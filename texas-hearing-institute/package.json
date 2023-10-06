@@ -16,7 +16,9 @@
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-elements": "^3.4.3",
-    "react-native-url-polyfill": "^2.0.0"
+    "react-native-url-polyfill": "^2.0.0",
+    "tailwind-react-native-classnames": "^1.5.1",
+    "tailwind-rn": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
