@@ -1,4 +1,4 @@
-# Texas Hearing Institute
+ = # Texas Hearing Institute
 - Ensure Git and Node.js are downloaded/setup on your local machine
 - Clone this repo
 - Change directories to the texas-hearing-institute folder in this repo (with command "cd texas-hearing-institute") from where the repo is clone in your local machine
