@@ -12,16 +12,12 @@ export default function App() {
         color="#FFFFFF"
         onPress={() => Alert.alert('First Button pressed')}
       />
-      {/* <TouchableOpacity
-      
-      <Text>Press Here</Text>
-        onPress={() => Alert.alert('Simple Button pressed')}
-      /> */}
+      {/* <button><img src={"./img/google.png"} /></button> */}
       <TouchableOpacity style={styles.loginScreenButton} 
       onPress={() => Alert.alert('Second Button pressed')}>
         <Text style={styles.text}>Press Here</Text>
       </TouchableOpacity>
-        
+
     </View >
   );
 }
