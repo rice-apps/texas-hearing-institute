@@ -7,7 +7,7 @@ import tw from 'tailwind-react-native-classnames';
 import { Alert } from 'react-native';
 
 
-export default function SpeechSetting() {
+export default function SpeechSetting({ navigation }) {
   const showAlert = () => {
     Alert.alert(
       'Come later',
@@ -28,7 +28,7 @@ export default function SpeechSetting() {
     <Subheading title={"Let’s get practicing"}></Subheading>
     <BigButton
         label={"Vowels"}
-        onPress={showAlert}
+        onPress={() => navigation.navigate('Coming Soon')}
       /> 
     <BigButton
         label={"Consonants"}
