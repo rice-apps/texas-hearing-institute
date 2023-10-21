@@ -1,5 +1,7 @@
 import {StyleSheet} from 'react-native'
 
-const styles = StyleSheet.create({
-    
+export default StyleSheet.create({
+    button: {
+        width: "90%"
+    }
 })

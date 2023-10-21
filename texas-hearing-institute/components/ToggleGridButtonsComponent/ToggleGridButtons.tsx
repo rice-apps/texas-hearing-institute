@@ -12,14 +12,18 @@ const ToggleGridButtons: React.FC<Props> = ({ items, itemSelected, setItemSelect
     return (
         <View style={styles.container}>
             {items.map((item, index) => (
-                <ToggleButton 
-                    key = {index}
-                    title={item}
-                    isToggled={itemSelected[index]} 
-                    onToggle={(newValue: boolean) => {
-                        setItemSelected(index, newValue);
-                    }} 
-                />
+                <View style={{
+                    marginRight: 12,
+                    marginBottom: 12,
+                }} key={index}>
+                    <ToggleButton 
+                        title={item}
+                        isToggled={itemSelected[index]} 
+                        onToggle={(newValue: boolean) => {
+                            setItemSelected(index, newValue);
+                        }}
+                    />
+                </View>
             ))}
         </View>
     );
@@ -29,7 +33,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        alignItems: 'flex-start', // Optional based on your design needs
+        alignItems: 'flex-start',
+        width: '100%',
     },
 });
     

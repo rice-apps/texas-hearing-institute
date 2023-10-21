@@ -5,6 +5,8 @@ import ToggleGridButtons from './components/ToggleGridButtonsComponent/ToggleGri
 import { useState } from 'react';
 
 
+
+
 export default function App() {
 	return (
 		<View style={styles.container}>
@@ -19,7 +21,7 @@ export default function App() {
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
-            <ToggleGridButtons items={["1", "2", "3"]} itemSelected={itemSelected} setItemSelected={(index: number, newValue: boolean) => {
+            <ToggleGridButtons items={testItems} itemSelected={itemSelected} setItemSelected={(index: number, newValue: boolean) => {
                 const newItemSelected = [...itemSelected];
                 newItemSelected[index] = newValue;
                 setItemSelected(newItemSelected);

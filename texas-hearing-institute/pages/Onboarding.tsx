@@ -2,6 +2,9 @@ import React,{useState} from 'react'
 import {View,Text,Button} from 'react-native'
 import tw from 'tailwind-react-native-classnames';
 import ToggleButton from '../components/ToggleGridButtonsComponent/ToggleButton';
+import styles from './OnboardingStyle';
+
+// none of this might be even working, I can't access the expo share might me all trash lol
 
 const Onboarding = () => {
 
