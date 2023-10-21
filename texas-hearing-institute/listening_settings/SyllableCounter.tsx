@@ -1,9 +1,18 @@
-import { useState } from "react";
-import { Text, Button, View, StyleSheet, Pressable, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import {useEffect, useState} from "react";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Icon} from "react-native-elements";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SyllableCounter() {
     const [syllableCount, setSyllableCount] = useState(1);
+
+    useEffect(() => {
+        AsyncStorage.getItem('listening_settings.syllableCount').then(r => {
+            if (r != null) {
+                setSyllableCount(Number.parseInt(r))
+            }
+        });
+    }, [])
 
     function handleClick(byHowMuch: number) {
         if (syllableCount + byHowMuch < 1) {
@@ -14,6 +23,10 @@ export default function SyllableCounter() {
         }
         setSyllableCount(syllableCount + byHowMuch);
     }
+    
+    useEffect(() => {
+        AsyncStorage.setItem('listening_settings.syllableCount', syllableCount.toString());
+    }, [syllableCount])
 
     var minusDisabled = syllableCount <= 1
     var plusDisabled = syllableCount >= 9
@@ -24,21 +37,21 @@ export default function SyllableCounter() {
             <TouchableOpacity
                 style={minusDisabled ? styles.circle_button_disabled : styles.circle_button}
                 disabled={minusDisabled}
-                onPress={e => {
+                onPress={() => {
                     console.log('Pressed minus')
                     handleClick(-1)
                 }}>
-                <Icon name={"remove"} />
+                <Icon name={"remove"}/>
             </TouchableOpacity>
             <Text style={styles.syllable_count}>{syllableCount} syllables</Text>
             <TouchableOpacity
                 style={plusDisabled ? styles.circle_button_disabled : styles.circle_button}
                 disabled={plusDisabled}
-                onPress={e => {
+                onPress={() => {
                     console.log('Pressed plus')
                     handleClick(1)
                 }}>
-                <Icon name={"add"} />
+                <Icon name={"add"}/>
             </TouchableOpacity>
         </View>
     );
