@@ -21,9 +21,10 @@ const Onboarding = () => {
 
     const [consonantStates, setConsonantStates] = useState(consonantsMap)
 
+    // const 
 
     return (
-        <View style={tw``}>
+        <View>
             // for the header of the onboarding screen, should have the backwards arrow and the weird bar at the top
             <View></View>
             <Text>{prompts[0]}</Text>
@@ -44,3 +45,5 @@ const Onboarding = () => {
         </View>
     )
 }
+
+export default Onboarding;

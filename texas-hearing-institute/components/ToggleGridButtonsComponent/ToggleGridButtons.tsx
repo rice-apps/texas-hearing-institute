@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 interface Props {
     items: string[];
-    itemSelected: boolean[];
-    setItemSelected: (index: number, newValue: boolean) => void;
+    itemsSelected: boolean[];
+    setItemsSelected: (index: number, newValue: boolean) => void;
 }
 
-const ToggleGridButtons: React.FC<Props> = ({ items, itemSelected, setItemSelected }) => {
+const ToggleGridButtons: React.FC<Props> = ({ items, itemsSelected, setItemsSelected }) => {
     return (
         <View style={styles.container}>
             {items.map((item, index) => (
@@ -18,9 +18,9 @@ const ToggleGridButtons: React.FC<Props> = ({ items, itemSelected, setItemSelect
                 }} key={index}>
                     <ToggleButton 
                         title={item}
-                        isToggled={itemSelected[index]} 
+                        isToggled={itemsSelected[index]} 
                         onToggle={(newValue: boolean) => {
-                            setItemSelected(index, newValue);
+                            setItemsSelected(index, newValue);
                         }}
                     />
                 </View>
