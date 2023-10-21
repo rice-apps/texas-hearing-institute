@@ -1,23 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, View, Text, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ListeningButtonGroup() {
-    const [selectedButton, setSelectedButton] = useState("");
+    const [selectedMode, setSelectedMode] = useState("");
+
+    /*
+    Not sure if works yet, don't uncomment
+
+    useEffect(() => {
+        // get set button in storage
+        AsyncStorage.getItem("listening_settings.selectedMode").then(r => {
+            if (r != null) {
+                setSelectedMode(r);
+            }
+        })
+    }, [])
+    */
 
     const buttonSelectHandler = (name: string) => {
-        if (selectedButton === name) {
-            setSelectedButton("");
+        if (selectedMode === name) {
+            setSelectedMode("");
         } else {
-            setSelectedButton(name);
+            setSelectedMode(name);
         }
     }
+
+    /*
+    Not sure if works yet, don't uncomment
+
+    useEffect(() => {
+        AsyncStorage.setItem("listening_settings.selectedMode", selectedMode);
+    }, [selectedMode])
+    */
 
     return (
         <View>
             {["Variegated Vowels", "Manner", "Voicing", "Place Cue"].map((name) => (
                 <Pressable
                     key={name}
-                    style={[styles.button, selectedButton === name && styles.selectedButton]}
+                    style={[styles.button, selectedMode === name && styles.selectedButton]}
                     onPress={() => buttonSelectHandler(name)}
                 >
                     <Text style={styles.buttonText}>{name}</Text>
