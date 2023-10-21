@@ -1,6 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
+import ToggleGridButtons from './components/ToggleGridButtonsComponent/ToggleGridButtons';
+import { useState } from 'react';
+
 
 export default function App() {
 	return (
@@ -13,6 +16,18 @@ export default function App() {
 	);
 }
 
+    return (
+        <View style={styles.container}>
+            <StatusBar style="auto" />
+            <ToggleGridButtons items={["1", "2", "3"]} itemSelected={itemSelected} setItemSelected={(index: number, newValue: boolean) => {
+                const newItemSelected = [...itemSelected];
+                newItemSelected[index] = newValue;
+                setItemSelected(newItemSelected);
+            }} />
+        </View>
+    );
+}
+    
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -21,3 +36,4 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 });
+    
