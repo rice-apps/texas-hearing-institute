@@ -3,6 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import ToggleGridButtons from './components/ToggleGridButtonsComponent/ToggleGridButtons';
 import { useState, useEffect } from 'react';
 
+// test with the Stack Navigator for React-Native
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 // Persistent storage. This is just a test and not expected to be permanent
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Onboarding from './pages/Onboarding';
@@ -61,8 +65,15 @@ export default function App() {
         storeItemSelection(storageKey, testItems, itemsSelected);
     }, [itemsSelected]); // Re-run this effect when 'itemsSelected' changes
 
+
+
+    const Stack = createNativeStackNavigator();
     return (
-        <Onboarding />
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Onboarding1" component={Onboarding}/>
+          </Stack.Navigator>
+        </NavigationContainer>
     );
 
     return (
