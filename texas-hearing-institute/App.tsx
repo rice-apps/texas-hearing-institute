@@ -1,27 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Heading from './components/Heading';
-import Subheading from './components/SubHeading';
-import BigButton from './components/Button';
-import tw from 'tailwind-react-native-classnames';
 
 
-export default function App() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SpeechSetting from './pages/SpeechSetting';
+
+const Stack = createStackNavigator();
+
+function App() {
   return (
-   <ScrollView>
-    <View style={tw`flex flex-col`}>
-    <Heading title={"Speech Babble"}></Heading>
-    <Subheading title={"Let’s get practicing"}></Subheading>
-    <BigButton
-        label={"Vowels"}
-        onPress={()=>console.log("Pressed")}
-      /> 
-    <BigButton
-        label={"Consonants"}
-        onPress={()=>console.log("Pressed")}
-      />    
-    </View>
-    
-    </ScrollView>
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Speech Setting Home Screen" component={SpeechSetting} />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
+
+export default App;

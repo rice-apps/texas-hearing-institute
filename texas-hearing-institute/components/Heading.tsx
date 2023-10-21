@@ -7,7 +7,7 @@ interface HeaderProps {
 
 const Heading: React.FC<HeaderProps> = ({ title }) => {
   return (
-    <Text style={tw`text-2xl font-bold pb-5 px-4`}>
+    <Text style={tw`text-2xl font-bold py-5 px-4`}>
         { title }
     </Text>
   )
