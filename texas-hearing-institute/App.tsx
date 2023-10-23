@@ -2,16 +2,19 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import ToggleGridButtons from './components/ToggleGridButtonsComponent/ToggleGridButtons';
 import { useState, useEffect } from 'react';
-
+import { storageKey } from './pages/Constants';
 // test with the Stack Navigator for React-Native
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Persistent storage. This is just a test and not expected to be permanent
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Onboarding from './pages/Onboarding';
+import Onboarding1 from './pages/Onboarding1';
+import Onboarding2 from './pages/Onboarding2';
+import Onboarding3 from './pages/Onboarding3';
+import Onboarding4 from './pages/Onboarding4';
 
-const storageKey = 'yourUniqueStorageKeyForThisData';
+
 
 export default function App() {
     const testItems = ['b', 'm', 'w', 'f', 'v', 'th', 'TH', 't', 'd', 'n', 's', 'z', 'l', 'sh', 'zh', 'ch', 'dg', 'y', 'r', 'k', 'g', 'ng', 'h'];
@@ -56,7 +59,7 @@ export default function App() {
             const storedSelections = await retrieveItemSelections(storageKey, testItems);
             setItemsSelected(storedSelections);
         };
-
+        console.log()
         loadStoredSelections();
     }, []); // The empty array ensures this effect runs once on mount
 
@@ -65,13 +68,14 @@ export default function App() {
         storeItemSelection(storageKey, testItems, itemsSelected);
     }, [itemsSelected]); // Re-run this effect when 'itemsSelected' changes
 
-
-
     const Stack = createNativeStackNavigator();
     return (
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Onboarding1" component={Onboarding}/>
+            <Stack.Screen name="Onboarding1" component={Onboarding1}/>
+            <Stack.Screen name="Onboarding2" component={Onboarding2}/>
+            <Stack.Screen name="Onboarding3" component={Onboarding3}/>
+            <Stack.Screen name="Onboarding4" component={Onboarding4}/>
           </Stack.Navigator>
         </NavigationContainer>
     );
