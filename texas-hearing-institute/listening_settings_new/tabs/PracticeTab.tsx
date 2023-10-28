@@ -1,9 +1,9 @@
 import {SafeAreaView, StyleSheet, View} from "react-native";
-import ButtonGroup from './components/ButtonGroup';
+import ButtonGroup from '../components/ButtonGroup';
 import {ApplicationProvider} from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 
-const headerImage = require('./images/active-listening.png');
+const headerImage = require('../images/active-listening.png');
 
 const headerText = "Listening Babble"
 

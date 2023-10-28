@@ -1,10 +1,10 @@
 import {StyleSheet, Text, View} from "react-native";
-import SyllableCounterDropdown from "./SyllableCounterDropdown";
-import PracticeButton from "./PracticeButton";
+import SyllableCounterDropdown from "../components/SyllableCounterDropdown";
+import PracticeButton from "../components/PracticeButton";
 import {ApplicationProvider} from "@ui-kitten/components";
 import * as eva from '@eva-design/eva'
 
-export default function PlaceCue() {
+export default function PlaceCueTab() {
     return (
             <View style={[styles.margins, styles.expanded]}>
                 <View style={[styles.expanded, styles.gaps]}>
