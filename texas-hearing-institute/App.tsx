@@ -3,8 +3,8 @@ import ListeningSettings from './listening_settings/ListeningSettings';
 
 export default function App() {
   return (
-    <View>
-      
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <ListeningSettings />
+    </SafeAreaView>
   );
 }
