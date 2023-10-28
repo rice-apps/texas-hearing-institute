@@ -1,13 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
+import {SafeAreaView, StyleSheet } from 'react-native';
+import PracticeTab from './listening_settings_new/PracticeTab';
+import ListeningNavigator from './listening_settings_new/ListeningNavigator';
+import {ApplicationProvider} from "@ui-kitten/components";
+import * as eva from '@eva-design/eva';
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <Text style={tw`text-3xl font-bold underline`}>Open up App.tsx to start working on your app!</Text>
-            <StatusBar style="auto" />
-        </View>
+        <ApplicationProvider {...eva} theme={eva.light}>
+            <SafeAreaView style={{flex: 1}}>
+                <ListeningNavigator />
+            </SafeAreaView>
+        </ApplicationProvider>
     );
 }
 
