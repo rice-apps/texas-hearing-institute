@@ -6,7 +6,6 @@ import * as eva from '@eva-design/eva'
 
 export default function PlaceCue() {
     return (
-        <ApplicationProvider {...eva} theme={eva.light}>
             <View style={[styles.margins, styles.expanded]}>
                 <View style={[styles.expanded, styles.gaps]}>
                     <View>
@@ -22,7 +21,6 @@ export default function PlaceCue() {
             styles.expanded (flex: 1) View, it is thrown to the bottom. */}
                 <PracticeButton/>
             </View>
-        </ApplicationProvider>
     );
 }
 

@@ -1,5 +1,5 @@
 import {SafeAreaView, StyleSheet, View} from "react-native";
-import ButtonGroup from './ButtonGroup';
+import ButtonGroup from './components/ButtonGroup';
 import {ApplicationProvider} from "@ui-kitten/components";
 import * as eva from '@eva-design/eva';
 
@@ -15,10 +15,10 @@ const buttonLabels = [
 ]
 
 const buttonRoutes = [
-    "variegated-vowels",
-    "manner",
-    "place-cue",
-    "voicing"
+    "Variegated Vowels",
+    "Manner",
+    "Place Cue",
+    "Voicing"
 ]
 
 export default function PracticeTab() {
