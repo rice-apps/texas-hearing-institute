@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         marginBottom: 6
     },
     buttonText: {
-        fontSize: 20
+        fontSize: 16,
+        fontWeight: '600'
     }
 })
