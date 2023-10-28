@@ -2,8 +2,8 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SpeechSetting from '../pages/SpeechSetting';
-import Comelater from '../pages/ComeLater';
+import SpeechSetting from './SpeechSetting';
+import Comelater from './ComeLater';
 
 const Stack = createStackNavigator();
 

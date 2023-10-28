@@ -1,5 +1,5 @@
 
-import SpeechSetup from "./pages/Home";
+import SpeechSetup from "./pages/Navigator";
 function App() {
   return <SpeechSetup/>
 }
