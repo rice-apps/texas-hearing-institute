@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from "react-native";
 import {IndexPath, Select, SelectItem} from "@ui-kitten/components";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SyllableCounterDropdown() {
@@ -8,32 +8,30 @@ export default function SyllableCounterDropdown() {
     const [syllableCount, setSyllableCount] = useState(() => {
         AsyncStorage.getItem('listeningSettings.syllableCount').then(value => {
             if (value != null) {
-                // - 2 because the syllables start at 2
                 setSyllableCount(Number.parseInt(value))
-                setSelectedIndex(new IndexPath(Number.parseInt(value) - 2))
+                setSelectedIndex(new IndexPath(syllablesToRow(Number.parseInt(value))))
             } else {
-                setSyllableCount(1)
+                setSyllableCount(2)
                 setSelectedIndex(new IndexPath(0))
             }
         })
         return 1
     });
+    // TODO: Redundant? As this is being set by the useState up above.
+    // But we still need the selectedIndex and setSelectedIndex vars.
     const [selectedIndex, setSelectedIndex] = useState<IndexPath>(new IndexPath(0));
-
-    useEffect(() => {
-        AsyncStorage.setItem('listeningSettings.syllableCount', syllableCount.toString());
-    }, [syllableCount])
 
     return (
         <View style={styles.row}>
             <Select
                 style={styles.select}
                 selectedIndex={selectedIndex}
-                value={selectedIndex.row + 2}
+                value={rowToSyllables(selectedIndex.row)}
                 onSelect={index => {
                     index = index as IndexPath
                     setSelectedIndex(index as IndexPath);
-                    setSyllableCount(index.row + 2);
+                    setSyllableCount(rowToSyllables(index.row));
+                    AsyncStorage.setItem('listeningSettings.syllableCount', rowToSyllables(index.row).toString());
                 }}>
                 <SelectItem title='2'/>
                 <SelectItem title='3'/>
@@ -42,6 +40,14 @@ export default function SyllableCounterDropdown() {
             <Text style={styles.label}>Syllables</Text>
         </View>
     );
+
+    function rowToSyllables(row: number) {
+        return row + 2;
+    }
+
+    function syllablesToRow(syllables: number) {
+        return syllables - 2;
+    }
 }
 
 const styles = StyleSheet.create({
@@ -52,10 +58,10 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     select: {
-        flex: 1,
+        flex: 2,
     },
     label: {
-        flex: 3,
+        flex: 5,
         fontSize: 16
     }
 });
