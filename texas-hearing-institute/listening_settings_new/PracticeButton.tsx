@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { Pressable, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export default function PracticeButton() {
 
     return (
         <View>
             <TouchableOpacity
-                style={[styles.button]}
-            >   
+                style={styles.button}
+            >
                 <View style={styles.container}>
                     <Text style={styles.buttonText}>Let's Practice</Text>
                 </View>
