@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     select: {
-        flex: 1,
+        flex: 2,
     },
     label: {
-        flex: 3,
+        flex: 5,
         fontSize: 16
     }
 });
