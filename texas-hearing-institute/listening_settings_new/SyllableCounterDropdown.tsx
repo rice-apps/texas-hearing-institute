@@ -4,27 +4,30 @@ import {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SyllableCounterDropdown() {
-    const [syllableCount, setSyllableCount] = useState(1);
+    // Load from storage the first time the page is loading
+    const [syllableCount, setSyllableCount] = useState(() => {
+        AsyncStorage.getItem('listeningSettings.syllableCount').then(value => {
+            if (value != null) {
+                // - 2 because the syllables start at 2
+                setSyllableCount(Number.parseInt(value))
+                setSelectedIndex(new IndexPath(Number.parseInt(value) - 2))
+            } else {
+                setSyllableCount(1)
+                setSelectedIndex(new IndexPath(0))
+            }
+        })
+        return 1
+    });
     const [selectedIndex, setSelectedIndex] = useState<IndexPath>(new IndexPath(0));
 
-    // Load from storage the first time the page is loading
     useEffect(() => {
-        AsyncStorage.getItem('listening_settings.syllableCount').then(r => {
-            if (r != null) {
-                setSelectedIndex(new IndexPath(Number.parseInt(r) - 2))
-                setSyllableCount(Number.parseInt(r))
-            }
-        });
-    }, [])
-
-    useEffect(() => {
-        AsyncStorage.setItem('listening_settings.syllableCount', syllableCount.toString());
+        AsyncStorage.setItem('listeningSettings.syllableCount', syllableCount.toString());
     }, [syllableCount])
 
     return (
         <View style={styles.row}>
             <Select
-                style={{flex: 1}}
+                style={styles.select}
                 selectedIndex={selectedIndex}
                 value={selectedIndex.row + 2}
                 onSelect={index => {
@@ -35,11 +38,6 @@ export default function SyllableCounterDropdown() {
                 <SelectItem title='2'/>
                 <SelectItem title='3'/>
                 <SelectItem title='4'/>
-                <SelectItem title='5'/>
-                <SelectItem title='6'/>
-                <SelectItem title='7'/>
-                <SelectItem title='8'/>
-                <SelectItem title='9'/>
             </Select>
             <Text style={styles.label}>Syllables</Text>
         </View>
@@ -49,11 +47,12 @@ export default function SyllableCounterDropdown() {
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        // width: "100%",
         justifyContent: 'flex-start',
-        // flexWrap: 'wrap',
         alignItems: 'center',
         gap: 10,
+    },
+    select: {
+        flex: 1,
     },
     label: {
         flex: 3,

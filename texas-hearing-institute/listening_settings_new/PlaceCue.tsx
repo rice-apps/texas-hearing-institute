@@ -1,22 +1,28 @@
 import {StyleSheet, Text, View} from "react-native";
 import SyllableCounterDropdown from "./SyllableCounterDropdown";
-import PracticeButton from "../listening_settings/PracticeButton";
+import PracticeButton from "./PracticeButton";
+import {ApplicationProvider} from "@ui-kitten/components";
+import * as eva from '@eva-design/eva'
 
-export default function ListeningSettings() {
+export default function PlaceCue() {
     return (
-        <View style={[styles.margins, styles.expanded]}>
-            <View style={[styles.expanded, styles.gaps]}>
-                <View>
-                    <Text style={styles.title}>Place Cue</Text>
-                    <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
+        <ApplicationProvider {...eva} theme={eva.light}>
+            <View style={[styles.margins, styles.expanded]}>
+                <View style={[styles.expanded, styles.gaps]}>
+                    <View>
+                        <Text style={styles.title}>Place Cue</Text>
+                        <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
+                    </View>
+                    <View style={{backgroundColor: '#a2a2a2', height: 200}}>
+                        <Text>Grid goes here</Text>
+                    </View>
+                    <SyllableCounterDropdown/>
                 </View>
-                <View style={{backgroundColor: '#a2a2a2', height: 200}}>
-                    <Text>Grid goes here</Text>
-                </View>
-                <SyllableCounterDropdown/>
+                {/*Because PracticeButton is not included in the
+            styles.expanded (flex: 1) View, it is thrown to the bottom. */}
+                <PracticeButton/>
             </View>
-            <PracticeButton/>
-        </View>
+        </ApplicationProvider>
     );
 }
 
@@ -46,7 +52,6 @@ const styles = StyleSheet.create({
         fontSize: 22
     },
     form_section: {
-        // flex: 1,
         justifyContent: 'center'
     }
 });
