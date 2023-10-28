@@ -5,9 +5,14 @@ import Subheading from '../components/SubHeading';
 import BigButton from '../components/Button';
 import tw from 'tailwind-react-native-classnames';
 import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function SpeechSetting({ navigation }) {
+
+export default function SpeechSetting() {
+
+  const navigation = useNavigation();
+
   const showAlert = () => {
     Alert.alert(
       'Come later',
