@@ -5,9 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function ListeningButtonGroup() {
     const [selectedMode, setSelectedMode] = useState("");
 
-    /*
-    Not sure if works yet, don't uncomment
-
     useEffect(() => {
         // get set button in storage
         AsyncStorage.getItem("listening_settings.selectedMode").then(r => {
@@ -16,7 +13,6 @@ export default function ListeningButtonGroup() {
             }
         })
     }, [])
-    */
 
     const buttonSelectHandler = (name: string) => {
         if (selectedMode === name) {
@@ -26,13 +22,9 @@ export default function ListeningButtonGroup() {
         }
     }
 
-    /*
-    Not sure if works yet, don't uncomment
-
     useEffect(() => {
         AsyncStorage.setItem("listening_settings.selectedMode", selectedMode);
     }, [selectedMode])
-    */
 
     return (
         <View>
