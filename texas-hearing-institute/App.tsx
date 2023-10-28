@@ -1,14 +1,21 @@
-import {SafeAreaView} from 'react-native';
-import PracticeTab from './listening_settings_new/PracticeTab';
-import {ApplicationProvider} from "@ui-kitten/components";
-import * as eva from '@eva-design/eva';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import tw from 'tailwind-react-native-classnames';
 
 export default function App() {
     return (
-        <ApplicationProvider {...eva} theme={eva.light}>
-            <SafeAreaView style={{flex: 1}}>
-                <PracticeTab/>
-            </SafeAreaView>
-        </ApplicationProvider>
+        <View style={styles.container}>
+            <Text style={tw`text-3xl font-bold underline`}>Open up App.tsx to start working on your app!</Text>
+            <StatusBar style="auto" />
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});

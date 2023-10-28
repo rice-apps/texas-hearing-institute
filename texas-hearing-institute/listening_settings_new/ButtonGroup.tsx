@@ -1,24 +1,22 @@
-import { useEffect, useState } from 'react';
-import { TouchableOpacity, View, Text, StyleSheet, Image } from 'react-native';
+import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import SettingsButton from './SettingsButton';
 
 type ButtonGroupProps = {
-    // not sure what type an image is 
-    headerImage: any;
+    headerImage: ImageSourcePropType;
     headerText: string;
     buttonLabels: string[];
     buttonRoutes: string[];
 }
 
-export default function ButtonGroup({ headerImage, headerText, buttonLabels, buttonRoutes } : ButtonGroupProps) {
+export default function ButtonGroup({headerImage, headerText, buttonLabels, buttonRoutes}: ButtonGroupProps) {
     return (
         <View>
             <View style={styles.headerContainer}>
-                <Image source={headerImage} style={styles.img} />
+                <Image source={headerImage} style={styles.img}/>
                 <Text style={styles.headerText}>{headerText}</Text>
             </View>
-            {buttonLabels.map((label : string, indx : number) => (
-                <SettingsButton 
+            {buttonLabels.map((label: string, indx: number) => (
+                <SettingsButton
                     key={label}
                     label={label}
                     route={buttonRoutes[indx]}
