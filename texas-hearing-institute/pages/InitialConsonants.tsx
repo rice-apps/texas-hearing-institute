@@ -9,7 +9,7 @@ import tw from 'tailwind-react-native-classnames';
 import Selection from '../components/Selection';
 
 
-const Comelater: React.FC = () => {
+const InitialConsonants: React.FC = () => {
   return (
     <ScrollView>
     <Heading title={"Initial Consonants"}></Heading>
@@ -28,5 +28,5 @@ const Comelater: React.FC = () => {
 
 
 
-export default Comelater
+export default InitialConsonants
 
