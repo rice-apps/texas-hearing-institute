@@ -6,6 +6,7 @@ import BigButton from '../components/Button';
 import tw from 'tailwind-react-native-classnames';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import InitialConsonants from './InitialConsonants';
 
 
 
@@ -33,11 +34,11 @@ export default function SpeechSetting() {
     <Subheading title={"Let’s get practicing"}></Subheading>
     <BigButton
         label={"Vowels"}
-        onPress={() => navigation.navigate('Coming Soon')}
+        onPress={showAlert}
       /> 
     <BigButton
         label={"Inital Consonants"}
-        onPress={showAlert}
+        onPress={() => navigation.navigate("Initial Consonants")}
       />    
      <BigButton
         label={"Final Consonants"}

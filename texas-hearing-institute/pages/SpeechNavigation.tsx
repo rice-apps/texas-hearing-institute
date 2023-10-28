@@ -2,8 +2,8 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SpeechSetting from '../pages/SpeechSetting';
-import Comelater from '../pages/ComeLater';
+import SpeechSetting from './SpeechSetting';
+import InitialConsonants from './InitialConsonants';
 
 const Stack = createStackNavigator();
 
@@ -12,8 +12,7 @@ export default function SpeechSetup(){
      <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen name="Speech Setting Home Screen" component={SpeechSetting} />
-      <Stack.Screen name="Coming Soon" component={Comelater} />
-
+      <Stack.Screen name="Initial Consonants" component={InitialConsonants} />
     </Stack.Navigator>
   </NavigationContainer>
     )
