@@ -1,16 +1,15 @@
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 type SettingsButtonProps = {
     label: string;
     route: string;
 }
 
-export default function SettingsButton({ label, route }: SettingsButtonProps) {
+export default function SettingsButton({label, route}: SettingsButtonProps) {
     return (
         <View>
             <TouchableOpacity
-                style={styles.button}
-            >
+                style={styles.button}>
                 <Text style={styles.buttonLabel}>{label}</Text>
             </TouchableOpacity>
         </View>
