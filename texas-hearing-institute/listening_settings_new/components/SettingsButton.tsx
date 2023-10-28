@@ -1,15 +1,26 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 type SettingsButtonProps = {
     label: string;
     route: string;
 }
 
-export default function SettingsButton({label, route}: SettingsButtonProps) {
+// Keep getting the error that the type to be passed into navigation.navigate must be type void, not sure why
+// This is a solution
+type Nav = {
+    navigate: (value: string) => void;
+}
+
+export default function SettingsButton({ label, route }: SettingsButtonProps) {
+    const navigation = useNavigation<Nav>();
+
     return (
         <View>
             <TouchableOpacity
-                style={styles.button}>
+                style={styles.button}
+                onPress={() => navigation.navigate(route)}
+            >
                 <Text style={styles.buttonLabel}>{label}</Text>
             </TouchableOpacity>
         </View>
