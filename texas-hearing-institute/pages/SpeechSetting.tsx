@@ -36,7 +36,11 @@ export default function SpeechSetting() {
         onPress={() => navigation.navigate('Coming Soon')}
       /> 
     <BigButton
-        label={"Consonants"}
+        label={"Inital Consonants"}
+        onPress={showAlert}
+      />    
+     <BigButton
+        label={"Final Consonants"}
         onPress={showAlert}
       />    
     </View>

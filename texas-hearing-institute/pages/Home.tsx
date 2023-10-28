@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 export default function SpeechSetup(){
     return(
-        <NavigationContainer>
+     <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen name="Speech Setting Home Screen" component={SpeechSetting} />
       <Stack.Screen name="Coming Soon" component={Comelater} />
