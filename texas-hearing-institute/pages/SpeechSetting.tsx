@@ -6,7 +6,6 @@ import BigButton from '../components/Button';
 import tw from 'tailwind-react-native-classnames';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import InitialConsonants from './InitialConsonants';
 
 
 
@@ -28,24 +27,20 @@ export default function SpeechSetting() {
     );
   };
   return (
-   <ScrollView>
+  <ScrollView>
     <View style={tw`flex flex-col`}>
-    <Heading title={"Speech Babble"}></Heading>
-    <Subheading title={"Let’s get practicing"}></Subheading>
-    <BigButton
-        label={"Vowels"}
-        onPress={showAlert}
-      /> 
-    <BigButton
-        label={"Inital Consonants"}
-        onPress={() => navigation.navigate("Initial Consonants")}
-      />    
-     <BigButton
-        label={"Final Consonants"}
-        onPress={showAlert}
-      />    
+      <Heading title={"Speech Babble"}></Heading>
+      <Subheading title={"Let’s get practicing"}></Subheading>
+      <BigButton
+          label={"Vowels"}
+          onPress={showAlert}/> 
+      <BigButton
+          label={"Inital Consonants"}
+          onPress={() => navigation.navigate("Initial Consonants" as never)}/>    
+      <BigButton
+          label={"Final Consonants"}
+          onPress={showAlert}/>    
     </View>
-    
-    </ScrollView>
+  </ScrollView> 
   );
 }
