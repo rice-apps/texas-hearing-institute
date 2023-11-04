@@ -8,7 +8,6 @@ import {useEffect,useState} from 'react'
 import { retrieveItemSelections,storeItemSelection } from '../util/persistSelection';
 
 export const SoundInventory = () => {
-
         // hashmap/dictionary to keep track of all consonants and their toggled state, update via useState to rerender componetns
         const [speechConsonants, setSpeechConsonants] = useState(Array(setupPageElements[0].length).fill(false));
         const [speechVowels, setSpeechVowels] = useState(Array(setupPageElements[2].length).fill(false));
@@ -134,8 +133,10 @@ export const SoundInventory = () => {
             </ScrollView>
 
 
-            <View style={{borderTopColor:'black',borderTopWidth: 1, height:100, shadowColor:"black",shadowOpacity:0.2, display: disabled ? 'none' : 'flex'}}>
-                <Button style={{padding: 50}} onPress={() => changeDisabled(!disabled)} title="Save Changes"/>
+            <View style={{borderTopColor:'black',borderTopWidth: 1, height:100, shadowColor:"black", display: disabled ? 'none' : 'flex', justifyContent:'center',alignItems:'center'}}>
+                <Pressable style={{marginTop: 25,backgroundColor: '#d3d3d3',padding: 18, width: 300,borderRadius:15}} onPress={() => changeDisabled(!disabled)}>
+                    <Text style={{textAlign:'center',fontSize:18,fontWeight:'bold'}}>Save Changes</Text>
+                </Pressable>
             </View>
         </SafeAreaView>
     )
@@ -143,12 +144,12 @@ export const SoundInventory = () => {
 
 const pagestyles = StyleSheet.create({
     heading:{
-        fontSize:18, 
+        fontSize:20, 
         fontWeight:'bold',
         marginBottom:20
     },
     subheading:{
-        fontSize:15, 
+        fontSize:16, 
         marginTop:15,
         marginBottom:15
     },
