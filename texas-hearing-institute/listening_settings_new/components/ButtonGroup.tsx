@@ -10,7 +10,7 @@ type ButtonGroupProps = {
 
 export default function ButtonGroup({headerImage, headerText, buttonLabels, buttonRoutes}: ButtonGroupProps) {
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <Image source={headerImage} style={styles.img}/>
                 <Text style={styles.headerText}>{headerText}</Text>
@@ -27,6 +27,9 @@ export default function ButtonGroup({headerImage, headerText, buttonLabels, butt
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop: 40
+    },
     headerContainer: {
         flexDirection: 'row'
     },

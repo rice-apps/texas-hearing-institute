@@ -7,8 +7,10 @@ import MannerScreen from './tabs/MannerScreen';
 import VoicingScreen from './tabs/VoicingScreen';
 import { ApplicationProvider } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
+import { StatusBar } from 'react-native';
 
 const Stack = createNativeStackNavigator();
+
 
 // This is the navigator of listening settings
 // Use this componenet in App.tsx as follows:
@@ -16,9 +18,24 @@ const Stack = createNativeStackNavigator();
 export default function ListeningNavigator() {
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
+            {/* May need to remove this later since it will be implemented elsewhere, just temporary for now */}<StatusBar barStyle="dark-content" />
             <NavigationContainer>
-                    <Stack.Navigator initialRouteName='Practice'>
-                        <Stack.Screen name="Practice" component={PracticeTab} />
+                    <Stack.Navigator 
+                        initialRouteName='Practice'
+                        screenOptions={{
+                            headerShadowVisible: false,
+                            headerStyle: {
+                                backgroundColor: 'white'
+                            },
+                            contentStyle: {
+                                backgroundColor: 'white'
+                            },
+                            headerTitleStyle: {
+                                color: 'transparent'
+                            }
+                        }}
+                    >
+                        <Stack.Screen name="Practice" component={PracticeTab} options={{headerShown: false}}/>
                         <Stack.Screen name="Place Cue" component={PlaceCueTab} />
                         <Stack.Screen name="Variegated Vowels" component={VarVowelsScreen} />
                         <Stack.Screen name="Manner" component={MannerScreen} />
