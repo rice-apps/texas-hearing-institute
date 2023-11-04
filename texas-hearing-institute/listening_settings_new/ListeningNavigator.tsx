@@ -32,10 +32,11 @@ export default function ListeningNavigator() {
                             },
                             headerTitleStyle: {
                                 color: 'transparent'
-                            }
+                            },
+                            headerBackTitle: 'Practice'
                         }}
                     >
-                        <Stack.Screen name="Practice" component={PracticeTab} options={{headerShown: false}}/>
+                        <Stack.Screen name="Practice" component={PracticeTab} options={{ headerShown: false}}/>
                         <Stack.Screen name="Place Cue" component={PlaceCueTab} />
                         <Stack.Screen name="Variegated Vowels" component={VarVowelsScreen} />
                         <Stack.Screen name="Manner" component={MannerScreen} />
