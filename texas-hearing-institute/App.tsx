@@ -19,8 +19,6 @@ text-to-speech
 track correct/incorrect answers
 */
 
-const syllables = ["pee paw", "pee po", "pee pie", "the", "quick", "brown", "fox"];
-const text = "pee paw";
 export default function App() {
   const thingToSay = 'pee paw';
   const speak = (text:string) => {
