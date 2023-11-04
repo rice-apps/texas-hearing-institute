@@ -7,9 +7,25 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import * as eva from "@eva-design/eva"
 import tw from 'tailwind-react-native-classnames';
 import Selection from '../components/Selection';
+import BigButton from '../components/Button';
+import { Alert } from 'react-native';
 
 
 const InitialConsonants: React.FC = () => {
+  const showAlert = () => {
+    Alert.alert(
+      'Come later',
+      'We are working on it, bruh!',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel', // This button will be the 'Cancel' button
+        },
+        { text: 'OK' }, // This will be the 'OK' button
+      ],
+    );
+  };
+
   return (
     <ScrollView>
     <Heading title={"Initial Consonants"}></Heading>
@@ -17,16 +33,15 @@ const InitialConsonants: React.FC = () => {
     <GridButton/>
     <Selection buttonNames={["Variegated Vowels", "Voicing", "Manner", "Place Cue"]}></Selection>
     <View style={tw`px-4`}>
-    <ApplicationProvider {...eva} theme={eva.dark}>
-      <SyllableCounterDropdown/>
-    </ApplicationProvider>   
+      <ApplicationProvider {...eva} theme={eva.dark}>
+        <SyllableCounterDropdown/>
+      </ApplicationProvider>   
     </View>
+    <BigButton label={"Submit"} onPress={showAlert}/>
     </ScrollView>
    
   )
 }
-
-
 
 export default InitialConsonants
 
