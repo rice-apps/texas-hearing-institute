@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
 	View,
 	StyleSheet,
@@ -14,10 +14,6 @@ const GridButton = () => {
 			[label]: isToggled,
 		}));
 	};
-
-	useEffect(() => {
-		console.log(buttonData);
-	}, [buttonData]);
 
 	const renderButtons = () => {
 		const buttonLabels = [
