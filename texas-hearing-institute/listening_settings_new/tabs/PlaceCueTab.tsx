@@ -20,7 +20,6 @@ export default function PlaceCueTab() {
                     itemsSelected={itemsSelected}
                     setItemsSelected={(index, newValue) => {
                         itemsSelected[index] = newValue
-                        console.log(itemsSelected)
                         setItemsSelected(itemsSelected)
                     }}
                 />
