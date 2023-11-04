@@ -3,20 +3,25 @@ import {IndexPath, Select, SelectItem} from "@ui-kitten/components";
 import {useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function SyllableCounterDropdown() {
-    // Load from storage the first time the page is loading
-    const [syllableCount, setSyllableCount] = useState(() => {
+interface Props {
+    syllableCountChanged: (syllables: number) => void,
+}
+
+const SyllableCounterDropdown: React.FC<Props> = ({ syllableCountChanged }) => {
+    // Abuse useState to only run the following code the first time this page loads.
+    // This function loads syllableCount from storage.
+    useState(() => {
         AsyncStorage.getItem('listeningSettings.syllableCount').then(value => {
             if (value != null) {
-                setSyllableCount(Number.parseInt(value))
                 setSelectedIndex(new IndexPath(syllablesToRow(Number.parseInt(value))))
+                syllableCountChanged(Number.parseInt(value))
             } else {
-                setSyllableCount(2)
                 setSelectedIndex(new IndexPath(0))
             }
         })
         return 1
     });
+    
     // TODO: Redundant? As this is being set by the useState up above.
     // But we still need the selectedIndex and setSelectedIndex vars.
     const [selectedIndex, setSelectedIndex] = useState<IndexPath>(new IndexPath(0));
@@ -30,8 +35,9 @@ export default function SyllableCounterDropdown() {
                 onSelect={index => {
                     index = index as IndexPath
                     setSelectedIndex(index as IndexPath);
-                    setSyllableCount(rowToSyllables(index.row));
                     AsyncStorage.setItem('listeningSettings.syllableCount', rowToSyllables(index.row).toString());
+                    // Callback to parent component
+                    syllableCountChanged(rowToSyllables(index.row))
                 }}>
                 <SelectItem title='2'/>
                 <SelectItem title='3'/>
@@ -49,6 +55,8 @@ export default function SyllableCounterDropdown() {
         return syllables - 2;
     }
 }
+
+export default SyllableCounterDropdown
 
 const styles = StyleSheet.create({
     row: {
