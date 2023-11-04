@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import ToggleButton from './ToggleButton';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
     disabled?: boolean
 }
 
-const ToggleGridButtons: React.FC<Props> = ({ items, itemsSelected, setItemsSelected,disabled }) => {
+export default function ToggleGridButtons({items, itemsSelected, setItemsSelected, disabled}: Props) {
     return (
         <View style={styles.container}>
             {items.map((item, index) => (
@@ -16,13 +16,14 @@ const ToggleGridButtons: React.FC<Props> = ({ items, itemsSelected, setItemsSele
                     marginRight: 12,
                     marginBottom: 12,
                 }} key={index}>
-                    <ToggleButton 
+                    <ToggleButton
                         title={item}
-                        isToggled={itemsSelected[index]} 
+                        isToggled={itemsSelected[index]}
                         onToggle={
                             (newValue: boolean) => {
-                            disabled ? () => {} : setItemsSelected(index, newValue) 
-                        }}
+                                disabled ? () => {
+                                } : setItemsSelected(index, newValue)
+                            }}
                     />
                 </View>
             ))}
@@ -38,5 +39,3 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 });
-    
-export default ToggleGridButtons;
