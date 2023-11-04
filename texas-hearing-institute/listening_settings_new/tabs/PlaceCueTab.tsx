@@ -3,10 +3,32 @@ import PracticeButton from "../components/PracticeButton";
 import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGridButtons";
 import {useState} from "react";
 import SyllableCounterDropdown from "../components/SyllableCounterDropdown";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function PlaceCueTab() {
     const phonemes = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
-    const [phonemesSelected, setPhonemesSelected] = useState<boolean[]>([])
+
+    async function fetchPhonemesSelectedFromStorage() {
+        let selectedJson = await AsyncStorage.getItem('listeningSettings.phonemesSelected');
+        if (selectedJson != null) {
+            return JSON.parse(selectedJson);
+        } else {
+            return []
+        }
+    }
+
+    const [phonemesSelected, _setPhonemesSelected] = useState<boolean[]>(() => {
+        fetchPhonemesSelectedFromStorage().then(selected => {
+            _setPhonemesSelected(selected)
+        });
+        return []
+    })
+
+    // Our function for setPhonemesSelected, since we also want to store it 
+    function setPhonemesSelected(selected: boolean[]) {
+        AsyncStorage.setItem('listeningSettings.phonemesSelected', JSON.stringify(phonemesSelected));
+        _setPhonemesSelected(selected)
+    }
 
     let numberOfSyllables = 2;
 
