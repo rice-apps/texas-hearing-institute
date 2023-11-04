@@ -20,7 +20,9 @@ export default function PlaceCueTab() {
                     itemsSelected={itemsSelected}
                     setItemsSelected={(index, newValue) => {
                         itemsSelected[index] = newValue
-                        setItemsSelected(itemsSelected)
+                        // [...itemsSelected] clones the list for useState
+                        // https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
+                        setItemsSelected([...itemsSelected])
                     }}
                 />
                 <SyllableCounterDropdown/>
