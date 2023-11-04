@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import Constants from 'expo-constants';
 //import { Button } from 'react-native-elements';
 import tw from 'tailwind-react-native-classnames';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +11,8 @@ import * as Speech from 'expo-speech';
 // import ProgressBar from "../Progress";
 
 
+const syllables = ["pee paw", "pee po", "pee pie", "the", "quick", "brown", "fox"];
+const text = "pee paw";
 /*
 TODO: custom audio button
 link to consonants page
@@ -17,8 +20,6 @@ text-to-speech
 track correct/incorrect answers
 */
 
-const syllables = ["pee paw", "pee po", "pee pie", "the", "quick", "brown", "fox"];
-const text = "pee paw";
 export default function Active() {
   const thingToSay = 'pee paw';
   const speak = (text:string) => {
@@ -26,25 +27,52 @@ export default function Active() {
   };
 
     return(
+      
     <View style={[styles.container, 
       {
         flexDirection: 'column',
       }]}>
-    <View style={[styles.practiceArea, 
-      {
-        flexDirection: 'column',
-      }]}>
+        {/* PROGRESS AREA ==================================================*/}
+        <View style={styles.container}>
+          <View style={[styles.container, 
+          {flexDirection: 'row',
+            alignContent:'space-between',
+            // backgroundColor: 'red',
 
-        <View style = {[styles.closeButton, 
-          {flexDirection:'row',
-          display: 'flex', justifyContent: 'flex-end',}]}>
-        <Pressable onPress={() => {speak(thingToSay)}} style={({ pressed }) => [
+          }]}>
+      <Text style={styles.text2}>
+        1/20
+      </Text>
+
+      {/* X BUTTON ==================================================*/}
+      <View style = {[styles.closeButton, 
+          {flexDirection:'column',
+          display: 'flex', 
+          justifyContent: 'center',alignItems:'center',}]}>
+        <Pressable style={({ pressed }) => [
           styles.box, pressed? styles.pressed : styles.box
         ]}>
           <Icon style={tw `p-5`} name="close" size={25} color="black">
             </Icon>  
         </Pressable>
         </View>
+        </View>
+      <View style={styles.progressBar}>
+      </View>
+      
+
+      
+      <Text style={styles.text3}>0%</Text>
+      </View>
+      <StatusBar style="auto" />
+    
+
+
+    <View style={[styles.practiceArea, 
+      {
+        flexDirection: 'column',
+      }]}>
+        
         <View style={[styles.practice, {flexDirection: 'row',}]}>
             <Text style={tw `text-3xl pt-6`}>Pee Paw</Text> 
           <AudioButton someText={syllables[0]}></AudioButton> 
@@ -52,7 +80,7 @@ export default function Active() {
     
         </View>
     </View>
-  
+      {/* GREEN CHECK AND RED X BUTTONS================================================== */}
     <View style={[styles.buttonArea,
       {flexDirection:'row',
       alignContent: 'space-around'}]}>
@@ -73,12 +101,6 @@ export default function Active() {
   }
   
 
-  /*
-  <Pressable style={({ pressed }) => [
-  styles.circleButton, {width:40, height:40, backgroundColor: "gray"}, pressed? styles.pressed : styles.circleButton
-  ]}></Pressable>  
-  */
-
   const AudioButton = ({someText}: {someText:string}) => {
     const [isPlaying, setIsPlaying] = useState(false);
   
@@ -88,10 +110,11 @@ export default function Active() {
       Speech.speak(someText);
       setIsPlaying(isPlaying)
       // add logic to play/pause audio here
-      
+  
     };
   
     return (
+      //  TEXT TO SPEECH BUTTON==================================================
       <View>
         <Pressable style={({ pressed }) => [
           styles.circleButton, {backgroundColor: "#cfcdcc", width:40, height:40}, pressed? styles.pressed : styles.circleButton
@@ -122,44 +145,10 @@ export default function Active() {
       </View>
     );
   };
-
-  
-
-  // return <ProgressBar value={value} max = {100}/>
-  
-  // const ProgressBar = ({value, max}) => {
-  //   const [value, setValue] = useState(0);
-  //   useEffect(() => {
-  //     const interval = setInterval(() => {
-  //       setValue(oldValue => {
-  //         const newValue = oldValue *10;
-  //         if (newValue == 100){
-  //           clearInterval(interval);
-  //         }
-  //         return newValue;
-  //       });
-  //     }, 1000);
-  //   },[]);
-  //   return (
-  //     <progress value={value} max={max} />
-  //   )
-  // }
-
-  // // return (
-  // //   <ProgressBar value={40} max={100} />;
-  // // );
-  // }
-  // ProgressBar.propTypes={
-  //   value: PropTypes.number.isRequired,
-  //   max: PropTypes.number,
-  // }
-  // ProgressBar.defaultProps = {
-  //   max: 100,
-  // }
   
   const styles = StyleSheet.create({
     container: {
-      flex:2.7,
+      flex:1.5,
       backgroundColor: '#fff',
       justifyContent: 'space-between',
       padding: 20,
@@ -168,7 +157,6 @@ export default function Active() {
     },
     buttonArea:{
       flex: 2,
-      //backgroundColor: 'black',
       justifyContent: 'center',
       alignItems: 'center',
       alignContent: 'space-around',
@@ -176,7 +164,6 @@ export default function Active() {
     },
     practiceArea:{
       flex:3,
-      //backgroundColor: 'yellow',
       justifyContent: 'center',
       
     },
@@ -195,7 +182,7 @@ export default function Active() {
       backgroundColor: "fffff",
       borderRadius: 40,
       alignItems: 'center',
-  
+      
     },
     pressed: {
     
@@ -213,31 +200,23 @@ export default function Active() {
       flex:1,
       alignItems: 'center',
       justifyContent: 'center',
-      
-      //backgroundColor: 'red',
+    },
+    progressBar: {
+      width: '100%',
+      height: 40,
+      backgroundColor: '#fff',
+      borderWidth: 3,
+      borderRadius: 8,
+      borderColor: '#555',
+      flexDirection:"row"
+    },
+    text1: {
+      fontSize: 34
+    },
+    text2: {
+      fontSize: 22,
+    },
+    text3: {
+      fontSize: 18
     },
   });
-  
-  
-  
-  //   const progress = StyleSheet.create({
-  //   progressContainerStyle:{
-  //     width: 300,
-  //     height: 20,
-  //     borderRadius: 10,
-  //     backgroundColor: '#e0e0e0',
-  //     overflow: "hidden",
-  //   },
-  //   fillerStyle: {
-  //     height: '100%',
-  //     width: 50,
-  //     backgroundColor: '#3498db',
-  //   },
-  //   progressText: {
-  //     position: 'absolute',
-  //     textAlign: 'center',
-  //     lineHeight: 20,
-  //     width: '100%',
-  //     color: '#ffffff',
-  //   },
-  // });
