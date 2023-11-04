@@ -1,5 +1,5 @@
 
-import SpeechNavigation from "./SpeechSetup/SpeechNavigation";
+import SpeechNavigation from "./pages/SpeechSetup/SpeechNavigation";
 function App() {
   return <SpeechNavigation/>
 }

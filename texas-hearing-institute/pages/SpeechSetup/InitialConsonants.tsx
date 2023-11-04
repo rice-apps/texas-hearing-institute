@@ -1,10 +1,10 @@
 import { ScrollView, View } from 'react-native';
-import Heading from '../components/Heading';
-import Subheading from '../components/SubHeading';
-import GridButton from '../components/GridButton';
-import SyllableCounterDropdown from "../components/Counter"
-import Selection from '../components/Selection';
-import BigButton from '../components/Button';
+import Heading from '../../components/Heading';
+import Subheading from '../../components/SubHeading';
+import GridButton from '../../components/GridButton';
+import SyllableCounterDropdown from "../../components/Counter"
+import Selection from '../../components/Selection';
+import BigButton from '../../components/Button';
 import { Alert } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 

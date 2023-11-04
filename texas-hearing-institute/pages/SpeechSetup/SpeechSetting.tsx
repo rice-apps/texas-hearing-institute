@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import Heading from '../components/Heading';
-import Subheading from '../components/SubHeading';
-import BigButton from '../components/Button';
+import Heading from '../../components/Heading';
+import Subheading from '../../components/SubHeading';
+import BigButton from '../../components/Button';
 import tw from 'tailwind-react-native-classnames';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
