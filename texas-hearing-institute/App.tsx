@@ -1,7 +1,7 @@
 
-import SpeechSetup from "./pages/SpeechNavigation";
+import SpeechNavigation from "./SpeechSetup/SpeechNavigation";
 function App() {
-  return <SpeechSetup/>
+  return <SpeechNavigation/>
 }
 
 export default App;

@@ -9,7 +9,7 @@ import * as eva from "@eva-design/eva"
 
 const Stack = createStackNavigator();
 
-export default function SpeechSetup(){
+export default function SpeechNavigation(){
     return(
     <ApplicationProvider {...eva} theme={eva.dark}>
       <NavigationContainer>
