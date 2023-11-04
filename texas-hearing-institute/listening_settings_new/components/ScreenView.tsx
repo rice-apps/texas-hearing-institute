@@ -9,7 +9,7 @@ type ScreenViewProps = {
  */
 export default function ScreenView({ children } : ScreenViewProps) {
     return (
-        <View style={{ padding: 32}}>
+        <View style={{ paddingLeft: 32, paddingRight: 32, paddingTop: 20}}>
             {children}
         </View>
     )
