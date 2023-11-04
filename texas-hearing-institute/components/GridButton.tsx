@@ -51,9 +51,6 @@ const GridButton = () => {
 	return (
 		<View>
 			<View style={buttonStyles.container}>{renderButtons()}</View>
-			{/* <Text style={{ fontSize: 18, fontWeight: 'bold', margin: 10 }}>
-        Toggled Buttons: {Object.keys(buttonData).filter((label) => buttonData[label]).join(', ')}
-      </Text> */}
 		</View>
 	);
 };
