@@ -1,13 +1,39 @@
 import {StyleSheet, Text, View} from "react-native";
-import SyllableCounterDropdown from "../components/SyllableCounterDropdown";
 import PracticeButton from "../components/PracticeButton";
 import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGridButtons";
 import {useState} from "react";
+import SyllableCounterDropdown from "../components/SyllableCounterDropdown";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function PlaceCueTab() {
-    const items = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
-    const [itemsSelected, setItemsSelected] = useState<boolean[]>([])
-    
+    const phonemes = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
+
+    async function fetchPhonemesSelectedFromStorage() {
+        const selectedJson = await AsyncStorage.getItem('listeningSettings.phonemesSelected');
+        if (selectedJson != null) {
+            return JSON.parse(selectedJson);
+        } else {
+            return []
+        }
+    }
+
+    const [phonemesSelected, _setPhonemesSelected] = useState<boolean[]>(() => {
+        fetchPhonemesSelectedFromStorage().then(selected => {
+            _setPhonemesSelected(selected)
+        });
+        return []
+    })
+
+    // Our function for setPhonemesSelected, since we also want to store it 
+    function setPhonemesSelected(selected: boolean[]) {
+        AsyncStorage.setItem('listeningSettings.phonemesSelected', JSON.stringify(phonemesSelected));
+        _setPhonemesSelected(selected)
+    }
+
+    // Bypassing this warning for now, as this variable will be used in the future.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let numberOfSyllables = 2;
+
     return (
         <View style={[styles.margins, styles.expanded]}>
             <View style={[styles.expanded, styles.gaps]}>
@@ -16,19 +42,22 @@ export default function PlaceCueTab() {
                     <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
                 </View>
                 <ToggleGridButtons
-                    items={items}
-                    itemsSelected={itemsSelected}
+                    items={phonemes}
+                    itemsSelected={phonemesSelected}
                     setItemsSelected={(index, newValue) => {
-                        itemsSelected[index] = newValue
+                        phonemesSelected[index] = newValue
                         // [...itemsSelected] clones the list for useState
                         // https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
-                        setItemsSelected([...itemsSelected])
+                        setPhonemesSelected([...phonemesSelected])
                     }}
                 />
-                <SyllableCounterDropdown/>
+                <SyllableCounterDropdown syllableCountChanged={syllables => {
+                    numberOfSyllables = syllables
+                }}/>
             </View>
             {/*Because PracticeButton is not included in the
             styles.expanded (flex: 1) View, it is thrown to the bottom. */}
+            {/*TODO: Pass phonemesSelected, numberOfSyllables to PracticeButton*/}
             <PracticeButton/>
         </View>
     );
