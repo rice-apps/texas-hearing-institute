@@ -2,7 +2,6 @@ import { ScrollView, View } from 'react-native';
 import Heading from '../../components/Heading';
 import Subheading from '../../components/SubHeading';
 import GridButton from '../../components/GridButton';
-import SyllableCounterDropdown from '../../components/Counter';
 import Selection from '../../components/Selection';
 import BigButton from '../../components/Button';
 import { Alert } from 'react-native';
@@ -29,9 +28,7 @@ const InitialConsonants: React.FC = () => {
 			<Selection
 				buttonNames={['Variegated Vowels', 'Voicing', 'Manner', 'Place Cue']}
 			></Selection>
-			<View style={tw`p-4`}>
-				<SyllableCounterDropdown />
-			</View>
+			<View style={tw`p-4`}></View>
 			<BigButton label={'Submit'} onPress={showAlert} />
 		</ScrollView>
 	);
