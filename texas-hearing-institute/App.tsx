@@ -1,16 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
+import ListeningNavigator from './listening_settings_new/ListeningNavigator';
 
 export default function App() {
-	return (
-		<View style={styles.container}>
-			<Text style={tw`text-3xl font-bold underline`}>
-				Open up App.tsx to start working on your app!
-			</Text>
-			<StatusBar style="auto" />
-		</View>
-	);
+	return <ListeningNavigator />
 }
 
 const styles = StyleSheet.create({
