@@ -22,8 +22,6 @@ const SyllableCounterDropdown: React.FC<Props> = ({ syllableCountChanged }) => {
         return 1
     });
     
-    // TODO: Redundant? As this is being set by the useState up above.
-    // But we still need the selectedIndex and setSelectedIndex vars.
     const [selectedIndex, setSelectedIndex] = useState<IndexPath>(new IndexPath(0));
 
     return (
