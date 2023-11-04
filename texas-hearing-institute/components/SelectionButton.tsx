@@ -1,4 +1,4 @@
-import { View, Button, Text, Pressable, Image, StyleSheet } from 'react-native';
+import { Text, Pressable, Image, StyleSheet } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
 type SelectionButtonProps = {

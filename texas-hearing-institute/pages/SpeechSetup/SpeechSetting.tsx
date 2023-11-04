@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import Heading from '../../components/Heading';
 import Subheading from '../../components/SubHeading';
 import BigButton from '../../components/Button';

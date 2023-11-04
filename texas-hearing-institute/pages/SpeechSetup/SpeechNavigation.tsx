@@ -2,8 +2,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SpeechSetting from './SpeechSetting';
 import InitialConsonants from './InitialConsonants';
-import { ApplicationProvider } from '@ui-kitten/components';
-import * as eva from '@eva-design/eva';
 
 const Stack = createStackNavigator();
 

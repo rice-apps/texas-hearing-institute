@@ -1,4 +1,4 @@
-import { View, Button, Text, Pressable } from 'react-native';
+import { Text, Pressable } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
 type BigButtonProps = {

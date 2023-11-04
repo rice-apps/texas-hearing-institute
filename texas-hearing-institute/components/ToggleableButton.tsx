@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import {
-	ScrollView,
 	TouchableOpacity,
 	Text,
-	View,
 	StyleSheet,
 } from 'react-native';
 

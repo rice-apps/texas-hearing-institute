@@ -1,4 +1,3 @@
-import { Text } from 'react-native-elements';
 import { View } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import SelectionButton from './SelectionButton';
