@@ -7,7 +7,7 @@ import BigButton from '../../components/Button';
 import { Alert } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
-const InitialConsonants: React.FC = () => {
+const InitialConsonants = () => {
 	const showAlert = () => {
 		Alert.alert('Come later', 'We are working on it, bruh!', [
 			{
