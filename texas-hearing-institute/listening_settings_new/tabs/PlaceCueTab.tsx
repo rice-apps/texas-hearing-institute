@@ -1,26 +1,35 @@
 import {StyleSheet, Text, View} from "react-native";
 import SyllableCounterDropdown from "../components/SyllableCounterDropdown";
 import PracticeButton from "../components/PracticeButton";
-import {ApplicationProvider} from "@ui-kitten/components";
-import * as eva from '@eva-design/eva'
+import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGridButtons";
+import {useState} from "react";
 
 export default function PlaceCueTab() {
+    const items = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
+    const [itemsSelected, setItemsSelected] = useState<boolean[]>([])
+    
     return (
-            <View style={[styles.margins, styles.expanded]}>
-                <View style={[styles.expanded, styles.gaps]}>
-                    <View>
-                        <Text style={styles.title}>Place Cue</Text>
-                        <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
-                    </View>
-                    <View style={{backgroundColor: '#a2a2a2', height: 200}}>
-                        <Text>Grid goes here</Text>
-                    </View>
-                    <SyllableCounterDropdown/>
+        <View style={[styles.margins, styles.expanded]}>
+            <View style={[styles.expanded, styles.gaps]}>
+                <View>
+                    <Text style={styles.title}>Place Cue</Text>
+                    <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
                 </View>
-                {/*Because PracticeButton is not included in the
-            styles.expanded (flex: 1) View, it is thrown to the bottom. */}
-                <PracticeButton/>
+                <ToggleGridButtons
+                    items={items}
+                    itemsSelected={itemsSelected}
+                    setItemsSelected={(index, newValue) => {
+                        itemsSelected[index] = newValue
+                        console.log(itemsSelected)
+                        setItemsSelected(itemsSelected)
+                    }}
+                />
+                <SyllableCounterDropdown/>
             </View>
+            {/*Because PracticeButton is not included in the
+            styles.expanded (flex: 1) View, it is thrown to the bottom. */}
+            <PracticeButton/>
+        </View>
     );
 }
 
