@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import OnboardingMain from './pages/OnboardingMain';
+import OnboardingMain from './pages/Onboarding/OnboardingMain';
 
 
 

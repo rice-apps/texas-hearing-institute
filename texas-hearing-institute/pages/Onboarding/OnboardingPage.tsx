@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { View,Button, SafeAreaView,Pressable } from 'react-native'
 import { SvgXml } from 'react-native-svg';
-import leftArrow from '../icons/leftarrow';
-import ProgressBar from '../utilComponents/ProgressBar/ProgressBar';
-import MarkdownText from '../utilComponents/MarkdownText/MarkdownText';
-import ToggleGridButtons from '../utilComponents/ToggleGridButtonsComponent/ToggleGridButtons';
-import {storeItemSelection, retrieveItemSelections} from '../util/persistSelection'
-import { StackNavigationProp } from '@react-navigation/stack';
-import { OnboardingStackParamList } from './OnboardingMain';
-import { setupPrompts, setupPersistenceKeys, setupPageElements } from '../util/setupData'
-import { RouteProp } from '@react-navigation/native';
+import leftArrow from '../../icons/leftarrow';
+import ProgressBar from '../../utilComponents/ProgressBar/ProgressBar';
+import MarkdownText from '../../utilComponents/MarkdownText/MarkdownText';
+import ToggleGridButtons from '../../utilComponents/ToggleGridButtonsComponent/ToggleGridButtons';
+import {storeItemSelection, retrieveItemSelections} from '../../util/persistSelection'
+import { setupPrompts, setupPersistenceKeys, setupPageElements } from '../../util/soundInventoryDataAndKeys'
 
 // type RootStackParamList = {
 //     Onboarding1: OnboardingRouteParams;
@@ -36,28 +33,25 @@ import { RouteProp } from '@react-navigation/native';
   
 
 const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigation }) => {
-    let prompt: string = route.params.prompt;
-    let pageNumber: number = route.params.pageNumber;
-    let persistenceKey: string = route.params.persistenceKey;
-    let setupElements: string[] = route.params.setupElements;
+    const prompt: string = route.params.prompt;
+    const pageNumber: number = route.params.pageNumber;
+    const persistenceKey: string = route.params.persistenceKey;
+    const setupElements: string[] = route.params.setupElements;
 
-    const [itemsSelected, setItemsSelected] = useState(Array(setupElements.length).fill(false));
+    const [itemsSelected, setItemsSelected] = useState(() => {
+        // Start load from storage and set state once load completes
+        retrieveItemSelections(persistenceKey, setupElements).then((result) => {
+            setItemsSelected(result);
+        })
 
-    // Load stored selection statuses when the component mounts
-    useEffect(() => {
-        const loadStoredSelections = async () => {
-            const storedSelections = await retrieveItemSelections(persistenceKey, setupElements);
-            setItemsSelected(storedSelections);
-        };
-        loadStoredSelections();
-    }, []); // The empty array ensures this effect runs once on mount
+        // set an initial value
+        return Array(setupElements.length).fill(false) as boolean[];
+    })
 
-    // This effect triggers every time 'itemsSelected' changes, storing the new state
-    useEffect(() => {
-        storeItemSelection(persistenceKey, setupElements, itemsSelected);
-    }, [itemsSelected]); // Re-run this effect when 'itemsSelected' changes
-
-
+    const setAndStoreItemSelection = ((newItemsSelectedValue: boolean[]) => {
+        setItemsSelected(newItemsSelectedValue);
+        storeItemSelection(persistenceKey, setupElements, newItemsSelectedValue)
+    })
 
     return (
         <SafeAreaView style={{
@@ -72,15 +66,20 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
                 marginBottom: 32,
                 marginHorizontal: 27,
             }}>
-                <Pressable onPress = {() => navigation.navigate((`Onboarding${pageNumber - 1}`) as any, {
-                        prompt: setupPrompts[pageNumber],
-                        pageNumber: pageNumber - 1,
-                        persistenceKey: setupPersistenceKeys[pageNumber],
-                        setupElements: setupPageElements[pageNumber],
-                    })}>
-                <SvgXml xml={leftArrow} width={24} height={24} 
-                />
-                </Pressable>
+                {
+                    pageNumber == 0 ? (
+                        <View style={{width: 24, height: 24}} /> /* placeholder */
+                    ) : (
+                        <Pressable onPress = {() => navigation.navigate((`Onboarding${pageNumber}`) as any, {
+                            prompt: setupPrompts[pageNumber - 1],
+                            pageNumber: pageNumber - 1,
+                            persistenceKey: setupPersistenceKeys[pageNumber - 1],
+                            setupElements: setupPageElements[pageNumber - 1],
+                        })}>
+                            <SvgXml xml={leftArrow} width={24} height={24} />
+                        </Pressable>
+                    )
+                }
                 <View style={{
                     width: 181
                 }}>
@@ -105,17 +104,17 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
                     <ToggleGridButtons items={setupElements} itemsSelected={itemsSelected} setItemsSelected={(index: number, newValue: boolean) => {
                         const newItemsSelected = [...itemsSelected];
                         newItemsSelected[index] = newValue;
-                        setItemsSelected(newItemsSelected);
-                    }} />
+                        setAndStoreItemSelection(newItemsSelected);
+                    }} disabled = {false}/>
                 </View>
                 <View>
                     <Button  
                         title="Continue" 
-                        onPress={() => navigation.navigate((`Onboarding${pageNumber + 1}`) as any, {
-                            prompt: setupPrompts[pageNumber],
+                        onPress={() => navigation.navigate((`Onboarding${pageNumber + 2}`) as any, {
+                            prompt: setupPrompts[pageNumber + 1],
                             pageNumber: pageNumber + 1,
-                            persistenceKey: setupPersistenceKeys[pageNumber],
-                            setupElements: setupPageElements[pageNumber],
+                            persistenceKey: setupPersistenceKeys[pageNumber + 1],
+                            setupElements: setupPageElements[pageNumber + 1],
                         })}
                     />
                     <Button title="Not sure, let's find out" />

@@ -6,10 +6,10 @@ interface Props {
     items: string[];
     itemsSelected: boolean[];
     setItemsSelected: (index: number, newValue: boolean) => void;
-    disabled?: boolean
+    disabled: boolean
 }
 
-const ToggleGridButtons: React.FC<Props> = ({ items, itemsSelected, setItemsSelected,disabled }) => {
+const ToggleGridButtons: React.FC<Props> = ({ items, itemsSelected, setItemsSelected, disabled }) => {
     return (
         <View style={styles.container}>
             {items.map((item, index) => (
@@ -24,6 +24,7 @@ const ToggleGridButtons: React.FC<Props> = ({ items, itemsSelected, setItemsSele
                             (newValue: boolean) => {
                             disabled ? () => {} : setItemsSelected(index, newValue) 
                         }}
+                        enabled={!disabled}
                     />
                 </View>
             ))}

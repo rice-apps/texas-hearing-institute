@@ -32,3 +32,28 @@ export const retrieveItemSelections = async (storageKey: string, items: string[]
         return items.map(() => false);
     }
 }
+
+export const retrieveSelectedItems = async (storageKey: string, items: string[] | undefined = undefined): Promise<string[]> => {
+    try {
+        const itemSelectionJson = await AsyncStorage.getItem(storageKey);
+        let itemSelectionMap = new Map<string, boolean>();
+
+        if (itemSelectionJson !== null) {
+            const itemSelectionArray: [string, boolean][] = JSON.parse(itemSelectionJson);
+            itemSelectionMap = new Map(itemSelectionArray);
+        }
+
+        const keys = Object.keys(itemSelectionMap);
+
+        if (items == undefined) {
+            return keys
+        }
+
+        return keys.filter((item) => {
+            return items.includes(item);
+        })
+    } catch (e) {
+        console.log(e);
+        return []
+    }
+}
