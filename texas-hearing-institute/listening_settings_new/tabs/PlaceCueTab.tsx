@@ -9,7 +9,7 @@ export default function PlaceCueTab() {
     const phonemes = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
 
     async function fetchPhonemesSelectedFromStorage() {
-        let selectedJson = await AsyncStorage.getItem('listeningSettings.phonemesSelected');
+        const selectedJson = await AsyncStorage.getItem('listeningSettings.phonemesSelected');
         if (selectedJson != null) {
             return JSON.parse(selectedJson);
         } else {
@@ -30,6 +30,8 @@ export default function PlaceCueTab() {
         _setPhonemesSelected(selected)
     }
 
+    // Bypassing this warning for now, as this variable will be used in the future.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let numberOfSyllables = 2;
 
     return (
