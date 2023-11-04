@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import ToggleableButton from './ToggleableButton';
 
-const GridButton: React.FC = () => {
+const GridButton = () => {
 	const [buttonData, setButtonData] = useState<{ [key: string]: boolean }>({});
 
 	const handleButtonToggle = (label: string, isToggled: boolean) => {

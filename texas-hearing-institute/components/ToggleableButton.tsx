@@ -7,15 +7,12 @@ import {
 	StyleSheet,
 } from 'react-native';
 
-interface ToggleableButtonProps {
+type ToggleableButtonProps = {
 	label: string;
 	onToggle: (label: string, isToggled: boolean) => void;
-}
+};
 
-const ToggleableButton: React.FC<ToggleableButtonProps> = ({
-	label,
-	onToggle,
-}) => {
+const ToggleableButton = ({ label, onToggle }: ToggleableButtonProps) => {
 	const [isToggled, setIsToggled] = useState(false);
 
 	const handleToggle = () => {

@@ -4,11 +4,11 @@ import tw from 'tailwind-react-native-classnames';
 import SelectionButton from './SelectionButton';
 import { useState } from 'react';
 
-interface SubheaderProps {
+type SelectionProps = {
 	buttonNames: string[];
-}
+};
 
-const Selection: React.FC<SubheaderProps> = ({ buttonNames }) => {
+const Selection = ({ buttonNames }: SelectionProps) => {
 	const [mode, setMode] = useState(-1);
 
 	const selectionButtons = buttonNames.map((buttonName, i) => (

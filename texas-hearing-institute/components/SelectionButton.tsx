@@ -1,31 +1,30 @@
 import { View, Button, Text, Pressable, Image, StyleSheet } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
-interface SelectionButtonProps {
+type SelectionButtonProps = {
 	label: string;
 	onPress: () => void;
 	color?: string;
 	textColor?: string;
 	checkedState: number;
 	id: number;
-}
+};
 
 const styles = StyleSheet.create({
 	image: {
 		width: 30,
 		height: 30,
-		// margin: 20,
 		marginRight: 20,
 		resizeMode: 'stretch',
 	},
 });
 
-const SelectionButton: React.FC<SelectionButtonProps> = ({
+const SelectionButton = ({
 	label,
 	onPress,
 	checkedState,
 	id,
-}) => {
+}: SelectionButtonProps) => {
 	if (checkedState == id) {
 		return (
 			<Pressable

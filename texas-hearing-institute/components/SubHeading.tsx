@@ -1,11 +1,11 @@
 import { Text } from 'react-native-elements';
 import tw from 'tailwind-react-native-classnames';
 
-interface SubheaderProps {
+type SubheadingProps = {
 	title: string;
-}
+};
 
-const Subheading: React.FC<SubheaderProps> = ({ title }) => {
+const Subheading = ({ title }: SubheadingProps) => {
 	return <Text style={tw`text-lg font-normal pb-5 px-4`}>{title}</Text>;
 };
 
