@@ -7,7 +7,7 @@ interface Props {
     syllableCountChanged: (syllables: number) => void,
 }
 
-const SyllableCounterDropdown: React.FC<Props> = ({ syllableCountChanged }) => {
+export default function SyllableCounterDropdown({syllableCountChanged}: Props) {
     // Abuse useState to only run the following code the first time this page loads.
     // This function loads syllableCount from storage.
     useState(() => {
@@ -21,7 +21,7 @@ const SyllableCounterDropdown: React.FC<Props> = ({ syllableCountChanged }) => {
         })
         return 1
     });
-    
+
     const [selectedIndex, setSelectedIndex] = useState<IndexPath>(new IndexPath(0));
 
     return (
@@ -53,8 +53,6 @@ const SyllableCounterDropdown: React.FC<Props> = ({ syllableCountChanged }) => {
         return syllables - 2;
     }
 }
-
-export default SyllableCounterDropdown
 
 const styles = StyleSheet.create({
     row: {
