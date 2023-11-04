@@ -1,9 +1,14 @@
 import { View, Text } from 'react-native';
+import TitleText from '../components/TitleText';
+import SubTitleText from '../components/SubTitleText';
+import ScreenView from '../components/ScreenView';
 
 export default function MannerScreen() {
     return (
-        <View>
-            <Text>Manner</Text>
-        </View>
+        <ScreenView>
+            <TitleText>Manner</TitleText>
+            <SubTitleText>Practice something with manner here</SubTitleText>
+            {/*Implement the rest of manner screen*/}
+        </ScreenView>
     )
 }
