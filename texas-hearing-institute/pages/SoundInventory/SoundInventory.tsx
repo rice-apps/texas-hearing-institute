@@ -1,5 +1,6 @@
+import React from 'react';
 import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
-import ToggleGridButtons from '../../utilComponents/ToggleGridButtonsComponent/ToggleGridButtons';
+import ToggleGridButtons from '../../components/ToggleGridButtonsComponent/ToggleGridButtons';
 import styles from '../Onboarding/OnboardingStyle';
 import { SvgXml } from 'react-native-svg';
 import pencil from '../../icons/pencil';
@@ -8,13 +9,13 @@ import {
 	vowels,
 	consonantInventoryPersistenceKey,
 	vowelInventoryPersistenceKey,
-} from '../../util/soundInventoryDataAndKeys';
+} from '../../utils/soundInventoryDataAndKeys';
 import { useState } from 'react';
 import {
 	retrieveItemSelections,
 	storeItemSelection,
-} from '../../util/persistSelection';
-import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
+} from '../../utils/persistSelection';
+import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 
 export const SoundInventory = () => {
 	// hashmap/dictionary to keep track of all consonants and their toggled state, update via useState to rerender componetns

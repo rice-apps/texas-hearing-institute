@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { View, Button, Pressable, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Button, Pressable } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
-import ProgressBar from '../../utilComponents/ProgressBar/ProgressBar';
-import MarkdownText from '../../utilComponents/MarkdownText/MarkdownText';
-import ToggleGridButtons from '../../utilComponents/ToggleGridButtonsComponent/ToggleGridButtons';
+import ProgressBar from '../../components/ProgressBar/ProgressBar';
+import MarkdownText from '../../components/MarkdownText/MarkdownText';
+import ToggleGridButtons from '../../components/ToggleGridButtonsComponent/ToggleGridButtons';
 import {
 	storeItemSelection,
 	retrieveItemSelections,
-} from '../../util/persistSelection';
+} from '../../utils/persistSelection';
 import {
 	setupPrompts,
 	setupPersistenceKeys,
 	setupPageElements,
-} from '../../util/soundInventoryDataAndKeys';
-import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
+} from '../../utils/soundInventoryDataAndKeys';
+import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 
 // commented out typing, teporarily said to be 'any' in parameters
 

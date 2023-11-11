@@ -1,6 +1,6 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ToggleButton from './ToggleButton';
-import { useState } from 'react';
+import React from 'react';
 
 interface Props {
 	items: string[];

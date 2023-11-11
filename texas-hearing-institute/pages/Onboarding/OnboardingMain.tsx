@@ -1,4 +1,5 @@
 // test with the Stack Navigator for React-Native
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SoundInventory } from '../SoundInventory/SoundInventory';
@@ -7,7 +8,7 @@ import {
 	setupPrompts,
 	setupPersistenceKeys,
 	setupPageElements,
-} from '../../util/soundInventoryDataAndKeys';
+} from '../../utils/soundInventoryDataAndKeys';
 
 export type OnboardingStackParamList = {
 	Onboarding1: {
