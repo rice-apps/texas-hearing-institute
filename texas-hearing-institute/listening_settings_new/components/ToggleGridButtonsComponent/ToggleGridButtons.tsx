@@ -20,10 +20,12 @@ export default function ToggleGridButtons({items, itemsSelected, setItemsSelecte
                         title={item}
                         isToggled={itemsSelected[index]}
                         onToggle={
-                            (newValue: boolean) => {
-                                disabled ? () => {
-                                } : setItemsSelected(index, newValue)
-                            }}
+                            (newValue: boolean) =>
+                                disabled ?
+                                    () => {
+                                        // Do nothing if disabled
+                                    }
+                                    : setItemsSelected(index, newValue)}
                     />
                 </View>
             ))}
