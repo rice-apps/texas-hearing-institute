@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { View,Button,Pressable, Text} from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, Button, Pressable, Text } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../utilComponents/ProgressBar/ProgressBar';
 import MarkdownText from '../../utilComponents/MarkdownText/MarkdownText';
 import ToggleGridButtons from '../../utilComponents/ToggleGridButtonsComponent/ToggleGridButtons';
-import {storeItemSelection, retrieveItemSelections} from '../../util/persistSelection'
-import { setupPrompts, setupPersistenceKeys, setupPageElements } from '../../util/soundInventoryDataAndKeys'
+import {
+	storeItemSelection,
+	retrieveItemSelections,
+} from '../../util/persistSelection';
+import {
+	setupPrompts,
+	setupPersistenceKeys,
+	setupPageElements,
+} from '../../util/soundInventoryDataAndKeys';
 import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
-
 
 // commented out typing, teporarily said to be 'any' in parameters
 
@@ -34,97 +40,117 @@ import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSa
 //     persistenceKey: string;
 //     setupElements: string[];
 // };
-  
 
-const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigation }) => {
-    const prompt: string = route.params.prompt;
-    const pageNumber: number = route.params.pageNumber;
-    const persistenceKey: string = route.params.persistenceKey;
-    const setupElements: string[] = route.params.setupElements;
+const Onboarding: React.FC<{ route: any; navigation: any }> = ({
+	route,
+	navigation,
+}) => {
+	const prompt: string = route.params.prompt;
+	const pageNumber: number = route.params.pageNumber;
+	const persistenceKey: string = route.params.persistenceKey;
+	const setupElements: string[] = route.params.setupElements;
 
+	const [itemsSelected, setItemsSelected] = useState(() => {
+		// Start load from storage and set state once load completes
+		retrieveItemSelections(persistenceKey, setupElements).then((result) => {
+			setItemsSelected(result);
+		});
 
-    const [itemsSelected, setItemsSelected] = useState(() => {
-        // Start load from storage and set state once load completes
-        retrieveItemSelections(persistenceKey, setupElements).then((result) => {
-            setItemsSelected(result);
-        })
+		// set an initial value
+		return Array(setupElements.length).fill(false) as boolean[];
+	});
 
-        // set an initial value
-        return Array(setupElements.length).fill(false) as boolean[];
-    })
+	const setAndStoreItemSelection = (newItemsSelectedValue: boolean[]) => {
+		setItemsSelected(newItemsSelectedValue);
+		storeItemSelection(persistenceKey, setupElements, newItemsSelectedValue);
+	};
 
-    const setAndStoreItemSelection = ((newItemsSelectedValue: boolean[]) => {
-        setItemsSelected(newItemsSelectedValue);
-        storeItemSelection(persistenceKey, setupElements, newItemsSelectedValue)
-    })
+	return (
+		<CustomSafeAreaView>
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					height: 40,
+					marginTop: 32,
+					marginBottom: 32,
+					marginHorizontal: 27,
+				}}
+			>
+				{pageNumber == 0 ? (
+					<View style={{ width: 24, height: 24 }} /> /* placeholder */
+				) : (
+					<Pressable
+						onPress={() =>
+							navigation.navigate(`Onboarding${pageNumber}` as any, {
+								prompt: setupPrompts[pageNumber - 1],
+								pageNumber: pageNumber - 1,
+								persistenceKey: setupPersistenceKeys[pageNumber - 1],
+								setupElements: setupPageElements[pageNumber - 1],
+							})
+						}
+					>
+						<SvgXml xml={leftArrow} width={24} height={24} />
+					</Pressable>
+				)}
+				<View
+					style={{
+						width: 181,
+					}}
+				>
+					<ProgressBar progress={0} height={8} />
+				</View>
+				<View
+					style={{
+						width: 24,
+					}}
+				/>
+			</View>
 
-    return (
-        <CustomSafeAreaView>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                height: 40,
-                marginTop: 32,
-                marginBottom: 32,
-                marginHorizontal: 27,
-            }}>
-                {
-                    pageNumber == 0 ? (
-                        <View style={{width: 24, height: 24}} /> /* placeholder */
-                    ) : (
-                        <Pressable onPress = {() => navigation.navigate((`Onboarding${pageNumber}`) as any, {
-                            prompt: setupPrompts[pageNumber - 1],
-                            pageNumber: pageNumber - 1,
-                            persistenceKey: setupPersistenceKeys[pageNumber - 1],
-                            setupElements: setupPageElements[pageNumber - 1],
-                        })}>
-                            <SvgXml xml={leftArrow} width={24} height={24} />
-                        </Pressable>
-                    )
-                }
-                <View style={{
-                    width: 181
-                }}>
-                    <ProgressBar progress={0} height={8} />
-                </View>
-                <View style={{
-                    width: 24,
-                }} />
-            </View>
-
-            <View style={{
-                marginHorizontal: 32,
-                justifyContent: 'space-between',
-                flexGrow: 1,
-            }}>
-                <View style={{
-                    flexGrow: 1,
-                }}>
-                    <View style={{marginBottom: 32}}>
-                        <MarkdownText content={prompt} fontSize={24} />
-                    </View>
-                    <ToggleGridButtons items={setupElements} itemsSelected={itemsSelected} setItemsSelected={(index: number, newValue: boolean) => {
-                        const newItemsSelected = [...itemsSelected];
-                        newItemsSelected[index] = newValue;
-                        setAndStoreItemSelection(newItemsSelected);
-                    }} disabled = {false}/>
-                </View>
-                <View>
-                    <Button  
-                        title="Continue" 
-                        onPress={() => navigation.navigate((`Onboarding${pageNumber + 2}`) as any, {
-                            prompt: setupPrompts[pageNumber + 1],
-                            pageNumber: pageNumber + 1,
-                            persistenceKey: setupPersistenceKeys[pageNumber + 1],
-                            setupElements: setupPageElements[pageNumber + 1],
-                        })}
-                    />
-                    <Button title="Not sure, let's find out" />
-                </View>
-            </View>
-        </CustomSafeAreaView>
-    )
-}
+			<View
+				style={{
+					marginHorizontal: 32,
+					justifyContent: 'space-between',
+					flexGrow: 1,
+				}}
+			>
+				<View
+					style={{
+						flexGrow: 1,
+					}}
+				>
+					<View style={{ marginBottom: 32 }}>
+						<MarkdownText content={prompt} fontSize={24} />
+					</View>
+					<ToggleGridButtons
+						items={setupElements}
+						itemsSelected={itemsSelected}
+						setItemsSelected={(index: number, newValue: boolean) => {
+							const newItemsSelected = [...itemsSelected];
+							newItemsSelected[index] = newValue;
+							setAndStoreItemSelection(newItemsSelected);
+						}}
+						disabled={false}
+					/>
+				</View>
+				<View>
+					<Button
+						title="Continue"
+						onPress={() =>
+							navigation.navigate(`Onboarding${pageNumber + 2}` as any, {
+								prompt: setupPrompts[pageNumber + 1],
+								pageNumber: pageNumber + 1,
+								persistenceKey: setupPersistenceKeys[pageNumber + 1],
+								setupElements: setupPageElements[pageNumber + 1],
+							})
+						}
+					/>
+					<Button title="Not sure, let's find out" />
+				</View>
+			</View>
+		</CustomSafeAreaView>
+	);
+};
 
 export default Onboarding;
