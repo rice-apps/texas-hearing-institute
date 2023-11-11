@@ -11,11 +11,13 @@ const ProgressBar: React.FC<Props> = ({ progress, height }) => {
         <View style={[styles.backBar, {
             height: height,
             borderRadius: height / 2,
-            width: '100%'
+            width: '100%',
+            backgroundColor:'#D9D9D9'
         }]}>
             <View style={[styles.frontBar, {
                 width: `${progress}%`,
                 borderRadius: height / 2,
+                backgroundColor:'#AFE4F9'
             }]} />
         </View>
     );

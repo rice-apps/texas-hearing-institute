@@ -12,6 +12,8 @@ import {
 import {useState} from 'react'
 import { retrieveItemSelections,storeItemSelection } from '../../util/persistSelection';
 import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
+import PrimaryActionButton from '../../uiComponents/PrimaryActionButton/PrimaryActionButton';
+import SecondaryActionButton from '../../uiComponents/SecondaryActionButton/SecondaryActionButton';
 
 export const SoundInventory = () => {
     // hashmap/dictionary to keep track of all consonants and their toggled state, update via useState to rerender componetns
@@ -103,7 +105,9 @@ export const SoundInventory = () => {
                     Sound Inventory
                 </Text>
                 <Pressable style={{
-                    backgroundColor: "#D3D3D3",
+                    backgroundColor: "transparent",
+                    borderColor:'#D3D3D3',
+                    borderWidth:2,
                     padding: 10,
                     borderRadius: 10,
                     flexDirection: 'row',
@@ -139,13 +143,17 @@ export const SoundInventory = () => {
             </ScrollView>
 
 
-            <View style={{borderTopColor:'black',borderTopWidth: 1, shadowColor:"black", display: editModeEnabled ? 'flex' : 'none', justifyContent:'center',alignItems:'center', flexDirection: 'column'}}>
-                <Pressable style={{marginTop: 25,backgroundColor: '#d3d3d3',padding: 18, width: 300,borderRadius:15}} onPress={() => setEditModeEnabled(!editModeEnabled, false)}>
-                    <Text style={{textAlign:'center',fontSize:18,fontWeight:'bold'}}>Discard Changes</Text>
-                </Pressable>
-                <Pressable style={{marginTop: 25,backgroundColor: '#d3d3d3',padding: 18, width: 300,borderRadius:15}} onPress={() => setEditModeEnabled(!editModeEnabled, true)}>
-                    <Text style={{textAlign:'center',fontSize:18,fontWeight:'bold'}}>Save Changes</Text>
-                </Pressable>
+            <View style={{display: editModeEnabled ? 'flex' : 'none', justifyContent:'center',alignItems:'center', flexDirection: 'column',gap:10}}>
+                <PrimaryActionButton
+                    text="Save Changes"
+                    onPress={() => setEditModeEnabled(!editModeEnabled, true)}
+                    disabled={false}
+                />
+                <SecondaryActionButton
+                    text="Discard Changes"
+                    onPress ={() => setEditModeEnabled(!editModeEnabled, false)}
+                    disabled={false}
+                />
             </View>
         </CustomSafeAreaView>
     )

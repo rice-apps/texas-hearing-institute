@@ -9,6 +9,7 @@ import {storeItemSelection, retrieveItemSelections} from '../../util/persistSele
 import { setupPrompts, setupPersistenceKeys, setupPageElements } from '../../util/soundInventoryDataAndKeys'
 import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
 import PrimaryActionButton from '../../uiComponents/PrimaryActionButton/PrimaryActionButton'
+import SecondaryActionButton from '../../uiComponents/SecondaryActionButton/SecondaryActionButton';
 
 
 // commented out typing, teporarily said to be 'any' in parameters
@@ -87,11 +88,12 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
                 <View style={{
                     width: 181
                 }}>
-                    <ProgressBar progress={0} height={8} />
+                    <ProgressBar progress={50+pageNumber*25} height={12} />
                 </View>
-                <View style={{
+                {/* <View style={{
                     width: 24,
-                }} />
+                }} /> */}
+                <Text>Skip</Text>
             </View>
 
             <View style={{
@@ -122,16 +124,6 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
                         setupElements: setupPageElements[pageNumber + 1],
                     })}
                     />
-                    <Button  
-                        title="Continue" 
-                        onPress={() => navigation.navigate((`Onboarding${pageNumber + 2}`) as any, {
-                            prompt: setupPrompts[pageNumber + 1],
-                            pageNumber: pageNumber + 1,
-                            persistenceKey: setupPersistenceKeys[pageNumber + 1],
-                            setupElements: setupPageElements[pageNumber + 1],
-                        })}
-                    />
-                    <Button title="Not sure, let's find out" />
                 </View>
             </View>
         </CustomSafeAreaView>

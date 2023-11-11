@@ -11,8 +11,8 @@ export default StyleSheet.create({
         borderWidth: 1,
     },
     buttonActive: {
-        backgroundColor: 'blue',
-        borderColor: 'white',
+        backgroundColor: '#AFE4F9',
+        borderColor: '#D9D9D9',
     },
     buttonInactive: {
         backgroundColor: '#F5F5F5',
@@ -23,7 +23,7 @@ export default StyleSheet.create({
         fontSize: 20, 
     },
     buttonTextActive: {
-        color: 'white',
+        color: 'black',
     },
     buttonTextInactive: {
         color: 'black',

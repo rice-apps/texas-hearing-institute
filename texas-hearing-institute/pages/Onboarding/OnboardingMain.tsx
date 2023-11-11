@@ -15,7 +15,7 @@ export default function OnboardingMain() {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Onboarding1"
+          initialRouteName="SoundInventory"
           screenOptions={{
             headerShown: false // This hides the header for all screens
           }}

@@ -1,20 +1,22 @@
 import {TouchableOpacity, Text} from 'react-native'
 import React from 'react';
 
-interface PrimaryActionButtonType {
+interface SecondaryActionButtonType {
     text:String,
     disabled:boolean,
     onPress: () => void
 };
 
-const PrimaryActionButton:React.FC<PrimaryActionButtonType> = ({text,disabled,onPress}) => {
+const SecondaryActionButton:React.FC<SecondaryActionButtonType> = ({text,disabled,onPress}) => {
 
     return(
         <TouchableOpacity 
         style={{
-            backgroundColor:'#AFE4F9',
+            backgroundColor:'transparent',
             borderRadius:'50%',
             padding: 16,
+            borderColor:'#AFE4F9',
+            borderWidth:2,
             width:'80%'
         }}
         onPress={onPress}
@@ -31,4 +33,5 @@ const PrimaryActionButton:React.FC<PrimaryActionButtonType> = ({text,disabled,on
     );
 };
 
-export default PrimaryActionButton;
+export default SecondaryActionButton;
+
