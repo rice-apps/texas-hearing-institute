@@ -1,6 +1,4 @@
-// //APP STUFF===============================================================================================================
-
-
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import Constants from 'expo-constants';
