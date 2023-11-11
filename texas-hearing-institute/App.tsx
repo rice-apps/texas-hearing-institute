@@ -1,12 +1,27 @@
 // //APP STUFF===============================================================================================================
+
+
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Pressable, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import Constants from 'expo-constants';
+//import { Button } from 'react-native-elements';
 import tw from 'tailwind-react-native-classnames';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import * as Speech from 'expo-speech';
+import PracticeCard from './components/PracticeCard';
+
+// import ProgressBar from "../Progress";
+/*
+TODO: custom audio button
+link to consonants page
+text-to-speech
+track correct/incorrect answers
+*/
 
 
-// LOOK AT -TTS
+
 export default function App() {
   return (
     <View style={[styles.container, 
