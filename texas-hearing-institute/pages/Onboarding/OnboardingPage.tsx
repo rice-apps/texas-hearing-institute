@@ -8,6 +8,7 @@ import ToggleGridButtons from '../../utilComponents/ToggleGridButtonsComponent/T
 import {storeItemSelection, retrieveItemSelections} from '../../util/persistSelection'
 import { setupPrompts, setupPersistenceKeys, setupPageElements } from '../../util/soundInventoryDataAndKeys'
 import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
+import PrimaryActionButton from '../../uiComponents/PrimaryActionButton/PrimaryActionButton'
 
 
 // commented out typing, teporarily said to be 'any' in parameters
@@ -111,6 +112,16 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
                     }} disabled = {false}/>
                 </View>
                 <View>
+                    <PrimaryActionButton
+                    text="Continue"
+                    disabled={false}
+                    onPress={() => navigation.navigate((`Onboarding${pageNumber + 2}`) as any, {
+                        prompt: setupPrompts[pageNumber + 1],
+                        pageNumber: pageNumber + 1,
+                        persistenceKey: setupPersistenceKeys[pageNumber + 1],
+                        setupElements: setupPageElements[pageNumber + 1],
+                    })}
+                    />
                     <Button  
                         title="Continue" 
                         onPress={() => navigation.navigate((`Onboarding${pageNumber + 2}`) as any, {
