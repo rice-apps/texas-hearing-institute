@@ -1,49 +1,33 @@
-import {View,Text,SafeAreaView, Pressable,ScrollView, StyleSheet} from 'react-native'
+import {View,Text, Pressable,ScrollView, StyleSheet} from 'react-native'
 import ToggleGridButtons from '../../utilComponents/ToggleGridButtonsComponent/ToggleGridButtons'
 import styles from '../Onboarding/OnboardingStyle'
 import { SvgXml } from 'react-native-svg';
 import pencil from '../../icons/pencil';
 import {
-    consonantCanHearPersistenceKey,
     consonants,
-    setupPageElements,
-    setupPersistenceKeys, vowelCanHearPersistenceKey, vowels
+    vowels,
+    consonantInventoryPersistenceKey,
+    vowelInventoryPersistenceKey
 } from '../../util/soundInventoryDataAndKeys'
-import {useEffect,useState} from 'react'
+import {useState} from 'react'
 import { retrieveItemSelections,storeItemSelection } from '../../util/persistSelection';
-import { consonantCanSayPersistenceKey, vowelCanSayPersistenceKey } from '../../util/soundInventoryDataAndKeys'
+import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
 
 export const SoundInventory = () => {
     // hashmap/dictionary to keep track of all consonants and their toggled state, update via useState to rerender componetns
     const [editModeEnabled, privateSetEditModeEnabled] = useState(false)
 
-    const [canSayConsonants, setCanSayConsonants] = useState(() => {
-        retrieveItemSelections(consonantCanSayPersistenceKey, consonants).then((result) => {
-            setCanSayConsonants(result);
+    const [inventoryConsonants, setInventoryConsonants] = useState(() => {
+        retrieveItemSelections(consonantInventoryPersistenceKey, consonants).then((result) => {
+            setInventoryConsonants(result);
         })
 
         return [] as boolean[]
     })
 
-    const [canSayVowels, setCanSayVowels] = useState(() => {
-        retrieveItemSelections(vowelCanSayPersistenceKey, vowels).then((result) => {
-            setCanSayVowels(result);
-        })
-
-        return [] as boolean[]
-    })
-
-    const [canHearConsonants, setCanHearConsonants] = useState(() => {
-        retrieveItemSelections(consonantCanHearPersistenceKey, consonants).then((result) => {
-            setCanHearConsonants(result);
-        })
-
-        return [] as boolean[]
-    })
-
-    const [canHearVowels, setCanHearVowels] = useState(() => {
-        retrieveItemSelections(vowelCanHearPersistenceKey, vowels).then((result) => {
-            setCanHearVowels(result);
+    const [inventoryVowels, setInventoryVowels] = useState(() => {
+        retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then((result) => {
+            setInventoryVowels(result);
         })
 
         return [] as boolean[]
@@ -51,41 +35,31 @@ export const SoundInventory = () => {
 
     const [draftInventoryConsonants, setDraftInventoryConsonants] = useState([] as boolean[])
     const [draftInventoryVowels, setDraftInventoryVowels] = useState([] as boolean[])
-    const [draftCanHearConsonants, setDraftCanHearConsonants] = useState([] as boolean[])
-    const [draftCanHearVowels, setDraftCanHearVowels] = useState([] as boolean[])
 
     const setAndStoreSelections = ((
-        newCanSayConsonants: boolean[],
-        newCanSayVowels: boolean[],
-        newCanHearConsonants: boolean[],
-        newCanHearVowels: boolean[],
+        newInventoryConsonants: boolean[],
+        newInventoryVowels: boolean[],
         saveToDraft: boolean
     ) => {
         // `saveToDraft` is used for edit mode to be able to revert changes
         if (saveToDraft) {
-            setCanSayConsonants(newCanSayConsonants);
-            setCanSayVowels(newCanSayVowels);
-            setCanHearConsonants(newCanHearConsonants);
-            setCanHearVowels(newCanHearVowels);
-
-            storeItemSelection(consonantCanSayPersistenceKey, consonants, newCanSayConsonants);
-            storeItemSelection(vowelCanSayPersistenceKey, vowels, newCanSayVowels);
-            storeItemSelection(consonantCanHearPersistenceKey, consonants, newCanHearConsonants);
-            storeItemSelection(vowelCanHearPersistenceKey, vowels, newCanHearVowels);
+            setDraftInventoryConsonants(newInventoryConsonants);
+            setDraftInventoryVowels(newInventoryVowels);
         } else {
-            setDraftInventoryConsonants(newCanSayConsonants);
-            setDraftInventoryVowels(newCanSayVowels);
-            setDraftCanHearConsonants(newCanHearConsonants);
-            setDraftCanHearVowels(newCanHearVowels);
+            setInventoryConsonants(newInventoryConsonants);
+            setInventoryVowels(newInventoryVowels);
+
+            storeItemSelection(consonantInventoryPersistenceKey, consonants, newInventoryConsonants);
+            storeItemSelection(vowelInventoryPersistenceKey, vowels, newInventoryVowels);
         }
     })
 
     const setDraftToNonDraft = () => {
-        setAndStoreSelections(canSayConsonants, canSayVowels, canHearConsonants, canHearVowels, true);
+        setAndStoreSelections(inventoryConsonants, inventoryVowels, true);
     }
 
     const setNonDraftToDraft = () => {
-        setAndStoreSelections(draftInventoryConsonants, draftInventoryVowels, draftCanHearConsonants, draftCanHearVowels, false);
+        setAndStoreSelections(draftInventoryConsonants, draftInventoryVowels, false);
     }
 
     const setEditModeEnabled = (newValue: boolean, commitChanges: boolean) => {
@@ -101,14 +75,26 @@ export const SoundInventory = () => {
             }
         }
         privateSetEditModeEnabled(newValue)
-    }
+    };
 
+    const getCorrespondingInventoryConsonants = () => {
+        if (editModeEnabled) {
+            return draftInventoryConsonants;
+        } else {
+            return inventoryConsonants;
+        }
+    };
+
+    const getCorrespondingInventoryVowels = () => {
+        if (editModeEnabled) {
+            return draftInventoryVowels;
+        } else {
+            return inventoryVowels;
+        }
+    };
 
     return (
-        <SafeAreaView style={{
-            height: '100%',
-        }}>
-            <ScrollView>
+        <CustomSafeAreaView>
             <View style={styles.onboardingHeaderView}>
                 <Text style={{
                     fontSize: 28,
@@ -132,46 +118,24 @@ export const SoundInventory = () => {
                     <Text style={{fontSize: 16,}}>Edit</Text>
                 </Pressable>
             </View>
+            <ScrollView>
+                <View style={styles.onboardingViewMargins}>
+                    <Text style={pagestyles.subheading}>Consonants</Text>
 
-            <View style={styles.onboardingViewMargins}>
-                <Text style={pagestyles.heading} >Speech Babble</Text>
+                    <ToggleGridButtons disabled={!editModeEnabled} items={consonants} itemsSelected={getCorrespondingInventoryConsonants()} setItemsSelected={(index: number, newValue: boolean) => {
+                            const newItemsSelected = [...getCorrespondingInventoryConsonants()];
+                            newItemsSelected[index] = newValue;
+                            setAndStoreSelections(newItemsSelected, inventoryVowels, editModeEnabled);
+                        }} />
 
-                <Text style={pagestyles.subheading}>Consonants</Text>
+                    <Text style={pagestyles.subheading}>Vowels</Text>
 
-                <ToggleGridButtons disabled={!editModeEnabled} items={consonants} itemsSelected={canSayConsonants} setItemsSelected={(index: number, newValue: boolean) => {
-                        const newItemsSelected = [...canSayConsonants];
+                    <ToggleGridButtons disabled={!editModeEnabled} items={vowels} itemsSelected={getCorrespondingInventoryVowels()} setItemsSelected={(index: number, newValue: boolean) => {
+                        const newItemsSelected = [...getCorrespondingInventoryVowels()];
                         newItemsSelected[index] = newValue;
-                        setAndStoreSelections(newItemsSelected, canSayVowels, canHearConsonants, canHearVowels, editModeEnabled);
+                        setAndStoreSelections(inventoryConsonants, newItemsSelected, editModeEnabled);
                     }} />
-
-                <Text style={pagestyles.subheading}>Vowels</Text>
-
-                <ToggleGridButtons disabled={!editModeEnabled} items={setupPageElements[2]} itemsSelected={canSayVowels} setItemsSelected={(index: number, newValue: boolean) => {
-                    const newItemsSelected = [...canSayVowels];
-                    newItemsSelected[index] = newValue;
-                    setAndStoreSelections(canSayConsonants, newItemsSelected, canHearConsonants, canHearVowels, editModeEnabled);
-                }} />
-            </View>
-
-            <View style={styles.onboardingViewMargins}>
-                <Text style={pagestyles.heading}>Listening Babble</Text>
-
-                <Text style={pagestyles.subheading}>Consonants</Text>
-
-                <ToggleGridButtons disabled={!editModeEnabled} items={setupPageElements[0]} itemsSelected={canHearConsonants} setItemsSelected={(index: number, newValue: boolean) => {
-                    const newItemsSelected = [...canHearConsonants];
-                    newItemsSelected[index] = newValue;
-                    setAndStoreSelections(canSayConsonants, canSayVowels, newItemsSelected, canHearVowels, editModeEnabled);
-                }} />
-
-                <Text style={pagestyles.subheading}>Vowels</Text>
-
-                <ToggleGridButtons disabled={!editModeEnabled} items={setupPageElements[2]} itemsSelected={canHearVowels} setItemsSelected={(index: number, newValue: boolean) => {
-                    const newItemsSelected = [...canHearVowels];
-                    newItemsSelected[index] = newValue;
-                    setAndStoreSelections(canSayConsonants, canSayVowels, canHearConsonants, newItemsSelected, editModeEnabled);
-                }} />
-            </View>
+                </View>
             </ScrollView>
 
 
@@ -183,7 +147,7 @@ export const SoundInventory = () => {
                     <Text style={{textAlign:'center',fontSize:18,fontWeight:'bold'}}>Save Changes</Text>
                 </Pressable>
             </View>
-        </SafeAreaView>
+        </CustomSafeAreaView>
     )
 }
 

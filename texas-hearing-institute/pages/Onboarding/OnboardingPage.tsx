@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View,Button, SafeAreaView,Pressable, Text} from 'react-native'
+import { View,Button,Pressable, Text} from 'react-native'
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../utilComponents/ProgressBar/ProgressBar';
@@ -7,8 +7,8 @@ import MarkdownText from '../../utilComponents/MarkdownText/MarkdownText';
 import ToggleGridButtons from '../../utilComponents/ToggleGridButtonsComponent/ToggleGridButtons';
 import {storeItemSelection, retrieveItemSelections} from '../../util/persistSelection'
 import { setupPrompts, setupPersistenceKeys, setupPageElements } from '../../util/soundInventoryDataAndKeys'
+import CustomSafeAreaView from '../../utilComponents/CustomSafeAreaView/CustomSafeAreaView';
 
-import {    SafeAreaProvider,useSafeAreaInsets,} from 'react-native-safe-area-context';
 
 // commented out typing, teporarily said to be 'any' in parameters
 
@@ -42,7 +42,6 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
     const persistenceKey: string = route.params.persistenceKey;
     const setupElements: string[] = route.params.setupElements;
 
-    const insets = useSafeAreaInsets()
 
     const [itemsSelected, setItemsSelected] = useState(() => {
         // Start load from storage and set state once load completes
@@ -60,16 +59,7 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
     })
 
     return (
-        // <SafeAreaView style={{
-        //     height: '100%',
-        // }}>
-        <View
-        style={{
-            paddingTop: insets.top,
-            paddingBottom: insets.bottom,
-            paddingLeft: insets.left,
-            paddingRight: insets.right,
-        }}>
+        <CustomSafeAreaView>
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -133,8 +123,7 @@ const Onboarding: React.FC< {route: any, navigation: any} > = ({ route, navigati
                     <Button title="Not sure, let's find out" />
                 </View>
             </View>
-        {/* </SafeAreaView> */}
-        </View>
+        </CustomSafeAreaView>
     )
 }
 

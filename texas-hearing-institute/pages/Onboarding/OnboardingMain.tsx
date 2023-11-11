@@ -8,8 +8,6 @@ import { setupPrompts, setupPersistenceKeys, setupPageElements } from '../../uti
 export type OnboardingStackParamList = {
   Onboarding1: {prompt: string, pageNumber: number, persistenceKey: string, setupElements: string[]};
   Onboarding2: {prompt: string, pageNumber: number, persistenceKey: string, setupElements: string[]};
-  Onboarding3: {prompt: string, pageNumber: number, persistenceKey: string, setupElements: string[]};
-  Onboarding4: {prompt: string, pageNumber: number, persistenceKey: string, setupElements: string[]};
 };
 
 export default function OnboardingMain() {
@@ -17,7 +15,7 @@ export default function OnboardingMain() {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Onboarding1"
+          initialRouteName="SoundInventory"
           screenOptions={{
             headerShown: false // This hides the header for all screens
           }}
@@ -33,8 +31,6 @@ export default function OnboardingMain() {
           }}
           />
           <Stack.Screen name="Onboarding2" component={Onboarding as any}/>
-          <Stack.Screen name="Onboarding3" component={Onboarding as any}/>
-          <Stack.Screen name="Onboarding4" component={Onboarding as any}/>
 
         </Stack.Navigator>
       </NavigationContainer>
