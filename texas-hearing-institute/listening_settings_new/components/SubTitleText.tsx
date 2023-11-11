@@ -1,4 +1,5 @@
 import { Text, StyleSheet } from 'react-native';
+import ColoredText from './ColoredText';
 
 type SubTitleTextProps = {
     children: string
@@ -9,9 +10,9 @@ type SubTitleTextProps = {
  */
 export default function SubTitleText({ children } : SubTitleTextProps) {
     return (
-        <Text style={styles.title}>
+        <ColoredText style={styles.title}>
             {children}
-        </Text>
+        </ColoredText>
     )
 }
 

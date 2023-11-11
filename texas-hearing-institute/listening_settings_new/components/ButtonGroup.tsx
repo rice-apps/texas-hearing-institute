@@ -1,19 +1,18 @@
 import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import SettingsButton from './SettingsButton';
+import ColoredText from './ColoredText';
 
 type ButtonGroupProps = {
-    headerImage: ImageSourcePropType;
     headerText: string;
     buttonLabels: string[];
     buttonRoutes: string[];
 }
 
-export default function ButtonGroup({headerImage, headerText, buttonLabels, buttonRoutes}: ButtonGroupProps) {
+export default function ButtonGroup({headerText, buttonLabels, buttonRoutes}: ButtonGroupProps) {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <Image source={headerImage} style={styles.img}/>
-                <Text style={styles.headerText}>{headerText}</Text>
+                <ColoredText style={styles.headerText}>{headerText}</ColoredText>
             </View>
             {buttonLabels.map((label: string, indx: number) => (
                 <SettingsButton
@@ -34,13 +33,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     headerText: {
-        fontSize: 18,
-        fontWeight: '500',
-        marginBottom: 17
+        fontSize: 20,
+        fontWeight: '600',
+        marginBottom: 17,
     },
-    img: {
-        width: 22,
-        height: 22,
-        marginRight: 10
-    }
 })

@@ -1,4 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import ColoredText from './ColoredText';
 
 export default function PracticeButton() {
 
@@ -8,7 +9,7 @@ export default function PracticeButton() {
                 style={styles.button}
             >
                 <View style={styles.container}>
-                    <Text style={styles.buttonText}>Let's Practice</Text>
+                    <ColoredText style={styles.buttonText}>Let's Practice</ColoredText>
                 </View>
             </TouchableOpacity>
         </View>
