@@ -1,5 +1,5 @@
 import TitleText from '../components/TitleText';
-import RadioButtonGrid from "../components/RadioButtonGrid/RadioButtonGrid";
+import RadioButtonGrid from "../../components/RadioButtonGrid/RadioButtonGrid";
 import {useState} from "react";
 import {StyleSheet, View} from "react-native";
 import PracticeButton from "../components/PracticeButton";
