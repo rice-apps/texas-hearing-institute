@@ -52,7 +52,6 @@ const SingleSelectionButtons = () => {
       { id: 13, label: "d"},
       { id: 14, label: 'r'},
       { id: 15, label: "d"},
-
       // Add more buttons as needed
     ];
 
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   selectedButton: {
-    backgroundColor: 'grey',
+    backgroundColor: '#AFE4F9',
   },
   buttonText: {
     color: 'black',

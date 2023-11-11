@@ -3,9 +3,9 @@ import Heading from '../../components/Heading';
 import Subheading from '../../components/SubHeading';
 import GridButton from '../../components/GridButton';
 import Selection from '../../components/Selection';
-import BigButton from '../../components/Button';
 import { Alert } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
+import PractiseButton from '../../components/PractiseButton';
 
 const InitialConsonants = () => {
 	const showAlert = () => {
@@ -22,14 +22,14 @@ const InitialConsonants = () => {
 		<ScrollView>
 			<Heading title={'Initial Consonants'}></Heading>
 			<Subheading
-				title={'Select a consonant and blahblah to blahblah practise speaking'}
+				title={'Select a consonant'}
 			></Subheading>
 			<GridButton />
 			<Selection
 				buttonNames={['Variegated Vowels', 'Voicing', 'Manner', 'Place Cue']}
 			></Selection>
 			<View style={tw`p-4`}></View>
-			<BigButton label={'Submit'} onPress={showAlert} />
+			<PractiseButton label="Let's Practise" onPress={showAlert} />
 		</ScrollView>
 	);
 };
