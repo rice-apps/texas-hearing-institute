@@ -6,7 +6,10 @@ import SubTitleText from "../components/SubTitleText";
 
 const headerText = "Listening Babble"
 
-// The mapping may seem redundant, but this is just in case we change the route strings from the screen titles
+/**
+ * This maps screen titles to routes for input into ButtonGroup component.
+ * May seem redundant, but the mapping is just in case we reach a point where screen title != route string
+ */
 const screenRouteMapping = new Map([
     ["Variegated Vowels", "Variegated Vowels"],
     ["Place Cue", "Place Cue"],
