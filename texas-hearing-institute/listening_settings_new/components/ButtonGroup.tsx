@@ -5,9 +5,10 @@ import ColoredText from './ColoredText';
 type ButtonGroupProps = {
     headerText: string;
     screenRouteMapping: Map<string, string>;
+    screenImgMapping: Map<string, ImageSourcePropType>;
 }
 
-export default function ButtonGroup({headerText, screenRouteMapping}: ButtonGroupProps) {
+export default function ButtonGroup({headerText, screenRouteMapping, screenImgMapping}: ButtonGroupProps) {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
@@ -18,6 +19,7 @@ export default function ButtonGroup({headerText, screenRouteMapping}: ButtonGrou
                     key={screenTitle}
                     label={screenTitle}
                     route={route}
+                    img={screenImgMapping.get(route)}
                 />
             ))}
         </View>
