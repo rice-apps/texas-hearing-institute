@@ -3,4 +3,4 @@
 
 cd texas-hearing-institute
 
-npm run lint && npm run prettier-format
+npx lint-staged
