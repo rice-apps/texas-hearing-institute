@@ -6,19 +6,14 @@ import SubTitleText from "../components/SubTitleText";
 
 const headerText = "Listening Babble"
 
-const buttonLabels = [
-    "Variegated Vowels",
-    "Manner",
-    "Place Cue",
-    "Voicing"
-]
+// The mapping may seem redundant, but this is just in case we change the route strings from the screen titles
+const screenRouteMapping = new Map([
+    ["Variegated Vowels", "Variegated Vowels"],
+    ["Place Cue", "Place Cue"],
+    ["Voicing", "Voicing"],
+    ["Manner", "Manner"]
+])
 
-const buttonRoutes = [
-    "Variegated Vowels",
-    "Manner",
-    "Place Cue",
-    "Voicing"
-]
 
 export default function PracticeTab() {
     return (
@@ -31,8 +26,7 @@ export default function PracticeTab() {
                     <SubTitleText>Let's get practicing.</SubTitleText>
                     <ButtonGroup
                         headerText={headerText}
-                        buttonLabels={buttonLabels}
-                        buttonRoutes={buttonRoutes}
+                        screenRouteMapping={screenRouteMapping}
                     />
                 </ScreenView>
             </View>

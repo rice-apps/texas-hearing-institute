@@ -4,21 +4,20 @@ import ColoredText from './ColoredText';
 
 type ButtonGroupProps = {
     headerText: string;
-    buttonLabels: string[];
-    buttonRoutes: string[];
+    screenRouteMapping: Map<string, string>;
 }
 
-export default function ButtonGroup({headerText, buttonLabels, buttonRoutes}: ButtonGroupProps) {
+export default function ButtonGroup({headerText, screenRouteMapping}: ButtonGroupProps) {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <ColoredText style={styles.headerText}>{headerText}</ColoredText>
             </View>
-            {buttonLabels.map((label: string, indx: number) => (
+            {Array.from(screenRouteMapping.entries()).map(([screenTitle, route]) => (
                 <SettingsButton
-                    key={label}
-                    label={label}
-                    route={buttonRoutes[indx]}
+                    key={screenTitle}
+                    label={screenTitle}
+                    route={route}
                 />
             ))}
         </View>
