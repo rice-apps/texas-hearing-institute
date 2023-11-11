@@ -17,8 +17,9 @@ const screenRouteMapping = new Map([
     ["Manner", "Manner"]
 ])
 
+
 const screenImgMapping = new Map([
-    ["Variegated Vowels", require('../images/variegated-vowels.png')],
+    ["Variegated Vowels", require("../images/variegated-vowels.png")],
     ["Place Cue", require("../images/place-cue.png")],
     ["Voicing", require("../images/voicing.png")],
     ["Manner", require("../images/manner.png")]

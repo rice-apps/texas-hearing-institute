@@ -25,7 +25,7 @@ export default function SettingsButton({ label, route, img }: SettingsButtonProp
             >
                 <View style={styles.buttonLabelContainer}>
                     <ColoredText style={styles.buttonLabel}>{label}</ColoredText>
-                    <Image source={img} style={{}} />
+                    <Image source={img} style={styles.img}/>   
                 </View>
             </TouchableOpacity>
         </View>
@@ -51,6 +51,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    img: {
+        width: 45,
+        height: 45,
+        marginRight: 30,
+        marginTop: 5
     },
     buttonLabel: {
         fontSize: 16,
