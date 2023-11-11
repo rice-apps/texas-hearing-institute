@@ -1,3 +1,4 @@
+import React from 'react';
 import { View, Text} from 'react-native';
 import TitleText from '../components/TitleText';
 import SubTitleText from '../components/SubTitleText';

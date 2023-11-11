@@ -1,5 +1,7 @@
+import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 
 type SettingsButtonProps = {
     label: string;

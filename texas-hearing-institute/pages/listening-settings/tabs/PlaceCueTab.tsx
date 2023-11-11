@@ -1,3 +1,4 @@
+import React from 'react';
 import {StyleSheet, Text, View} from "react-native";
 import PracticeButton from "../components/PracticeButton";
 import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGridButtons";

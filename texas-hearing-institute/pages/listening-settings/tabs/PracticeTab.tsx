@@ -1,3 +1,4 @@
+import React from 'react';
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import ButtonGroup from '../components/ButtonGroup';
 import ScreenView from '../components/ScreenView';

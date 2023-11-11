@@ -1,13 +1,14 @@
+import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-type SubTitleTextProps = {
+type TitleTextProps = {
     children: string
 }
 
 /**
- * A component that displays subtitle text.
+ * A component that displays Title text
  */
-export default function SubTitleText({ children } : SubTitleTextProps) {
+export default function TitleText({ children } : TitleTextProps) {
     return (
         <Text style={styles.title}>
             {children}
@@ -17,9 +18,8 @@ export default function SubTitleText({ children } : SubTitleTextProps) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 16,
-        fontWeight: '400',
-        marginTop: 6,
+        fontSize: 24,
+        fontWeight: '600',
         marginBottom: 6
     }
 })

@@ -1,3 +1,4 @@
+import React from 'react';
 import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import SettingsButton from './SettingsButton';
 

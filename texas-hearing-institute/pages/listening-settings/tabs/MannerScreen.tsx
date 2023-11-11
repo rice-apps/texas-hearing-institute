@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import React from 'react';
 import TitleText from '../components/TitleText';
 import SubTitleText from '../components/SubTitleText';
 import ScreenView from '../components/ScreenView';
