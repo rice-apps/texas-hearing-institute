@@ -1,3 +1,4 @@
+import React from 'react';
 import { Text } from 'react-native-elements';
 import tw from 'tailwind-react-native-classnames';
 

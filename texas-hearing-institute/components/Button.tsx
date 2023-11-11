@@ -1,3 +1,4 @@
+import React from 'react';
 import { Text, Pressable } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
