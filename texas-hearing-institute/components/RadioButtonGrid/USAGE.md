@@ -15,17 +15,17 @@ const [selectedSpeedOptionsIndex, setselectedSpeedOptionsIndex] = useState(0)
     
 ```typescript jsx
 <RadioButtonGrid
-    items={vowelTypes}
-    label={'Select a vowel type'}
+    items={speedOptions}
+    label={'Select speed'}
     onSelect={newValue => {
-        setSelectedVowelTypeIndex(newValue)
+        setselectedSpeedOptionsIndex(newValue)
     }}
-    selectedItemIndex={selectedVowelTypeIndex}
+    selectedItemIndex={selectedSpeedOptionsIndex}
 />
 ```
 
 ## Output:
 
-You could then use `selectedSpeedOptionsIndex`.
+You could then use `selectedSpeedOptionsIndex`. In this example, it would be `1`—the second option (index of 1) is selected.
 
 ![Example of RadioButtonGrid](rbg_example.png)
