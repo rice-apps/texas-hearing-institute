@@ -13,7 +13,7 @@ const PrimaryActionButton:React.FC<PrimaryActionButtonType> = ({text,disabled,on
         <TouchableOpacity 
         style={{
             backgroundColor:'#AFE4F9',
-            borderRadius:'50%',
+            borderRadius:50,
             padding: 16
         }}
         onPress={onPress}
