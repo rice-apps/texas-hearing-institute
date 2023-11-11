@@ -12,39 +12,43 @@ import { StatusBar } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
-
 // This is the navigator of listening settings
 // Use this componenet in App.tsx as follows:
 // return <ListeningNavigator /> to see listening navigator
 export default function ListeningNavigator() {
-    return (
-        <ApplicationProvider {...eva} theme={eva.light}>
-            {/* May need to remove this later since it will be implemented elsewhere, just temporary for now */}<StatusBar barStyle="dark-content" />
-            <NavigationContainer>
-                    <Stack.Navigator 
-                        initialRouteName='Practice'
-                        screenOptions={{
-                            headerShadowVisible: false,
-                            headerStyle: {
-                                backgroundColor: 'white'
-                            },
-                            contentStyle: {
-                                backgroundColor: 'white'
-                            },
-                            headerTitleStyle: {
-                                color: 'transparent'
-                            },
-                            headerBackTitle: 'Practice'
-                        }}
-                    >
-                        <Stack.Screen name="Practice" component={PracticeTab} options={{ headerShown: false}}/>
-                        <Stack.Screen name="Place Cue" component={PlaceCueTab} />
-                        <Stack.Screen name="Variegated Vowels" component={VarVowelsScreen} />
-                        <Stack.Screen name="Manner" component={MannerScreen} />
-                        <Stack.Screen name="Voicing" component={VoicingScreen} />
-                        {/* Other screens not implemented yet */}
-                    </Stack.Navigator>
-            </NavigationContainer>
-        </ApplicationProvider>
-    )
+	return (
+		<ApplicationProvider {...eva} theme={eva.light}>
+			{/* May need to remove this later since it will be implemented elsewhere, just temporary for now */}
+			<StatusBar barStyle="dark-content" />
+			<NavigationContainer>
+				<Stack.Navigator
+					initialRouteName="Practice"
+					screenOptions={{
+						headerShadowVisible: false,
+						headerStyle: {
+							backgroundColor: 'white',
+						},
+						contentStyle: {
+							backgroundColor: 'white',
+						},
+						headerTitleStyle: {
+							color: 'transparent',
+						},
+						headerBackTitle: 'Practice',
+					}}
+				>
+					<Stack.Screen
+						name="Practice"
+						component={PracticeTab}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen name="Place Cue" component={PlaceCueTab} />
+					<Stack.Screen name="Variegated Vowels" component={VarVowelsScreen} />
+					<Stack.Screen name="Manner" component={MannerScreen} />
+					<Stack.Screen name="Voicing" component={VoicingScreen} />
+					{/* Other screens not implemented yet */}
+				</Stack.Navigator>
+			</NavigationContainer>
+		</ApplicationProvider>
+	);
 }

@@ -2,24 +2,20 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
 type TitleTextProps = {
-    children: string
-}
+	children: string;
+};
 
 /**
  * A component that displays Title text
  */
-export default function TitleText({ children } : TitleTextProps) {
-    return (
-        <Text style={styles.title}>
-            {children}
-        </Text>
-    )
+export default function TitleText({ children }: TitleTextProps) {
+	return <Text style={styles.title}>{children}</Text>;
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 24,
-        fontWeight: '600',
-        marginBottom: 6
-    }
-})
+	title: {
+		fontSize: 24,
+		fontWeight: '600',
+		marginBottom: 6,
+	},
+});
