@@ -28,7 +28,7 @@ export default function ListeningNavigator() {
                                 backgroundColor: 'white'
                             },
                             contentStyle: {
-                                backgroundColor: 'white'
+                                backgroundColor: '#FDFDFD'
                             },
                             headerTitleStyle: {
                                 color: 'transparent'

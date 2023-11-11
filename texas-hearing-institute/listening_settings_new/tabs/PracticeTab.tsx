@@ -4,23 +4,19 @@ import ScreenView from '../components/ScreenView';
 import TitleText from '../components/TitleText';
 import SubTitleText from "../components/SubTitleText";
 
-const headerImage = require('../images/active-listening.png');
-
 const headerText = "Listening Babble"
 
-const buttonLabels = [
-    "Variegated Vowels",
-    "Manner",
-    "Place Cue",
-    "Voicing"
-]
+/**
+ * This maps screen titles to routes for input into ButtonGroup component.
+ * May seem redundant, but the mapping is just in case we reach a point where screen title != route string
+ */
+const screenRouteMapping = new Map([
+    ["Variegated Vowels", "Variegated Vowels"],
+    ["Place Cue", "Place Cue"],
+    ["Voicing", "Voicing"],
+    ["Manner", "Manner"]
+])
 
-const buttonRoutes = [
-    "Variegated Vowels",
-    "Manner",
-    "Place Cue",
-    "Voicing"
-]
 
 export default function PracticeTab() {
     return (
@@ -32,10 +28,8 @@ export default function PracticeTab() {
                     <TitleText>Good morning, User</TitleText>
                     <SubTitleText>Let's get practicing.</SubTitleText>
                     <ButtonGroup
-                        headerImage={headerImage}
                         headerText={headerText}
-                        buttonLabels={buttonLabels}
-                        buttonRoutes={buttonRoutes}
+                        screenRouteMapping={screenRouteMapping}
                     />
                 </ScreenView>
             </View>
