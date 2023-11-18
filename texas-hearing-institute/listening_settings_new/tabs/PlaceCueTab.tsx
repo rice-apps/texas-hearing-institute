@@ -4,49 +4,29 @@ import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGr
 import {useState} from "react";
 import {retrieveItemSelections} from '../../utils/persistSelection';
 import {
-    consonantInventoryPersistenceKey,
     consonants,
     vowelInventoryPersistenceKey,
     vowels
 } from "../../utils/soundInventoryDataAndKeys";
 import RadioButtonGrid from "../../components/RadioButtonGrid/RadioButtonGrid";
 
-// TODO: There should be no more "selected" in storage. We should just be pulling the available 
-//  phonemes from storage.
 export default function PlaceCueTab() {
-    const phonemes = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
+    // Load enabled phonemes from phoneme storage. These will be the options on the grid 
+    const [enabledInventoryVowels, setEnabledInventoryVowels] = useState(() => {
+        // enabledInventoryVowels are the vowels selected in storage
+        retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
+            (result) => {
+                const filteredArray = consonants.filter((value, index) => result[index]);
+                setEnabledInventoryVowels(filteredArray)
+            },
+        );
+        return [] as string[]
+    });
 
-    async function fetchPhonemesFromStorage() {
-        const [inventoryConsonants, setInventoryConsonants] = useState(() => {
-            retrieveItemSelections(consonantInventoryPersistenceKey, consonants).then(
-                (result) => {
-                    setInventoryConsonants(result);
-                },
-            );
+    // These will be the highlighted phonemes on the grid, and will be passed to "active practice" mode.
+    const [selectedVowels, setSelectedVowels] = useState([] as boolean[])
 
-            return [] as boolean[];
-        });
-
-        const [inventoryVowels, setInventoryVowels] = useState(() => {
-            retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
-                (result) => {
-                    setInventoryVowels(result);
-                },
-            );
-
-            return [] as boolean[];
-        });
-
-        const allInventory = [...inventoryConsonants]
-        allInventory.push(...inventoryVowels)
-        return allInventory
-    }
-
-    const [phonemesSelected, setPhonemesSelected] = useState<boolean[]>(() => [])
-    
-    // DEBUG
-    console.log(fetchPhonemesFromStorage())
-
+    // The number of syllables to listen to. Will be passed to "active practice" mode.
     const speedOptions = [
         '2 Syllables',
         '3 Syllables',
@@ -62,13 +42,12 @@ export default function PlaceCueTab() {
                     <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
                 </View>
                 <ToggleGridButtons
-                    items={phonemes}
-                    itemsSelected={phonemesSelected}
-                    setItemsSelected={(index, newValue) => {
-                        phonemesSelected[index] = newValue
-                        // [...itemsSelected] clones the list for useState
-                        // https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
-                        setPhonemesSelected([...phonemesSelected])
+                    items={enabledInventoryVowels}
+                    itemsSelected={selectedVowels}
+                    setItemsSelected={(index: number, newValue: boolean) => {
+                        const newItemsSelected = [...selectedVowels];
+                        newItemsSelected[index] = newValue;
+                        setSelectedVowels(newItemsSelected)
                     }}
                 />
                 <RadioButtonGrid
@@ -79,9 +58,6 @@ export default function PlaceCueTab() {
                     }}
                     selectedItemIndex={selectedSpeedOptionsIndex}
                 />
-                {/*<SyllableCounterDropdown syllableCountChanged={syllables => {
-                    numberOfSyllables = syllables
-                }}/>*/}
             </View>
             {/*Because PracticeButton is not included in the
             styles.expanded (flex: 1) View, it is thrown to the bottom. */}
