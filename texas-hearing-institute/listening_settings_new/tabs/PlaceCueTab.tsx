@@ -2,37 +2,37 @@ import {StyleSheet, Text, View} from "react-native";
 import PracticeButton from "../components/PracticeButton";
 import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGridButtons";
 import {useState} from "react";
-import SyllableCounterDropdown from "../components/SyllableCounterDropdown";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {retrieveItemSelections} from '../../utils/persistSelection';
+import {
+    consonants,
+    vowelInventoryPersistenceKey,
+    vowels
+} from "../../utils/soundInventoryDataAndKeys";
+import RadioButtonGrid from "../../components/RadioButtonGrid/RadioButtonGrid";
 
 export default function PlaceCueTab() {
-    const phonemes = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
+    // Load enabled phonemes from phoneme storage. These will be the options on the grid 
+    const [enabledInventoryVowels, setEnabledInventoryVowels] = useState(() => {
+        // enabledInventoryVowels are the vowels selected in storage
+        retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
+            (result) => {
+                const filteredArray = consonants.filter((value, index) => result[index]);
+                setEnabledInventoryVowels(filteredArray)
+            },
+        );
+        return [] as string[]
+    });
 
-    async function fetchPhonemesSelectedFromStorage() {
-        const selectedJson = await AsyncStorage.getItem('listeningSettings.phonemesSelected');
-        if (selectedJson != null) {
-            return JSON.parse(selectedJson);
-        } else {
-            return []
-        }
-    }
+    // These will be the highlighted phonemes on the grid, and will be passed to "active practice" mode.
+    const [selectedVowels, setSelectedVowels] = useState([] as boolean[])
 
-    const [phonemesSelected, _setPhonemesSelected] = useState<boolean[]>(() => {
-        fetchPhonemesSelectedFromStorage().then(selected => {
-            _setPhonemesSelected(selected)
-        });
-        return []
-    })
-
-    // Our function for setPhonemesSelected, since we also want to store it 
-    function setPhonemesSelected(selected: boolean[]) {
-        AsyncStorage.setItem('listeningSettings.phonemesSelected', JSON.stringify(phonemesSelected));
-        _setPhonemesSelected(selected)
-    }
-
-    // Bypassing this warning for now, as this variable will be used in the future.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let numberOfSyllables = 2;
+    // The number of syllables to listen to. Will be passed to "active practice" mode.
+    const speedOptions = [
+        '2 Syllables',
+        '3 Syllables',
+        '4 Syllables',
+    ]
+    const [selectedSpeedOptionsIndex, setselectedSpeedOptionsIndex] = useState(0)
 
     return (
         <View style={[styles.margins, styles.expanded]}>
@@ -42,18 +42,22 @@ export default function PlaceCueTab() {
                     <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
                 </View>
                 <ToggleGridButtons
-                    items={phonemes}
-                    itemsSelected={phonemesSelected}
-                    setItemsSelected={(index, newValue) => {
-                        phonemesSelected[index] = newValue
-                        // [...itemsSelected] clones the list for useState
-                        // https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
-                        setPhonemesSelected([...phonemesSelected])
+                    items={enabledInventoryVowels}
+                    itemsSelected={selectedVowels}
+                    setItemsSelected={(index: number, newValue: boolean) => {
+                        const newItemsSelected = [...selectedVowels];
+                        newItemsSelected[index] = newValue;
+                        setSelectedVowels(newItemsSelected)
                     }}
                 />
-                <SyllableCounterDropdown syllableCountChanged={syllables => {
-                    numberOfSyllables = syllables
-                }}/>
+                <RadioButtonGrid
+                    items={speedOptions}
+                    label={'Select speed'}
+                    onSelect={newValue => {
+                        setselectedSpeedOptionsIndex(newValue)
+                    }}
+                    selectedItemIndex={selectedSpeedOptionsIndex}
+                />
             </View>
             {/*Because PracticeButton is not included in the
             styles.expanded (flex: 1) View, it is thrown to the bottom. */}

@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import ButtonGroup from '../components/ButtonGroup';
 import ScreenView from '../components/ScreenView';
 import TitleText from '../components/TitleText';
