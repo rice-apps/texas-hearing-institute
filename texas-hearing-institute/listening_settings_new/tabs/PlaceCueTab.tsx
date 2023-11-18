@@ -3,11 +3,7 @@ import PracticeButton from "../components/PracticeButton";
 import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGridButtons";
 import {useState} from "react";
 import {retrieveItemSelections} from '../../utils/persistSelection';
-import {
-    consonants,
-    vowelInventoryPersistenceKey,
-    vowels
-} from "../../utils/soundInventoryDataAndKeys";
+import {consonants, vowelInventoryPersistenceKey, vowels} from "../../utils/soundInventoryDataAndKeys";
 import RadioButtonGrid from "../../components/RadioButtonGrid/RadioButtonGrid";
 
 export default function PlaceCueTab() {
@@ -41,23 +37,26 @@ export default function PlaceCueTab() {
                     <Text style={styles.title}>Place Cue</Text>
                     <Text style={styles.subtitle}>Select a vowel to practice listening</Text>
                 </View>
-                <ToggleGridButtons
-                    items={enabledInventoryVowels}
-                    itemsSelected={selectedVowels}
-                    setItemsSelected={(index: number, newValue: boolean) => {
-                        const newItemsSelected = [...selectedVowels];
-                        newItemsSelected[index] = newValue;
-                        setSelectedVowels(newItemsSelected)
-                    }}
-                />
-                <RadioButtonGrid
-                    items={speedOptions}
-                    label={'Select speed'}
-                    onSelect={newValue => {
-                        setselectedSpeedOptionsIndex(newValue)
-                    }}
-                    selectedItemIndex={selectedSpeedOptionsIndex}
-                />
+                {enabledInventoryVowels.length > 0
+                    ? <View>
+                        <ToggleGridButtons
+                            items={enabledInventoryVowels}
+                            itemsSelected={selectedVowels}
+                            setItemsSelected={(index: number, newValue: boolean) => {
+                                const newItemsSelected = [...selectedVowels];
+                                newItemsSelected[index] = newValue;
+                                setSelectedVowels(newItemsSelected)
+                            }}/>
+                        <RadioButtonGrid
+                            items={speedOptions}
+                            label={'Select speed'}
+                            onSelect={newValue => {
+                                setselectedSpeedOptionsIndex(newValue)
+                            }}
+                            selectedItemIndex={selectedSpeedOptionsIndex}
+                        />
+                    </View>
+                    : <Text>No phonemes enabled in sound inventory. Select some first to get started!</Text>}
             </View>
             {/*Because PracticeButton is not included in the
             styles.expanded (flex: 1) View, it is thrown to the bottom. */}
