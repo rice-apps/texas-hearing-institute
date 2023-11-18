@@ -5,7 +5,7 @@ import ColoredText from './ColoredText';
 type SettingsButtonProps = {
     label: string;
     route: string;
-    img: any;
+    imgObj: any;
 }
 
 // Keep getting the error that the type to be passed into navigation.navigate must be type void, not sure why
@@ -14,7 +14,7 @@ type Nav = {
     navigate: (value: string) => void;
 }
 
-export default function SettingsButton({ label, route, img }: SettingsButtonProps) {
+export default function SettingsButton({ label, route, imgObj }: SettingsButtonProps) {
     const navigation = useNavigation<Nav>();
 
     return (
@@ -25,7 +25,7 @@ export default function SettingsButton({ label, route, img }: SettingsButtonProp
             >
                 <View style={styles.buttonLabelContainer}>
                     <ColoredText style={styles.buttonLabel}>{label}</ColoredText>
-                    <Image source={img} style={styles.img}/>   
+                    <Image source={imgObj.img} style={imgObj.styles ? imgObj.styles : styles.img}/>   
                 </View>
             </TouchableOpacity>
         </View>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         shadowColor: '#000000',
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.12,
-        shadowRadius: 2,
+        shadowRadius: 2
     },
     selectedButton: {
         backgroundColor: "#C0C0C0"
@@ -52,16 +52,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    img: {
-        width: 45,
-        height: 45,
-        marginRight: 30,
+    bigImg: {
+        width: 90,
+        height: 50,
+        marginRight: 13.7,
         marginTop: 5
+    }, 
+    img: {
+        width: 50,
+        height: 50,
+        marginRight: 30,
+        marginTop: 5,
     },
     buttonLabel: {
         fontSize: 16,
         margin: 18,
         fontWeight: '500',
-        alginSelf: 'flex-start'
+        alignSelf: 'flex-start'
     },
 });

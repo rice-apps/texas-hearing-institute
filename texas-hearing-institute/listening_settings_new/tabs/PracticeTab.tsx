@@ -17,12 +17,30 @@ const screenRouteMapping = new Map([
     ["Manner", "Manner"]
 ])
 
-
+/**
+ * This maps screen titles to img objects which contain img (required), styles (not required) properties
+ */
 const screenImgMapping = new Map([
-    ["Variegated Vowels", require("../images/variegated-vowels.png")],
-    ["Place Cue", require("../images/place-cue.png")],
-    ["Voicing", require("../images/voicing.png")],
-    ["Manner", require("../images/manner.png")]
+    ["Variegated Vowels", { 
+        img: require("../images/variegated-vowels.png"), 
+        styles: {
+            width: 90,
+            height: 50,
+            marginRight: 13.7,
+            marginTop: 5
+        }
+    }],
+    ["Place Cue", { 
+        img: require("../images/place-cue.png") }],
+    ["Voicing", { 
+        img: require("../images/voicing.png"), 
+        styles: {
+            width: 60,
+            height: 60,
+            marginRight: 22
+        } 
+    }],
+    ["Manner", { img: require("../images/manner.png") }] 
 ])
 
 
