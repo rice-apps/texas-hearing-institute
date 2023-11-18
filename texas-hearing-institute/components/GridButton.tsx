@@ -37,21 +37,20 @@ const SingleSelectionButtons = () => {
 
   const renderButtons = () => {
     const buttonData = [
-      { id: 1, label: 'A' },
-      { id: 2, label: 'B' },
-      { id: 3, label: 'ah'},
-      { id: 4, label: 'bu'},
-      { id: 5, label: 'me'},
-      { id: 6, label: 'yo'},
-      { id: 7, label: 'io'},
-      { id: 8, label: 'po'},
-      { id: 9, label: 'to'},
-      { id: 10, label: 'ru'},
-      { id: 11, label: "do"},
-      { id: 12, label: 'r'},
-      { id: 13, label: "d"},
-      { id: 14, label: 'r'},
-      { id: 15, label: "d"},
+      { id: 1, label: 'p' },
+      { id: 2, label: 'b' },
+      { id: 3, label: 'm'},
+      { id: 4, label: 'w'},
+      { id: 5, label: 'h'},
+      { id: 6, label: 'f'},
+      { id: 7, label: 'd'},
+      { id: 8, label: 'n'},
+      { id: 9, label: 'y'},
+      { id: 10, label: 'k'},
+      { id: 11, label: "g"},
+      { id: 12, label: 's'},
+      { id: 13, label: "z"},
+      { id: 14, label: 'Sh'},
       // Add more buttons as needed
     ];
 
@@ -78,17 +77,21 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    padding: 10,
+    padding: 15,
     backgroundColor: 'white',
-    borderRadius: 5,
-    margin: 5
+    borderRadius: 10,
+    margin: 3,
+    borderColor: "#D9D9D9",
+    borderWidth: 1.5,
+
   },
   selectedButton: {
     backgroundColor: '#AFE4F9',
   },
   buttonText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
+    fontSize: 16
   },
 });
