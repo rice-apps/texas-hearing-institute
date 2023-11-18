@@ -31,7 +31,14 @@ const screenImgMapping = new Map([
         }
     }],
     ["Place Cue", { 
-        img: require("../images/place-cue.png") }],
+        img: require("../images/place-cue.png"),
+        styles: {
+            width: 50,
+            height: 50,
+            marginRight: 30,
+            marginTop: 4
+        }
+    }],
     ["Voicing", { 
         img: require("../images/voicing.png"), 
         styles: {
