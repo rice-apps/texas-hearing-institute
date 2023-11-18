@@ -31,7 +31,8 @@ const InitialConsonants = () => {
 	const [selectedSpeedOptionsIndex, setselectedSpeedOptionsIndex] = useState(0);
 
 	return (
-		<ScrollView>
+		<View>
+		<ScrollView style={{marginBottom:100}}>
 			<Heading title={'Initial Consonants'}></Heading>
 			<Subheading title={'Select a consonant'}></Subheading>
 			<GridButton />
@@ -65,8 +66,10 @@ const InitialConsonants = () => {
 			</View>
 
 			<View style={tw`p-4`}></View>
-			<PracticeButton label="Let's Practice" onPress={showAlert} />
+			
 		</ScrollView>
+		<PracticeButton label="Let's Practice" onPress={showAlert} />
+		</View>
 	);
 };
 
