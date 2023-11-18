@@ -8,7 +8,7 @@ interface ButtonGroupProps {
     screenImgMapping: Map<string, any>;
 }
 
-export default function ButtonGrourp({headerText, screenRouteMapping, screenImgMapping}: ButtonGroupProps) {
+export default function ButtonGroup({headerText, screenRouteMapping, screenImgMapping}: ButtonGroupProps) {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
