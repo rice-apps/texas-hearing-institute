@@ -35,7 +35,9 @@ const InitialConsonants = () => {
 			<Heading title={'Initial Consonants'}></Heading>
 			<Subheading title={'Select a consonant'}></Subheading>
 			<GridButton />
-			<View style={tw`p-4 flex-col`}>
+			<View style={{
+				padding: 16,
+				gap: 40}}>
 				<RadioButtonGrid
 					items={modeOptions}
 					label={'Select mode'}
