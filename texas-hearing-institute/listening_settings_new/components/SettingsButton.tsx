@@ -1,16 +1,16 @@
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet, ImageSourcePropType} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ColoredText from './ColoredText';
 
-type SettingsButtonProps = {
+interface SettingsButtonProps {
     label: string;
     route: string;
-    img: any;
+    img: ImageSourcePropType;
 }
 
 // Keep getting the error that the type to be passed into navigation.navigate must be type void, not sure why
 // This is a solution
-type Nav = {
+interface Nav {
     navigate: (value: string) => void;
 }
 
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         margin: 18,
         fontWeight: '500',
-        alginSelf: 'flex-start'
+        alignSelf: 'flex-start'
     },
 });

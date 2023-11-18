@@ -2,37 +2,57 @@ import {StyleSheet, Text, View} from "react-native";
 import PracticeButton from "../components/PracticeButton";
 import ToggleGridButtons from "../components/ToggleGridButtonsComponent/ToggleGridButtons";
 import {useState} from "react";
-import SyllableCounterDropdown from "../components/SyllableCounterDropdown";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {retrieveItemSelections} from '../../utils/persistSelection';
+import {
+    consonantInventoryPersistenceKey,
+    consonants,
+    vowelInventoryPersistenceKey,
+    vowels
+} from "../../utils/soundInventoryDataAndKeys";
+import RadioButtonGrid from "../../components/RadioButtonGrid/RadioButtonGrid";
 
+// TODO: There should be no more "selected" in storage. We should just be pulling the available 
+//  phonemes from storage.
 export default function PlaceCueTab() {
     const phonemes = ['phe', 'phi', 'pho', 'phum', 'que', 'qui', 'quo', 'qua', 'quu']
 
-    async function fetchPhonemesSelectedFromStorage() {
-        const selectedJson = await AsyncStorage.getItem('listeningSettings.phonemesSelected');
-        if (selectedJson != null) {
-            return JSON.parse(selectedJson);
-        } else {
-            return []
-        }
-    }
+    async function fetchPhonemesFromStorage() {
+        const [inventoryConsonants, setInventoryConsonants] = useState(() => {
+            retrieveItemSelections(consonantInventoryPersistenceKey, consonants).then(
+                (result) => {
+                    setInventoryConsonants(result);
+                },
+            );
 
-    const [phonemesSelected, _setPhonemesSelected] = useState<boolean[]>(() => {
-        fetchPhonemesSelectedFromStorage().then(selected => {
-            _setPhonemesSelected(selected)
+            return [] as boolean[];
         });
-        return []
-    })
 
-    // Our function for setPhonemesSelected, since we also want to store it 
-    function setPhonemesSelected(selected: boolean[]) {
-        AsyncStorage.setItem('listeningSettings.phonemesSelected', JSON.stringify(phonemesSelected));
-        _setPhonemesSelected(selected)
+        const [inventoryVowels, setInventoryVowels] = useState(() => {
+            retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
+                (result) => {
+                    setInventoryVowels(result);
+                },
+            );
+
+            return [] as boolean[];
+        });
+
+        const allInventory = [...inventoryConsonants]
+        allInventory.push(...inventoryVowels)
+        return allInventory
     }
 
-    // Bypassing this warning for now, as this variable will be used in the future.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let numberOfSyllables = 2;
+    const [phonemesSelected, setPhonemesSelected] = useState<boolean[]>(() => [])
+    
+    // DEBUG
+    console.log(fetchPhonemesFromStorage())
+
+    const speedOptions = [
+        '2 Syllables',
+        '3 Syllables',
+        '4 Syllables',
+    ]
+    const [selectedSpeedOptionsIndex, setselectedSpeedOptionsIndex] = useState(0)
 
     return (
         <View style={[styles.margins, styles.expanded]}>
@@ -51,9 +71,17 @@ export default function PlaceCueTab() {
                         setPhonemesSelected([...phonemesSelected])
                     }}
                 />
-                <SyllableCounterDropdown syllableCountChanged={syllables => {
+                <RadioButtonGrid
+                    items={speedOptions}
+                    label={'Select speed'}
+                    onSelect={newValue => {
+                        setselectedSpeedOptionsIndex(newValue)
+                    }}
+                    selectedItemIndex={selectedSpeedOptionsIndex}
+                />
+                {/*<SyllableCounterDropdown syllableCountChanged={syllables => {
                     numberOfSyllables = syllables
-                }}/>
+                }}/>*/}
             </View>
             {/*Because PracticeButton is not included in the
             styles.expanded (flex: 1) View, it is thrown to the bottom. */}
