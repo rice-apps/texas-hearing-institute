@@ -7,7 +7,7 @@ type BigButtonProps = {
 };
 
 
-const PractiseButton = ({ label, onPress }: BigButtonProps) => {
+const PracticeButton = ({ label, onPress }: BigButtonProps) => {
 	
 	
 	return (
@@ -17,4 +17,4 @@ const PractiseButton = ({ label, onPress }: BigButtonProps) => {
 	);
 };
 
-export default PractiseButton;
+export default PracticeButton;

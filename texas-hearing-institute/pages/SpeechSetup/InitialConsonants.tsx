@@ -5,7 +5,7 @@ import GridButton from '../../components/GridButton';
 import Selection from '../../components/Selection';
 import { Alert } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
-import PractiseButton from '../../components/PractiseButton';
+import PracticeButton from '../../components/PracticeButton';
 
 const InitialConsonants = () => {
 	const showAlert = () => {
@@ -29,7 +29,7 @@ const InitialConsonants = () => {
 				buttonNames={['Variegated Vowels', 'Voicing', 'Manner', 'Place Cue']}
 			></Selection>
 			<View style={tw`p-4`}></View>
-			<PractiseButton label="Let's Practise" onPress={showAlert} />
+			<PracticeButton label="Let's Practice" onPress={showAlert} />
 		</ScrollView>
 	);
 };
