@@ -7,6 +7,7 @@ interface Props {
     syllableCountChanged: (syllables: number) => void,
 }
 
+// Currently unused! We may not need ui-kitten or the dropdown at all anymore.
 export default function SyllableCounterDropdown({syllableCountChanged}: Props) {
     // Abuse useState to only run the following code the first time this page loads.
     // This function loads syllableCount from storage.

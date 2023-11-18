@@ -1,7 +1,7 @@
-import { Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import ColoredText from './ColoredText';
 
-type TitleTextProps = {
+interface TitleTextProps {
     children: string
 }
 

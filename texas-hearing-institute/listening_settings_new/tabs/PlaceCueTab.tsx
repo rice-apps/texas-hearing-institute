@@ -16,7 +16,7 @@ export default function PlaceCueTab() {
         // enabledInventoryVowels are the vowels selected in storage
         retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
             (result) => {
-                const filteredArray = consonants.filter((value, index) => result[index]);
+                const filteredArray = consonants.filter((_, index) => result[index]);
                 setEnabledInventoryVowels(filteredArray)
             },
         );

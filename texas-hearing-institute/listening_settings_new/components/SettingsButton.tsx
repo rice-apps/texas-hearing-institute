@@ -5,7 +5,7 @@ import ColoredText from './ColoredText';
 interface SettingsButtonProps {
     label: string;
     route: string;
-    img: ImageSourcePropType;
+    img: ImageSourcePropType | undefined;
 }
 
 // Keep getting the error that the type to be passed into navigation.navigate must be type void, not sure why
@@ -25,7 +25,7 @@ export default function SettingsButton({ label, route, img }: SettingsButtonProp
             >
                 <View style={styles.buttonLabelContainer}>
                     <ColoredText style={styles.buttonLabel}>{label}</ColoredText>
-                    <Image source={img} style={styles.img}/>   
+                    {img && <Image source={img} style={styles.img} />}   
                 </View>
             </TouchableOpacity>
         </View>

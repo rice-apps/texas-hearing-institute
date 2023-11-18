@@ -1,8 +1,9 @@
-import { Text } from 'react-native'; 
+import {StyleProp, Text, TextStyle} from 'react-native';
+import {ReactNode} from "react";
 
-type ColoredTextProps = {
-    style: any;
-    children: any;
+interface ColoredTextProps {
+    style: StyleProp<TextStyle>;
+    children: ReactNode;
 }
 
 export default function ColoredText({ style = {}, children } : ColoredTextProps) {

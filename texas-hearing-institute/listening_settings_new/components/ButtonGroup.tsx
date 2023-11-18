@@ -1,8 +1,8 @@
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
+import {ImageSourcePropType, StyleSheet, View} from 'react-native';
 import SettingsButton from './SettingsButton';
 import ColoredText from './ColoredText';
 
-type ButtonGroupProps = {
+interface ButtonGroupProps {
     headerText: string;
     screenRouteMapping: Map<string, string>;
     screenImgMapping: Map<string, ImageSourcePropType>;

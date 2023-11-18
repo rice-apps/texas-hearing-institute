@@ -1,7 +1,8 @@
 import { View } from 'react-native';
+import {ReactNode} from "react";
 
-type ScreenViewProps = {
-    children : any
+interface ScreenViewProps {
+    children : ReactNode
 }
 
 /**
