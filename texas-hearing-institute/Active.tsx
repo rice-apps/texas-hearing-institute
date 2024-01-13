@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import * as Speech from 'expo-speech';
 import PracticeCard from './components/PracticeCard';
 
+//REACT NATIVE DECK SWIPER
+
 // import ProgressBar from "../Progress";
 
 
