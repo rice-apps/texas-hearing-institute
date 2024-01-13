@@ -17,10 +17,10 @@ const Stack = createNativeStackNavigator();
 // return <ListeningNavigator /> to see listening navigator
 export default function ListeningNavigator() {
 	return (
-		<ApplicationProvider {...eva} theme={eva.light}>
-			{/* May need to remove this later since it will be implemented elsewhere, just temporary for now */}
-			<StatusBar barStyle="dark-content" />
-			<NavigationContainer>
+		// <ApplicationProvider {...eva} theme={eva.light}>
+		// 	{/* May need to remove this later since it will be implemented elsewhere, just temporary for now */}
+		// 	<StatusBar barStyle="dark-content" />
+		// 	<NavigationContainer>
 				<Stack.Navigator
 					initialRouteName="Practice"
 					screenOptions={{
@@ -48,7 +48,7 @@ export default function ListeningNavigator() {
 					<Stack.Screen name="Voicing" component={VoicingScreen} />
 					{/* Other screens not implemented yet */}
 				</Stack.Navigator>
-			</NavigationContainer>
-		</ApplicationProvider>
+		// 	</NavigationContainer>
+		// </ApplicationProvider>
 	);
 }

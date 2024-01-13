@@ -51,35 +51,36 @@ export default function PlaceCueTab() {
 	let numberOfSyllables = 2;
 
 	return (
-		<View style={[styles.margins, styles.expanded]}>
-			<View style={[styles.expanded, styles.gaps]}>
-				<View>
-					<Text style={styles.title}>Place Cue</Text>
-					<Text style={styles.subtitle}>
-						Select a vowel to practice listening
-					</Text>
-				</View>
-				<ToggleGridButtons
-					items={phonemes}
-					itemsSelected={phonemesSelected}
-					setItemsSelected={(index, newValue) => {
-						phonemesSelected[index] = newValue;
-						// [...itemsSelected] clones the list for useState
-						// https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
-						setPhonemesSelected([...phonemesSelected]);
-					}}
-				/>
-				<SyllableCounterDropdown
-					syllableCountChanged={(syllables) => {
-						numberOfSyllables = syllables;
-					}}
-				/>
-			</View>
-			{/*Because PracticeButton is not included in the
-            styles.expanded (flex: 1) View, it is thrown to the bottom. */}
-			{/*TODO: Pass phonemesSelected, numberOfSyllables to PracticeButton*/}
-			<PracticeButton />
-		</View>
+		<View></View>
+		// <View style={[styles.margins, styles.expanded]}>
+		// 	<View style={[styles.expanded, styles.gaps]}>
+		// 		<View>
+		// 			<Text style={styles.title}>Place Cue</Text>
+		// 			<Text style={styles.subtitle}>
+		// 				Select a vowel to practice listening
+		// 			</Text>
+		// 		</View>
+		// 		<ToggleGridButtons
+		// 			items={phonemes}
+		// 			itemsSelected={phonemesSelected}
+		// 			setItemsSelected={(index, newValue) => {
+		// 				phonemesSelected[index] = newValue;
+		// 				// [...itemsSelected] clones the list for useState
+		// 				// https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
+		// 				setPhonemesSelected([...phonemesSelected]);
+		// 			}}
+		// 		/>
+		// 		<SyllableCounterDropdown
+		// 			syllableCountChanged={(syllables) => {
+		// 				numberOfSyllables = syllables;
+		// 			}}
+		// 		/>
+		// 	</View>
+		// 	{/*Because PracticeButton is not included in the
+        //     styles.expanded (flex: 1) View, it is thrown to the bottom. */}
+		// 	{/*TODO: Pass phonemesSelected, numberOfSyllables to PracticeButton*/}
+		// 	<PracticeButton />
+		// </View>
 	);
 }
 
