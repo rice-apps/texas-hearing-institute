@@ -1,83 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PracticeButton from '../components/PracticeButton';
-import ToggleGridButtons from '../components/ToggleGridButtonsComponent/ToggleGridButtons';
-import { useState } from 'react';
-import SyllableCounterDropdown from '../components/SyllableCounterDropdown';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import RadioButton from '../components/RadioButton';
 
 export default function PlaceCueTab() {
-	const phonemes = [
-		'phe',
-		'phi',
-		'pho',
-		'phum',
-		'que',
-		'qui',
-		'quo',
-		'qua',
-		'quu',
-	];
-
-	async function fetchPhonemesSelectedFromStorage() {
-		const selectedJson = await AsyncStorage.getItem(
-			'listeningSettings.phonemesSelected',
-		);
-		if (selectedJson != null) {
-			return JSON.parse(selectedJson);
-		} else {
-			return [];
-		}
-	}
-
-	const [phonemesSelected, _setPhonemesSelected] = useState<boolean[]>(() => {
-		fetchPhonemesSelectedFromStorage().then((selected) => {
-			_setPhonemesSelected(selected);
-		});
-		return [];
-	});
-
-	// Our function for setPhonemesSelected, since we also want to store it
-	function setPhonemesSelected(selected: boolean[]) {
-		AsyncStorage.setItem(
-			'listeningSettings.phonemesSelected',
-			JSON.stringify(phonemesSelected),
-		);
-		_setPhonemesSelected(selected);
-	}
-
-	// Bypassing this warning for now, as this variable will be used in the future.
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	let numberOfSyllables = 2;
+	const [vowelType, setVowelType] = useState('Same');
+	const [numSyllables, setNumSyllables] = useState(2);
 
 	return (
 		<View style={[styles.margins, styles.expanded]}>
 			<View style={[styles.expanded, styles.gaps]}>
 				<View>
 					<Text style={styles.title}>Place Cue</Text>
-					<Text style={styles.subtitle}>
-						Select a vowel to practice listening
-					</Text>
 				</View>
-				<ToggleGridButtons
-					items={phonemes}
-					itemsSelected={phonemesSelected}
-					setItemsSelected={(index, newValue) => {
-						phonemesSelected[index] = newValue;
-						// [...itemsSelected] clones the list for useState
-						// https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
-						setPhonemesSelected([...phonemesSelected]);
-					}}
-				/>
-				<SyllableCounterDropdown
-					syllableCountChanged={(syllables) => {
-						numberOfSyllables = syllables;
-					}}
-				/>
+				<Text style={styles.subtitle}>SELECT VOWEL TYPE</Text>
+				<View>
+					<RadioButton<string>
+						label={'Same Vowels'}
+						value={'Same'}
+						onPress={setVowelType}
+						selectedRadio={vowelType}
+					/>
+					<RadioButton<string>
+						label={'Different Vowels'}
+						value={'Different'}
+						onPress={setVowelType}
+						selectedRadio={vowelType}
+					/>
+				</View>
+				<Text style={styles.subtitle}>SELECT NUMBER OF SYLLABLES</Text>
+				<View>
+					<RadioButton<number>
+						label={'2 Syllables'}
+						value={2}
+						onPress={setNumSyllables}
+						selectedRadio={numSyllables}
+					/>
+					<RadioButton<number>
+						label={'3 Syllables'}
+						value={3}
+						onPress={setNumSyllables}
+						selectedRadio={numSyllables}
+					/>
+					<RadioButton<number>
+						label={'4 Syllables'}
+						value={4}
+						onPress={setNumSyllables}
+						selectedRadio={numSyllables}
+					/>
+				</View>
 			</View>
 			{/*Because PracticeButton is not included in the
             styles.expanded (flex: 1) View, it is thrown to the bottom. */}
-			{/*TODO: Pass phonemesSelected, numberOfSyllables to PracticeButton*/}
 			<PracticeButton />
 		</View>
 	);
@@ -96,10 +70,11 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 30,
 		fontWeight: 'bold',
+		marginBottom: 20,
 	},
 	subtitle: {
-		paddingTop: 10,
-		paddingBottom: 10,
+		fontSize: 12,
+		color: '#747474',
 	},
 	label: {
 		textAlign: 'center',
@@ -107,8 +82,5 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		fontWeight: 'bold',
 		fontSize: 22,
-	},
-	form_section: {
-		justifyContent: 'center',
 	},
 });

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-type TitleTextProps = {
+interface TitleTextProps {
 	children: string;
-};
+}
 
 /**
  * A component that displays Title text

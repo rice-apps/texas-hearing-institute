@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, Pressable } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
-type BigButtonProps = {
+interface BigButtonProps {
 	label: string;
 	onPress: () => void;
 	color?: string;
 	textColor?: string;
-};
+}
 
 const BigButton = ({ label, onPress }: BigButtonProps) => {
 	return (

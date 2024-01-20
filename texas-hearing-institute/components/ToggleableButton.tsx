@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-type ToggleableButtonProps = {
+interface ToggleableButtonProps {
 	label: string;
 	onToggle: (label: string, isToggled: boolean) => void;
-};
+}
 
 const ToggleableButton = ({ label, onToggle }: ToggleableButtonProps) => {
 	const [isToggled, setIsToggled] = useState(false);

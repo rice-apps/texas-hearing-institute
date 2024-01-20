@@ -1,22 +1,14 @@
 import React from 'react';
-import {
-	Image,
-	ImageSourcePropType,
-	StyleSheet,
-	Text,
-	View,
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import SettingsButton from './SettingsButton';
 
-type ButtonGroupProps = {
-	headerImage: ImageSourcePropType;
+interface ButtonGroupProps {
 	headerText: string;
 	buttonLabels: string[];
 	buttonRoutes: string[];
-};
+}
 
 export default function ButtonGroup({
-	headerImage,
 	headerText,
 	buttonLabels,
 	buttonRoutes,
@@ -24,7 +16,6 @@ export default function ButtonGroup({
 	return (
 		<View style={styles.container}>
 			<View style={styles.headerContainer}>
-				<Image source={headerImage} style={styles.img} />
 				<Text style={styles.headerText}>{headerText}</Text>
 			</View>
 			{buttonLabels.map((label: string, indx: number) => (
@@ -42,13 +33,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 	},
 	headerText: {
-		fontSize: 18,
+		fontSize: 20,
 		fontWeight: '500',
 		marginBottom: 17,
-	},
-	img: {
-		width: 22,
-		height: 22,
-		marginRight: 10,
 	},
 });
