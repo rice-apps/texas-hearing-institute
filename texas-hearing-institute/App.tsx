@@ -10,7 +10,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Speech from 'expo-speech';
 import PracticeCard from './components/PracticeCard';
-import ProgressBar from './components/ProgressBar';   // problem bc not working on main branch 
 
 
 /**
@@ -29,33 +28,32 @@ import ProgressBar from './components/ProgressBar';   // problem bc not working 
  */
 
 interface Props {
-	progress: number;
-	height: number;
+  progress: number;
+  height: number;
+  backgroundColor?: string,
+  foregroundColor?: string
 }
-const ProgressBar: React.FC<Props> = ({ progress, height }) => {
-	return (
-		<View
-			style={[
-				styles.backBar,
-				{
-					height: height,
-					borderRadius: height / 2,
-					width: '100%',
-				},
-			]}
-		>
-			<View
-				style={[
-					styles.frontBar,
-					{
-						width: `${progress}%`,
-						borderRadius: height / 2,
-					},
-				]}
-			/>
-		</View>
-	);
+const ProgressBar: React.FC<Props> = ({ progress, height, backgroundColor , foregroundColor }) => {
+  const finalBackgroundColor = (backgroundColor == undefined ? '#D9D9D9' : backgroundColor!);
+  const finalForegroundColor = (foregroundColor == undefined ? '#000' : foregroundColor!);
+
+  return (
+      <View style={[styles.backBar, {
+          height: height,
+          borderRadius: height / 2,
+          width: '100%',
+          backgroundColor: finalBackgroundColor
+      }]}>
+          <View style={[styles.frontBar, {
+              width: `${progress}%`,
+              borderRadius: height / 2,
+              backgroundColor: finalForegroundColor
+          }]} />
+      </View>
+  );
 };
+  
+
 
 export default function App() {
   <ProgressBar height={10} progress={30}>
@@ -70,8 +68,8 @@ export default function App() {
 
     return(
     <View style={styles.container}>
-    <View style={styles.progressBar}>
-    </View>
+    {/* <View style={styles.progressBar}>
+    </View> */}
     <Text style={styles.text3}>0%</Text>
       <StatusBar style="auto" />
     <View style = {[styles.closeButton, 
@@ -157,15 +155,21 @@ export default function App() {
       marginTop: 20,
       
     },
-    backBar: {
-		backgroundColor: '#D9D9D9',
-		overflow: 'hidden',
-	},
-	frontBar: {
-		height: '100%',
-		backgroundColor: '#000',
-	},
+  //   backBar: {
+	// 	backgroundColor: '#D9D9D9',
+	// 	overflow: 'hidden',
+	// },
+	// frontBar: {
+	// 	height: '100%',
+	// 	backgroundColor: '#000',
+	// },
 
+  backBar: {
+    overflow: 'hidden',
+},
+frontBar: {
+    height: '100%',
+},
     // buttonArea:{
     //   flex: 2,
     //   justifyContent: 'center',
