@@ -5,7 +5,7 @@ import xmark from "../../icons/xmark";
 interface Props {
     enabled: boolean,
     onTap: () => void
-};
+}
 
 export const PracticeExitButton: React.FC<Props> = ({enabled, onTap}) => {
     const targetSize = 44
