@@ -3,7 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import PracticeButton from '../components/PracticeButton';
 import RadioButton from '../components/RadioButton';
 
-export default function PlaceCueTab() {
+interface SettingsPageProps {
+	title: string;
+	showVowelType: boolean;
+}
+
+export default function SettingsPage({
+	title,
+	showVowelType,
+}: SettingsPageProps) {
 	const [vowelType, setVowelType] = useState('Same');
 	const [numSyllables, setNumSyllables] = useState(2);
 
@@ -11,23 +19,27 @@ export default function PlaceCueTab() {
 		<View style={[styles.margins, styles.expanded]}>
 			<View style={[styles.expanded, styles.gaps]}>
 				<View>
-					<Text style={styles.title}>Place Cue</Text>
+					<Text style={styles.title}>{title}</Text>
 				</View>
-				<Text style={styles.subtitle}>SELECT VOWEL TYPE</Text>
-				<View>
-					<RadioButton<string>
-						label={'Same Vowels'}
-						value={'Same'}
-						onPress={setVowelType}
-						selectedRadio={vowelType}
-					/>
-					<RadioButton<string>
-						label={'Different Vowels'}
-						value={'Different'}
-						onPress={setVowelType}
-						selectedRadio={vowelType}
-					/>
-				</View>
+				{showVowelType ? (
+					<>
+						<Text style={styles.subtitle}>SELECT VOWEL TYPE</Text>
+						<View>
+							<RadioButton<string>
+								label={'Same Vowels'}
+								value={'Same'}
+								onPress={setVowelType}
+								selectedRadio={vowelType}
+							/>
+							<RadioButton<string>
+								label={'Different Vowels'}
+								value={'Different'}
+								onPress={setVowelType}
+								selectedRadio={vowelType}
+							/>
+						</View>
+					</>
+				) : null}
 				<Text style={styles.subtitle}>SELECT NUMBER OF SYLLABLES</Text>
 				<View>
 					<RadioButton<number>

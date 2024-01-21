@@ -2,13 +2,13 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PracticeTab from './tabs/PracticeTab';
-import PlaceCueTab from './tabs/PlaceCueTab';
 import VarVowelsScreen from './tabs/VarVowelsScreen';
 import MannerScreen from './tabs/MannerScreen';
 import VoicingScreen from './tabs/VoicingScreen';
 import { ApplicationProvider } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import { StatusBar } from 'react-native';
+import PlaceCueScreen from './tabs/PlaceCueScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +42,7 @@ export default function ListeningNavigator() {
 						component={PracticeTab}
 						options={{ headerShown: false }}
 					/>
-					<Stack.Screen name="Place Cue" component={PlaceCueTab} />
+					<Stack.Screen name="Place Cue" component={PlaceCueScreen} />
 					<Stack.Screen name="Variegated Vowels" component={VarVowelsScreen} />
 					<Stack.Screen name="Manner" component={MannerScreen} />
 					<Stack.Screen name="Voicing" component={VoicingScreen} />
