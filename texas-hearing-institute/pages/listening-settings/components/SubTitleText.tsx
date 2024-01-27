@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-type SubTitleTextProps = {
+interface SubTitleTextProps {
 	children: string;
-};
+}
 
 /**
  * A component that displays subtitle text.

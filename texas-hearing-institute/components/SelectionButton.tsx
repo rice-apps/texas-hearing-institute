@@ -2,14 +2,14 @@ import React from 'react';
 import { Text, Pressable, Image, StyleSheet } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 
-type SelectionButtonProps = {
+interface SelectionButtonProps {
 	label: string;
 	onPress: () => void;
 	color?: string;
 	textColor?: string;
 	checkedState: number;
 	id: number;
-};
+}
 
 const styles = StyleSheet.create({
 	image: {

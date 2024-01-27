@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
-type ScreenViewProps = {
-	children: any;
-};
+interface ScreenViewProps {
+	children: React.ReactNode;
+}
 
 /**
  * A component that controls the padding for each screen.

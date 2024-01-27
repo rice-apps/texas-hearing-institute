@@ -10,7 +10,7 @@ import {
 	setupPageElements,
 } from '../../utils/soundInventoryDataAndKeys';
 
-export type OnboardingStackParamList = {
+export interface OnboardingStackParamList {
 	Onboarding1: {
 		prompt: string;
 		pageNumber: number;
@@ -23,7 +23,7 @@ export type OnboardingStackParamList = {
 		persistenceKey: string;
 		setupElements: string[];
 	};
-};
+}
 
 export default function OnboardingMain() {
 	const Stack = createNativeStackNavigator();
@@ -39,7 +39,7 @@ export default function OnboardingMain() {
 
 				<Stack.Screen
 					name="Onboarding1"
-					component={Onboarding as any}
+					component={Onboarding}
 					initialParams={{
 						pageNumber: 0,
 						prompt: setupPrompts[0],
@@ -47,7 +47,7 @@ export default function OnboardingMain() {
 						setupElements: setupPageElements[0],
 					}}
 				/>
-				<Stack.Screen name="Onboarding2" component={Onboarding as any} />
+				<Stack.Screen name="Onboarding2" component={Onboarding} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

@@ -5,8 +5,6 @@ import ScreenView from '../components/ScreenView';
 import TitleText from '../components/TitleText';
 import SubTitleText from '../components/SubTitleText';
 
-const headerImage = require('../images/active-listening.png');
-
 const headerText = 'Listening Babble';
 
 const buttonLabels = ['Variegated Vowels', 'Manner', 'Place Cue', 'Voicing'];
@@ -23,7 +21,6 @@ export default function PracticeTab() {
 					<TitleText>Good morning, User</TitleText>
 					<SubTitleText>Let's get practicing.</SubTitleText>
 					<ButtonGroup
-						headerImage={headerImage}
 						headerText={headerText}
 						buttonLabels={buttonLabels}
 						buttonRoutes={buttonRoutes}
