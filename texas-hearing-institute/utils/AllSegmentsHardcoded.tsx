@@ -16,5 +16,25 @@ const allSegmentsHardcoded = [
 	new ConsonantSegment('t', [ConsonantCategories.Initial], {
 		manner: [0],
 		voice: [3],
+		place: [3],
+	}),
+	new ConsonantSegment('s', [ConsonantCategories.Initial], {
+		manner: [0],
+		voice: [0],
+		place: [1],
+	}),
+	new ConsonantSegment('sh', [ConsonantCategories.Initial], {
+		manner: [0],
+		place: [1],
+	}),
+	new ConsonantSegment('y', [ConsonantCategories.Initial], {
+		manner: [0, 1],
+	}),
+	new ConsonantSegment('n', [ConsonantCategories.Initial], {
+		manner: [0, 1],
+		place: [0],
+	}),
+	new ConsonantSegment('l', [ConsonantCategories.Initial], {
+		manner: [0, 1],
 	}),
 ];
