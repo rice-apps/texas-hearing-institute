@@ -1,15 +1,10 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
-import ButtonGroup from '../components/ButtonGroup';
 import ScreenView from '../components/ScreenView';
 import TitleText from '../components/TitleText';
 import SubTitleText from '../components/SubTitleText';
-
-const headerText = 'Listening Babble';
-
-const buttonLabels = ['Variegated Vowels', 'Manner', 'Place Cue', 'Voicing'];
-
-const buttonRoutes = ['Variegated Vowels', 'Manner', 'Place Cue', 'Voicing'];
+import ListeningBabble from './ListeningBabble';
+import SpeechBabble from '../../SpeechSettings/SpeechBabble';
 
 export default function PracticeTab() {
 	return (
@@ -20,11 +15,8 @@ export default function PracticeTab() {
 				<ScreenView>
 					<TitleText>Good morning, User</TitleText>
 					<SubTitleText>Let's get practicing.</SubTitleText>
-					<ButtonGroup
-						headerText={headerText}
-						buttonLabels={buttonLabels}
-						buttonRoutes={buttonRoutes}
-					/>
+					<SpeechBabble />
+					<ListeningBabble />
 				</ScreenView>
 			</View>
 		</SafeAreaView>
