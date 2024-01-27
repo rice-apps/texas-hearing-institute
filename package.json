@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "react-native-deck-swiper": "^1.6.7",
+    "react-native-swiper": "^1.6.0"
+  }
+}
