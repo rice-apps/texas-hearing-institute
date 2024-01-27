@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 import tw from 'tailwind-react-native-classnames';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 import * as Speech from 'expo-speech';
 import PracticeCard from './components/PracticeCard';
 
