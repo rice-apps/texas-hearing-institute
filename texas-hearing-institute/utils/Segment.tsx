@@ -1,5 +1,9 @@
 class Segment {
 	name = '';
+
+	constructor(name: string) {
+		this.name = name;
+	}
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -32,12 +36,32 @@ class ConsonantSegment extends Segment {
 		);
 
 		// Use filter and intersection logic to check if there are common petalIds
-		const consonantSiblings = consonantSegments.filter((x: ConsonantSegment) =>
-			x
-				.getPetalIds(flower)
-				.some((petalId: number) => petalIds.includes(petalId)),
+		const consonantSiblings = consonantSegments.filter(
+			(x: ConsonantSegment) =>
+				x !== this && // Don't include our own ConsonantSegment as a sibling
+				x
+					.getPetalIds(flower)
+					.some((petalId: number) => petalIds.includes(petalId)),
 		);
 		return consonantSiblings;
+	}
+
+	constructor(
+		name: string,
+		categories: ConsonantCategories[],
+		petalIds: {
+			manner?: number[];
+			voice?: number[];
+			place?: number[];
+		} = {},
+	) {
+		super(name);
+		this.categories = categories;
+		this.flowerToPetalId = new Map<ConsonantFlower, number[]>([
+			[ConsonantFlower.Manner, petalIds.manner ?? []],
+			[ConsonantFlower.Voice, petalIds.voice ?? []],
+			[ConsonantFlower.Place, petalIds.place ?? []],
+		]);
 	}
 }
 
