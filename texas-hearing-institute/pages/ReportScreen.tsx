@@ -14,7 +14,12 @@ interface Phoneme {
 	name: string;
 	correct: boolean;
 }
-//TODO: integrate progress bar/practice cards
+/*TODO: integrate progress bar/practice cards
+Save report -- supabase query
+query by username/id, get any necessary data from children?
+most data will be passed in from active practice/other sources, but the only 
+new info from report is phoneme list, correct/incorrect, and num syllables
+*/
 
 const ReportScreen = (phonemes: PhonemeListProps) => {
 	// frequency of correct/incorrect array
