@@ -61,36 +61,6 @@ export default function Active() {
   
     )
   }
-  
-
-  // const AudioButton = ({someText}: {someText:string}) => {
-  //   const [isPlaying, setIsPlaying] = useState(false);
-  
-  //   const startPlay = () => {
-  //     //TODO fix button functionality
-  //     setIsPlaying(!isPlaying);
-  //     Speech.speak(someText);
-  //     setIsPlaying(isPlaying)
-  //     // add logic to play/pause audio here
-  
-  //   };
-  
-  //   return (
-  //     //  TEXT TO SPEECH BUTTON==================================================
-  //     <View>
-  //       <Pressable style={({ pressed }) => [
-  //         styles.circleButton, {backgroundColor: "#cfcdcc", width:40, height:40}, pressed? styles.pressed : styles.circleButton
-  //       ]} onPress={startPlay}>
-  //         <Icon
-  //           name={isPlaying ? 'pause' : 'play'}
-  //           size={20}
-  //           color="black"
-  //         />
-  //       </Pressable>
-  //     </View>
-      
-  //   );
-  // };
 
   const ProgressBar = ({ progress }: { progress: number }) => {
     const [currProgress, setProgress] = useState(0);

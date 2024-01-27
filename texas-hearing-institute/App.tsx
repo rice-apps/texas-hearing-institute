@@ -52,7 +52,8 @@ const ProgressBar: React.FC<Props> = ({ progress, height, backgroundColor , fore
       </View>
   );
 };
-  
+
+
 
 
 export default function App() {
@@ -68,8 +69,7 @@ export default function App() {
 
     return(
     <View style={styles.container}>
-    {/* <View style={styles.progressBar}>
-    </View> */}
+    
     <Text style={styles.text3}>0%</Text>
       <StatusBar style="auto" />
     <View style = {[styles.closeButton, 
@@ -87,10 +87,6 @@ export default function App() {
 
     </View>
     
-
-
-
-  
     )
   }
   // export default ProgressBar;
