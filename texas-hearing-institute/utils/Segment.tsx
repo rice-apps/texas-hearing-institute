@@ -14,8 +14,30 @@ class ConsonantSegment extends Segment {
 		[ConsonantFlower.Place, []],
 	]);
 
-	getPetalIds(consonantFlower: ConsonantFlower): number[] | undefined {
-		return this.flowerToPetalId.get(consonantFlower);
+	getPetalIds(consonantFlower: ConsonantFlower): number[] {
+		return this.flowerToPetalId.get(consonantFlower) ?? [];
+	}
+
+	// Fetch other ConsonantSegments from canSayInventory that share any of the petalIds in this.getPetalIds
+	fetchConsonantSiblings(flower: ConsonantFlower) {
+		const petalIds = this.getPetalIds(flower);
+
+		// TODO: Assuming canSayInventory is an array of Segments
+		//  We would want to read this from async storage
+		const canSayInventory: Segment[] = [];
+
+		// Use filter to ensure x is of type ConsonantSegment
+		const consonantSegments: ConsonantSegment[] = canSayInventory.filter(
+			(x: Segment): x is ConsonantSegment => x instanceof ConsonantSegment,
+		);
+
+		// Use filter and intersection logic to check if there are common petalIds
+		const consonantSiblings = consonantSegments.filter((x: ConsonantSegment) =>
+			x
+				.getPetalIds(flower)
+				.some((petalId: number) => petalIds.includes(petalId)),
+		);
+		return consonantSiblings;
 	}
 }
 
