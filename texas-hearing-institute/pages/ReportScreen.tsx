@@ -1,9 +1,17 @@
 import React from 'react';
 import Heading from '../components/Heading';
-import { Pressable, StyleSheet, Text, View, ScrollView } from 'react-native';
+import {
+	TouchableOpacity,
+	StyleSheet,
+	Text,
+	View,
+	ScrollView,
+} from 'react-native';
 import tw from 'tailwind-react-native-classnames';
 import PieChart from 'react-native-pie-chart';
 import { AntDesign } from '@expo/vector-icons';
+import { supabase } from '../lib/supabase';
+import PillButtonView from '../components/PillButtonView';
 
 interface PhonemeListProps {
 	phonemes: Phoneme[];
@@ -14,6 +22,19 @@ interface Phoneme {
 	name: string;
 	correct: boolean;
 }
+
+interface ReportInfo {
+	child: string;
+	createdAt: string;
+	type: string;
+	subtype: string;
+	sound: string;
+	mode: string;
+	voweltype: string;
+	combinations: string[];
+	numSyllables: number;
+	correct: boolean[];
+}
 /*TODO: integrate progress bar/practice cards
 Save report -- supabase query
 query by username/id, get any necessary data from children?
@@ -21,14 +42,35 @@ most data will be passed in from active practice/other sources, but the only
 new info from report is phoneme list, correct/incorrect, and num syllables
 */
 
-const ReportScreen = (phonemes: PhonemeListProps) => {
+const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 	// frequency of correct/incorrect array
 	const cCount: number[] = [
 		phonemes.phonemes.filter((x) => x.correct == false).length,
 		phonemes.phonemes.filter((x) => x.correct == true).length,
 	];
+
+	const handleReportEntry = async () => {
+		const { error } = await supabase
+			.from('reports')
+			.insert({
+				child: report.child,
+				created_at: new Date().toISOString(),
+				type: report.type,
+				subtype: report.subtype,
+				sound: report.sound,
+				mode: report.mode,
+				voweltype: report.voweltype,
+				combinations: phonemes.phonemes.map((p) => p.name),
+				num_syllables: report.numSyllables,
+				correct_incorrect: phonemes.phonemes.map((p) => p.correct),
+			});
+		if (error) {
+			alert(error);
+		}
+	};
+
 	return (
-		<View>
+		<View style={styles.container}>
 			<Heading title={'Woohoo! High Five, ' + phonemes.user}></Heading>
 			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 				<PieChart
@@ -49,7 +91,9 @@ const ReportScreen = (phonemes: PhonemeListProps) => {
 						Incorrect: {cCount[0]}
 					</Text>
 					<Text style={tw`text-lg font-bold pt-2 pl-2 mx-5 mt-1`}>
-						{'Score: ' + (cCount[1] / (cCount[0] + cCount[1])) * 100 + '%'}
+						{'Score: ' +
+							Math.ceil((cCount[1] / (cCount[0] + cCount[1])) * 100) +
+							'%'}
 					</Text>
 				</View>
 			</View>
@@ -59,6 +103,7 @@ const ReportScreen = (phonemes: PhonemeListProps) => {
 					const iName = phoneme.correct ? 'check' : 'close';
 					return (
 						<View
+							key={phoneme.name}
 							style={{
 								flexDirection: 'row',
 								justifyContent: 'space-between',
@@ -74,27 +119,26 @@ const ReportScreen = (phonemes: PhonemeListProps) => {
 				})}
 			</ScrollView>
 
-			<Pressable
-				style={({ pressed }) => [
-					styles.box,
-					pressed ? styles.pressed : styles.button,
-				]}
-			>
-				<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-					Practice this set again
-				</Text>
-			</Pressable>
-			<Pressable
-				style={({ pressed }) => [
-					styles.box,
-					pressed ? styles.pressed : styles.button,
-				]}
-			>
-				<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>Save report</Text>
-			</Pressable>
+			<TouchableOpacity>
+				<PillButtonView
+					title="Practice this set again"
+					type="secondary"
+				></PillButtonView>
+			</TouchableOpacity>
+			<TouchableOpacity onPress={handleReportEntry}>
+				<PillButtonView title="Save Report" type="primary"></PillButtonView>
+			</TouchableOpacity>
 		</View>
 	);
 };
+
+/*
+				<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
+					Practice this set again
+				</Text>
+
+								<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>Save report</Text>
+*/
 
 const styles = StyleSheet.create({
 	container: {
@@ -102,28 +146,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		justifyContent: 'space-between',
 		padding: 20,
-	},
-	box: {
-		flex: 0.25,
-		backgroundColor: '#e3dfde',
-		justifyContent: 'space-between',
-		//alignItems: 'center',
-		marginTop: 15,
-		borderRadius: 20,
-	},
-	pressed: {
-		backgroundColor: '#a19e9d',
-		justifyContent: 'space-between',
-		padding: 10,
-		borderRadius: 10,
-	},
-	button: {
-		backgroundColor: '#D3D3D3',
-		padding: 10,
-		borderRadius: 10,
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-		gap: 10,
 	},
 });
 
