@@ -1,5 +1,5 @@
 import { Segment, ConsonantFlower, ConsonantCategories, VowelSegment, ConsonantSegment } from "./Segment";
-import { allSegmentsHardcoded } from "./AllSegmentsHardcoded";
+import { AllSegments } from "./AllSegmentsHardcoded";
 
 // syllableGeneration returns an array of 2-4 words (i.e. [pee, paw]).
 // Inputs:
@@ -14,8 +14,8 @@ export function syllableGeneration(
 ): string[] {
     let petalConsonants: Segment[] = [];
     let words: string[] = [];
-    const vowels: VowelSegment[] = allSegmentsHardcoded.filter(seg => seg instanceof VowelSegment); // dummy data
-    const consonants: ConsonantSegment[] = allSegmentsHardcoded.filter (seg => seg instanceof ConsonantSegment).map(seg => seg as ConsonantSegment);
+    const vowels: VowelSegment[] = AllSegments.getAllSegmentsHardcoded().filter(seg => seg instanceof VowelSegment); // dummy data
+    const consonants: ConsonantSegment[] = AllSegments.getAllSegmentsHardcoded().filter (seg => seg instanceof ConsonantSegment).map(seg => seg as ConsonantSegment);
 
     if (segment === null) {
         segment = getRandomElement(consonants)!;
@@ -62,16 +62,16 @@ function getRandomElement<T>(array: T[]): T | undefined {
 }
 
 // Testing:
-// console.log(
-//     syllableGeneration(
-//     new ConsonantSegment('t', [ConsonantCategories.Initial], {
-//         manner: [0],
-//         voice: [3],
-//         place: [3],
-//      }),
-//     ConsonantFlower.Manner,
-//     true,
-//     ConsonantCategories.Initial,
-//     2
-//     )
-// )
+console.log(
+    syllableGeneration(
+    new ConsonantSegment('t', [ConsonantCategories.Initial], {
+        manner: [0],
+        voice: [3],
+        place: [3],
+     }),
+    ConsonantFlower.Manner,
+    true,
+    ConsonantCategories.Initial,
+    2
+    )
+)
