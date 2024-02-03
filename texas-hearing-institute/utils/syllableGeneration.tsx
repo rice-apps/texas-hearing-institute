@@ -35,7 +35,7 @@ export function syllableGeneration(
     } else {
         petalConsonants = petalConsonants.filter(segment => {
             let consonantSegment = segment as ConsonantSegment;
-            consonantSegment.categories.includes(practiceTarget!)});
+            return consonantSegment.categories.includes(practiceTarget!)});
         let words = [];
 
         // Store random vowel in case isVariegatedVowel is false.
@@ -64,14 +64,14 @@ function getRandomElement<T>(array: T[]): T | undefined {
 // Testing:
 console.log(
     syllableGeneration(
-    new ConsonantSegment('t', [ConsonantCategories.Initial], {
-        manner: [0],
-        voice: [3],
-        place: [3],
-     }),
-    ConsonantFlower.Manner,
-    true,
-    ConsonantCategories.Initial,
-    2
+        new ConsonantSegment('t', [ConsonantCategories.Initial], {
+            manner: [0],
+            voice: [3],
+            place: [3],
+        }),
+        ConsonantFlower.Manner,
+        true,
+        ConsonantCategories.Initial,
+        2
     )
 )

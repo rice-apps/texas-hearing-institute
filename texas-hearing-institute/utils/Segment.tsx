@@ -41,7 +41,7 @@ export class ConsonantSegment extends Segment {
         // Use filter and intersection logic to check if there are common petalIds
         const consonantSiblings = consonantSegments.filter(
             (x: ConsonantSegment) =>
-                x !== this && // Don't include our own ConsonantSegment as a sibling
+                x.name != this.name && // Don't include our own ConsonantSegment as a sibling
                 x
                     .getPetalIds(flower)
                     .some((petalId: number) => petalIds.includes(petalId)),
