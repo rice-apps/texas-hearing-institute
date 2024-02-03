@@ -12,18 +12,19 @@ class ConsonantSegment extends Segment {
 	categories: ConsonantCategories[] = [];
 
 	// Maps "ConsonantFlower.XXX" to the petal IDs that this consonant belongs to in that flower
-	flowerToPetalId = new Map<ConsonantFlower, number[]>([
+	flowerToPetalIds = new Map<ConsonantFlower, number[]>([
 		[ConsonantFlower.Manner, []],
 		[ConsonantFlower.Voice, []],
 		[ConsonantFlower.Place, []],
 	]);
 
 	getPetalIds(consonantFlower: ConsonantFlower): number[] {
-		return this.flowerToPetalId.get(consonantFlower) ?? [];
+		// Return the corresponding petal IDs (or, for null safety, an empty array if the value doesn't exist)
+		return this.flowerToPetalIds.get(consonantFlower) ?? [];
 	}
 
 	// Fetch other ConsonantSegments from canSayInventory that share any of the petalIds in this.getPetalIds
-	fetchConsonantSiblings(flower: ConsonantFlower) {
+	fetchConsonantSiblings(flower: ConsonantFlower): ConsonantSegment[] {
 		const petalIds = this.getPetalIds(flower);
 
 		// TODO: Assuming canSayInventory is an array of Segments
@@ -57,7 +58,7 @@ class ConsonantSegment extends Segment {
 	) {
 		super(name);
 		this.categories = categories;
-		this.flowerToPetalId = new Map<ConsonantFlower, number[]>([
+		this.flowerToPetalIds = new Map<ConsonantFlower, number[]>([
 			[ConsonantFlower.Manner, petalIds.manner ?? []],
 			[ConsonantFlower.Voice, petalIds.voice ?? []],
 			[ConsonantFlower.Place, petalIds.place ?? []],
