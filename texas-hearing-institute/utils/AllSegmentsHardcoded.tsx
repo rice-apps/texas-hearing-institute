@@ -66,7 +66,7 @@ export class AllSegments {
 			new ConsonantSegment('j', [ConsonantCategories.Initial], {
 				manner: [2, 4],
 			}),
-			new ConsonantSegment('ng', [ConsonantCategories.Initial], {
+			new ConsonantSegment('ng', [ConsonantCategories.Final], {
 				manner: [2, 3, 4, 5],
 				place: [0],
 			}),
