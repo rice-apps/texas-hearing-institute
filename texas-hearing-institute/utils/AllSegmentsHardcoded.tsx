@@ -1,5 +1,6 @@
+import { VowelSegment, ConsonantSegment, ConsonantCategories } from "./Segment";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const allSegmentsHardcoded = [
+export const allSegmentsHardcoded = [
 	// Vowels
 	new VowelSegment('oo'),
 	new VowelSegment('ee'),

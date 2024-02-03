@@ -1,4 +1,4 @@
-class Segment {
+export class Segment {
 	name = '';
 
 	constructor(name: string) {
@@ -7,7 +7,7 @@ class Segment {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ConsonantSegment extends Segment {
+export class ConsonantSegment extends Segment {
 	// Categories can contain either ConsonantCategories.initial, .final, or both
 	categories: ConsonantCategories[] = [];
 
@@ -67,14 +67,14 @@ class ConsonantSegment extends Segment {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class VowelSegment extends Segment {}
+export class VowelSegment extends Segment {}
 
-enum ConsonantCategories {
+export enum ConsonantCategories {
 	Initial,
 	Final,
 }
 
-enum ConsonantFlower {
+export enum ConsonantFlower {
 	Manner,
 	Voice,
 	Place,
