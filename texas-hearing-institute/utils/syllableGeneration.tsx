@@ -15,7 +15,7 @@ export function syllableGeneration(
     let petalConsonants: Segment[] = [];
     let words: string[] = [];
     const vowels: VowelSegment[] = AllSegments.getAllSegmentsHardcoded().filter(seg => seg instanceof VowelSegment); // dummy data
-    const consonants: ConsonantSegment[] = AllSegments.getAllSegmentsHardcoded().filter (seg => seg instanceof ConsonantSegment).map(seg => seg as ConsonantSegment);
+    const consonants: ConsonantSegment[] = AllSegments.getAllSegmentsHardcoded().filter(seg => seg instanceof ConsonantSegment) as ConsonantSegment[];
 
 
     if (segment === null) {
@@ -28,11 +28,20 @@ export function syllableGeneration(
     } else if (segment instanceof ConsonantSegment) {
         petalConsonants = segment!.fetchConsonantSiblings(consonantFlower);
     } else {
-        console.debug("segment is neither Vowel or Consonant segments!");
+        throw "segment is neither Vowel or Consonant segments!";
     }
 
     if (segment instanceof VowelSegment) {
-
+        let randomConsonantSegment = getRandomElement(consonants.filter(consonant => consonant.getPetalIds(consonantFlower).length != 0));
+        words[0] = randomConsonantSegment!.name + segment.name;
+        let petalConsonants = randomConsonantSegment!.fetchConsonantSiblings(consonantFlower);
+        console.log("petalConsonats:", petalConsonants);
+        if (isVariegatedVowel) {
+            words[1] = getRandomElement(petalConsonants)!.name + getRandomElement(vowels.filter(vowel => vowel.name !== segment!.name))!.name; // TODO -- hopefully it actually filters it out!
+            console.log("words[1]:", words)
+        } else { 
+            words[1] = getRandomElement(petalConsonants)!.name + segment.name;
+        }
     } else {
         petalConsonants = petalConsonants.filter(segment => {
             let consonantSegment = segment as ConsonantSegment;
@@ -65,13 +74,23 @@ function getRandomElement<T>(array: T[]): T | undefined {
 }
 
 // Testing:
+// console.log("result:",
+//     syllableGeneration(
+//         new ConsonantSegment('t', [ConsonantCategories.Initial], {
+//             manner: [0],
+//             voice: [3],
+//             place: [3],
+//         }),
+//         ConsonantFlower.Manner,
+//         true,
+//         ConsonantCategories.Initial,
+//         2
+//     )
+// )
+
 console.log("result:",
     syllableGeneration(
-        new ConsonantSegment('t', [ConsonantCategories.Initial], {
-            manner: [0],
-            voice: [3],
-            place: [3],
-        }),
+        new VowelSegment('oo'),
         ConsonantFlower.Manner,
         true,
         ConsonantCategories.Initial,
