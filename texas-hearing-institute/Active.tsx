@@ -1,19 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import Constants from 'expo-constants';
-//import { Button } from 'react-native-elements';
 import tw from 'tailwind-react-native-classnames';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'
 import * as Speech from 'expo-speech';
 import PracticeCard from './components/PracticeCard';
+// import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-dynamic-deck-swiper';
 
 
-import Swiper from 'react-native-swiper';
-
-//REACT NATIVE DECK SWIPER
-
+//REACT NATIVE DECK SWIPER NEXT STEPS
 /**
  * HANDLING ACTIVE PRACTICE USING CARD APPROACH
  * 1. create card component (PracticeCard.tsx)
@@ -104,7 +102,7 @@ const ProgressBar: React.FC<Props> = ({ progress, height }) => {
 const MySwiperComponent = () => {
   return (
     <Swiper style={styles.wrapper} showsButtons={true}>
-      {/* Slide 1 */}
+      {/* card 1*/} 
       <View style={styles.slide}>
         <Text style={styles.text}>Slide 1</Text>
       </View>
@@ -118,6 +116,13 @@ const MySwiperComponent = () => {
       <View style={styles.slide}>
         <Text style={styles.text}>Slide 3</Text>
       </View>
+
+      {/* EMPTY SLIDE */}
+      <View>
+        <Text>Summary of results</Text>
+        {/* link this to the library of */}
+      </View>
+
     </Swiper>
   );
 };
@@ -202,26 +207,24 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
 
-  // SWIPER STUFF 
+  // SWIPER STUFF  === 
   wrapper: {
-    // styles for the swiper container
+    //style for swiper container 
     flex: 1,
   },
   slide: {
-    // styles for each slide
+    // style for each slide 
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#9DD6EB',
   },
   text: {
-    // styles for the text within each slide
+    //style for text within each slide 
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
   },
-  //END OF SWIPER STUFF 
-  // 
+  //END OF SWIPER STUFF === 
+
 });
-
-
