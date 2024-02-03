@@ -33,10 +33,14 @@ export class ConsonantSegment extends Segment {
         //  We would want to read this from async storage
         const canSayInventory: Segment[] = AllSegments.getAllSegmentsHardcoded();
 
+        console.log("4", canSayInventory)
+        
         // Use filter to ensure x is of type ConsonantSegment
         const consonantSegments: ConsonantSegment[] = canSayInventory.filter(
             (x: Segment): x is ConsonantSegment => x instanceof ConsonantSegment,
         );
+
+        console.log("5:", consonantSegments)
 
         // Use filter and intersection logic to check if there are common petalIds
         const consonantSiblings = consonantSegments.filter(
@@ -46,6 +50,7 @@ export class ConsonantSegment extends Segment {
                     .getPetalIds(flower)
                     .some((petalId: number) => petalIds.includes(petalId)),
         );
+        console.log("6:", consonantSiblings)
         return consonantSiblings;
     }
 

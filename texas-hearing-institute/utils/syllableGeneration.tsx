@@ -17,6 +17,7 @@ export function syllableGeneration(
     const vowels: VowelSegment[] = AllSegments.getAllSegmentsHardcoded().filter(seg => seg instanceof VowelSegment); // dummy data
     const consonants: ConsonantSegment[] = AllSegments.getAllSegmentsHardcoded().filter (seg => seg instanceof ConsonantSegment).map(seg => seg as ConsonantSegment);
 
+
     if (segment === null) {
         segment = getRandomElement(consonants)!;
     }
@@ -36,18 +37,20 @@ export function syllableGeneration(
         petalConsonants = petalConsonants.filter(segment => {
             let consonantSegment = segment as ConsonantSegment;
             return consonantSegment.categories.includes(practiceTarget!)});
-        let words = [];
+        console.log("petalConsoants:", petalConsonants);
 
         // Store random vowel in case isVariegatedVowel is false.
-        let randomVowel = getRandomElement(vowels)!;
+        let randomVowel = getRandomElement(vowels)!.name;
         words[0] = segment!.name + randomVowel;
+        console.log("words[0]:", words)
         if (isVariegatedVowel) {
-            words[1] = getRandomElement(petalConsonants)!.name + getRandomElement(vowels.filter(vowel => vowel !== randomVowel))!.name; // TODO -- hopefully it actually filters it out!
-        } else {
+            words[1] = getRandomElement(petalConsonants)!.name + getRandomElement(vowels.filter(vowel => vowel.name !== randomVowel))!.name; // TODO -- hopefully it actually filters it out!
+            console.log("words[1]:", words)
+        } else { 
             words[1] = getRandomElement(petalConsonants)!.name + randomVowel;
         }
     }
-    
+    console.log("words:", words)
     return words;
 }
 
@@ -62,7 +65,7 @@ function getRandomElement<T>(array: T[]): T | undefined {
 }
 
 // Testing:
-console.log(
+console.log("result:",
     syllableGeneration(
         new ConsonantSegment('t', [ConsonantCategories.Initial], {
             manner: [0],
