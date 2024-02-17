@@ -1,17 +1,20 @@
+//SWIPE VERSION 2, this one logs swipe history
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-const App = () => {
-  const cards = [1,2,3,4];
 
+
+const App = () => {
+  const cards = ['lol', 'lmao', 'rofl', 'wtf', 'omw'];
   return (
-    <View style={styles.container}>
+    <View style={styles.container}> 
       <Swiper
         cards={cards}
         renderCard={(card) => (
           <View style={styles.card}>
             <Text style={styles.text}>{card}</Text>
           </View>
+
         )}
         onSwiped={(cardIndex) => {
           console.log(`Swiped card index: ${cardIndex}`);
@@ -24,6 +27,10 @@ const App = () => {
         stackSize={3}
       >
       </Swiper>
+      <Text>Swipe right to mark <Text style={{ fontWeight: 'bold', color: '#A4C639' }}>CORRECT</Text></Text>
+      <Text></Text>
+      <Text>Swipe left to mark <Text style={{ fontWeight: 'bold', color: 'red' }}>STILL LEARNING</Text></Text>
+
     </View>
   );
 };
@@ -33,6 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   card: {
     height: 200,
@@ -40,10 +48,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'lightgray',
   },
   text: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 30,
+    //fontWeight: 'bold',
   },
 });
 
