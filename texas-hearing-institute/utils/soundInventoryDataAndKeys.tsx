@@ -1,4 +1,4 @@
-const prompt1 = 'What phenoms can your child **say**?';
+const prompt1 = 'What phenomes can your child **say**?';
 const prompt2 = 'What vowels can your child **say**?';
 
 export const consonants = [
