@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import Modal from 'react-native-modal';
 import tw from 'tailwind-react-native-classnames';
 import PillButtonView from './PillButtonView';
@@ -12,18 +12,22 @@ export default function PracticeModal() {
 					<View
 						style={{
 							backgroundColor: '#FFF',
-							width: 300,
-							height: 300,
-							borderRadius: 25,
-							padding: 10,
+							width: 342,
+							height: 390,
+							borderRadius: 16,
+							paddingHorizontal: 32,
+							paddingVertical: 40,
+							alignItems: 'center',
 						}}
 					>
-						<View>
-							<Text style={tw`text-lg text-center pt-4 pl-4 mx-5 mt-1`}>
-								Are you sure you want to end your practice session?
-							</Text>
-						</View>
-						<TouchableOpacity style={tw`pt-4`}>
+						<Image
+							source={require('../icons/speech-bubble.png')}
+							style={{ width: 70, height: 70, marginBottom: 24 }}
+						/>
+						<Text style={tw`text-xl font-medium text-center mb-6`}>
+							Are you sure you want to end your practice session?
+						</Text>
+						<TouchableOpacity style={tw`pt-4 mb-2`}>
 							<PillButtonView
 								title="End Session"
 								type="primary"
