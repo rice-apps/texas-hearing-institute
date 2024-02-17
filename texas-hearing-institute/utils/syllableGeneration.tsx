@@ -7,18 +7,19 @@ import {
 } from './Segment';
 import { AllSegments } from './AllSegmentsHardcoded';
 
-// syllableGeneration returns an array of 2-4 words (i.e. [pee, paw]).
+// syllableGeneration returns an array of `numberOfWords` words (i.e. ['pee', 'paw']).
 // Inputs:
-// segment: is some Segment during speaking preactice; null during listening practice.
-// consonantFlower: one of Voice/Manner/Place
-// isVariegatedVowel: true
-// practiceTarget: is initial/final in speaking practice; null to represent vowel targetting
-// numberOfWords: # of words
+// - segment: is the desired `Segment` to practice for speaking practice; null for listening practice.
+// - consonantFlower: one of Voice/Manner/Place, or All for listening practice, "Variegated Vowels" mode
+// - isUniqueVowels: Select Vowel Type: "Same Vowels"? Set this to false; "Different Vowels"? Set this to true.
+//   - Always set this to true if you're doing "Variegated Vowels" listening babble practice
+// - practiceTarget: is initial/final in speaking practice; null to represent vowel targeting
+// - numberOfWords: # of words to generate. Will deadlock if >10 and `isUniqueVowels` is true.
 
 export function syllableGeneration(
 	segment: Segment | null,
 	consonantFlower: ConsonantFlower,
-	isVariegatedVowel: boolean,
+	isUniqueVowels: boolean,
 	practiceTarget: ConsonantCategories | null,
 	numberOfWords: number,
 ): string[] {
@@ -68,14 +69,14 @@ export function syllableGeneration(
 		const petalConsonants =
 			randomConsonantSegment!.fetchConsonantSiblings(consonantFlower);
 
-		// If we're doing variegated vowels, keep track of the vowels used.
+		// If we're doing `isUniqueVowels`, keep track of the vowels used.
 		// We don't want a vowel to repeat more than once.
 		const vowelsUsed: VowelSegment[] = [segment];
 
 		// i starts at 1 because we want to start with the 2nd word. The first word is already completed
 		for (let i = 1; i < numberOfWords; i++) {
 			syllables[i] = generateWordWithVowelSegment(
-				isVariegatedVowel,
+				isUniqueVowels,
 				petalConsonants,
 				vowels,
 				vowelsUsed,
@@ -97,14 +98,14 @@ export function syllableGeneration(
 
 		// Generate other words
 
-		// If we're doing variegated vowels, keep track of the vowels used.
+		// If we're doing `isUniqueVowels`, keep track of the vowels used.
 		// We don't want a vowel to repeat more than once.
 		const vowelsUsed: VowelSegment[] = [randomVowel];
 
 		// i starts at 1 because we want to start with the 2nd word. The first word is already completed
 		for (let i = 1; i < numberOfWords; i++) {
 			syllables[i] = generateWordWithVowelSegment(
-				isVariegatedVowel,
+				isUniqueVowels,
 				petalConsonants,
 				vowels,
 				vowelsUsed,
@@ -113,7 +114,7 @@ export function syllableGeneration(
 		}
 	}
 
-	let words: string[] = [];
+	let words: string[];
 	if (practiceTarget == ConsonantCategories.Initial) {
 		words = syllables.map((wordArray) => wordArray[0] + wordArray[1]);
 	} else {
@@ -135,13 +136,13 @@ function getRandomElement<T>(array: T[]): T | undefined {
 
 // A word is an array of two segments. EG: ['z', 'oo']
 function generateWordWithVowelSegment(
-	isVariegatedVowel: boolean,
+	isUniqueVowels: boolean,
 	petalConsonants: ConsonantSegment[],
 	vowels: VowelSegment[],
 	vowelsUsed: VowelSegment[],
 	vowelSegment: VowelSegment,
 ) {
-	if (isVariegatedVowel) {
+	if (isUniqueVowels) {
 		// Generate a word with any vowel EXCEPT our segment's vowel
 		const newVowel = getRandomElement(
 			vowels.filter((vowel) => {
