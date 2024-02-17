@@ -74,6 +74,7 @@ const secondaryStyle = {
 	...{
 		borderWidth: 2,
 		borderColor: '#AFE4F9',
+		backgroundColor: '#FFFFFF',
 	},
 };
 

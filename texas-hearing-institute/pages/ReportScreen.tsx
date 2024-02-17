@@ -50,20 +50,18 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 	];
 
 	const handleReportEntry = async () => {
-		const { error } = await supabase
-			.from('reports')
-			.insert({
-				child: report.child,
-				created_at: new Date().toISOString(),
-				type: report.type,
-				subtype: report.subtype,
-				sound: report.sound,
-				mode: report.mode,
-				voweltype: report.voweltype,
-				combinations: phonemes.phonemes.map((p) => p.name),
-				num_syllables: report.numSyllables,
-				correct_incorrect: phonemes.phonemes.map((p) => p.correct),
-			});
+		const { error } = await supabase.from('reports').insert({
+			child: report.child,
+			created_at: new Date().toISOString(),
+			type: report.type,
+			subtype: report.subtype,
+			sound: report.sound,
+			mode: report.mode,
+			voweltype: report.voweltype,
+			combinations: phonemes.phonemes.map((p) => p.name),
+			num_syllables: report.numSyllables,
+			correct_incorrect: phonemes.phonemes.map((p) => p.correct),
+		});
 		if (error) {
 			alert(error);
 		}
@@ -122,23 +120,15 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 			<TouchableOpacity>
 				<PillButtonView
 					title="Practice this set again"
-					type="secondary"
+					type="primary"
 				></PillButtonView>
 			</TouchableOpacity>
 			<TouchableOpacity onPress={handleReportEntry}>
-				<PillButtonView title="Save Report" type="primary"></PillButtonView>
+				<PillButtonView title="Save Report" type="secondary"></PillButtonView>
 			</TouchableOpacity>
 		</View>
 	);
 };
-
-/*
-				<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-					Practice this set again
-				</Text>
-
-								<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>Save report</Text>
-*/
 
 const styles = StyleSheet.create({
 	container: {
