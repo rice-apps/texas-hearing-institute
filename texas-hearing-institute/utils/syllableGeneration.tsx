@@ -50,6 +50,7 @@ export async function syllableGeneration(
 			consonants.filter(
 				(consonant) => consonant.getPetalIds(consonantFlower).length != 0,
 			),
+			// TODO -- there will be an error if a child can only say one member of a flower.
 		)!;
 	}
 
