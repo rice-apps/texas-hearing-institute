@@ -18,6 +18,7 @@ export class ConsonantSegment extends Segment {
 		[ConsonantFlower.Manner, []],
 		[ConsonantFlower.Voice, []],
 		[ConsonantFlower.Place, []],
+		[ConsonantFlower.All, []],
 	]);
 
 	getPetalIds(consonantFlower: ConsonantFlower): number[] {
@@ -56,6 +57,7 @@ export class ConsonantSegment extends Segment {
 			manner?: number[];
 			voice?: number[];
 			place?: number[];
+			all?: number[];
 		} = {},
 	) {
 		super(name);
@@ -64,6 +66,7 @@ export class ConsonantSegment extends Segment {
 			[ConsonantFlower.Manner, petalIds.manner ?? []],
 			[ConsonantFlower.Voice, petalIds.voice ?? []],
 			[ConsonantFlower.Place, petalIds.place ?? []],
+			[ConsonantFlower.All, petalIds.all ?? []],
 		]);
 	}
 }
@@ -84,4 +87,5 @@ export enum ConsonantFlower {
 	Manner,
 	Voice,
 	Place,
+	All,
 }
