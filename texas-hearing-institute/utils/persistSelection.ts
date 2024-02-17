@@ -185,3 +185,36 @@ export const retrieveFinalConsonants = async (): Promise<
 		return [];
 	}
 };
+
+export const retrieveConsonants = async (): Promise<ConsonantSegment[]> => {
+	try {
+		const consonantSelectionJson = await AsyncStorage.getItem(
+			consonantInventoryPersistenceKey,
+		);
+		let consonantSelectionMap = new Map<string, boolean>();
+
+		if (consonantSelectionJson !== null) {
+			const consonantSelectionArray: [string, boolean][] = JSON.parse(
+				consonantSelectionJson,
+			);
+			consonantSelectionMap = new Map(consonantSelectionArray);
+		}
+
+		const selectedConsonants = Array.from(consonantSelectionMap.keys()).filter(
+			(s) => consonantSelectionMap.get(s),
+		);
+
+		const segments = AllSegments.getAllSegmentsHardcoded();
+
+		const consonantSegments: ConsonantSegment[] = segments.filter(
+			(seg) => seg instanceof ConsonantSegment,
+		) as ConsonantSegment[];
+
+		return consonantSegments.filter((seg: ConsonantSegment) =>
+			selectedConsonants.includes(seg.name),
+		);
+	} catch (e) {
+		console.log(e);
+		return [];
+	}
+};

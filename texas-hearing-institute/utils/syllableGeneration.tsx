@@ -16,14 +16,13 @@ import { AllSegments } from './AllSegmentsHardcoded';
 // - practiceTarget: is initial/final in speaking practice; null to represent vowel targeting
 // - numberOfWords: # of words to generate. Will deadlock if >10 and `isUniqueVowels` is true.
 
-export function syllableGeneration(
+export async function syllableGeneration(
 	segment: Segment | null,
 	consonantFlower: ConsonantFlower,
 	isUniqueVowels: boolean,
 	practiceTarget: ConsonantCategories | null,
 	numberOfWords: number,
-): string[] {
-	// Represents the sibling consonants in the petal
+): Promise<string[]> {
 	let petalConsonants: ConsonantSegment[] = [];
 	// Each array in syllable represents a word. Each item in the subarray represents a segment (as a string).
 	// The subarray will always have two items: the first is a consonant, the second is a vowel.
