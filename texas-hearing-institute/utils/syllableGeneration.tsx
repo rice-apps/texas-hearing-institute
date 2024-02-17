@@ -1,9 +1,9 @@
 import {
-	ConsonantCategories,
-	ConsonantFlower,
-	ConsonantSegment,
 	Segment,
+	ConsonantFlower,
+	ConsonantCategories,
 	VowelSegment,
+	ConsonantSegment,
 } from './Segment';
 import { AllSegments } from './AllSegmentsHardcoded';
 
@@ -19,14 +19,18 @@ export function syllableGeneration(
 	numberOfWords: number,
 ): string[] {
 	let petalConsonants: ConsonantSegment[] = [];
-	const words: string[] = [];
+	// Each array in syllable really represents a word.
+	const syllables: string[][] = [];
 	const vowels: VowelSegment[] = AllSegments.getAllSegmentsHardcoded().filter(
 		(seg) => seg instanceof VowelSegment,
 	); // dummy data
 	const consonants: ConsonantSegment[] =
 		AllSegments.getAllSegmentsHardcoded().filter(
-			(seg) => seg instanceof ConsonantSegment,
+			(seg) =>
+				seg instanceof ConsonantSegment &&
+				seg.categories.includes(practiceTarget!),
 		) as ConsonantSegment[];
+	// TODO - listening practice has practiceTarget null! something about the line above has to be fixed.
 
 	if (segment === null) {
 		segment = getRandomElement(consonants)!;
@@ -49,7 +53,7 @@ export function syllableGeneration(
 				(consonant) => consonant.getPetalIds(consonantFlower).length != 0,
 			),
 		);
-		words[0] = randomConsonantSegment!.name + segment.name;
+		syllables[0] = [randomConsonantSegment!.name, segment.name];
 
 		// Generate the other words
 		const petalConsonants =
@@ -61,7 +65,7 @@ export function syllableGeneration(
 
 		// i starts at 1 because we want to start with the 2nd word. The first word is already completed
 		for (let i = 1; i < numberOfWords; i++) {
-			words[i] = generateWordWithVowelSegment(
+			syllables[i] = generateWordWithVowelSegment(
 				isVariegatedVowel,
 				petalConsonants,
 				vowels,
@@ -80,7 +84,7 @@ export function syllableGeneration(
 		const randomVowel = getRandomElement(vowels)!;
 
 		// Generate the first word
-		words[0] = segment!.name + randomVowel.name;
+		syllables[0] = [segment!.name, randomVowel.name];
 
 		// Generate other words
 
@@ -90,7 +94,7 @@ export function syllableGeneration(
 
 		// i starts at 1 because we want to start with the 2nd word. The first word is already completed
 		for (let i = 1; i < numberOfWords; i++) {
-			words[i] = generateWordWithVowelSegment(
+			syllables[i] = generateWordWithVowelSegment(
 				isVariegatedVowel,
 				petalConsonants,
 				vowels,
@@ -99,6 +103,14 @@ export function syllableGeneration(
 			);
 		}
 	}
+
+	let words: string[] = [];
+	if (practiceTarget == ConsonantCategories.Initial) {
+		words = syllables.map((wordArray) => wordArray[0] + wordArray[1]);
+	} else {
+		words = syllables.map((wordArray) => wordArray[1] + wordArray[0]);
+	}
+
 	return words;
 }
 
@@ -112,6 +124,7 @@ function getRandomElement<T>(array: T[]): T | undefined {
 	return array[randomIndex];
 }
 
+// A word is an array of two segments. EG: ['z', 'oo']
 function generateWordWithVowelSegment(
 	isVariegatedVowel: boolean,
 	petalConsonants: ConsonantSegment[],
@@ -128,10 +141,10 @@ function generateWordWithVowelSegment(
 			}),
 		)!;
 		vowelsUsed.push(newVowel);
-		return getRandomElement(petalConsonants)!.name + newVowel.name;
+		return [getRandomElement(petalConsonants)!.name, newVowel.name];
 	} else {
 		// Generate a word with our segment's vowel
-		return getRandomElement(petalConsonants)!.name + vowelSegment.name;
+		return [getRandomElement(petalConsonants)!.name, vowelSegment.name];
 	}
 }
 
@@ -160,3 +173,14 @@ console.log(
 //         4
 //     )
 // )
+
+console.log(
+	'result:',
+	syllableGeneration(
+		new VowelSegment('oo'),
+		ConsonantFlower.Manner,
+		true,
+		ConsonantCategories.Final,
+		2,
+	),
+);
