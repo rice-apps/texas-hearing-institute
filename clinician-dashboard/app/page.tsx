@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import LoginBox from './page_components/LoginBox';
 
 export default async function Home() {
   const supabase = createClient(cookies());
@@ -10,12 +11,6 @@ export default async function Home() {
 
   return (
   <div>
-    <h1>Welcome {session?.user.email}</h1>
-    {session ?
-      <form action="/auth/logout" method="post">
-        <button type="submit">Sign out</button>
-      </form> :
-      <a href="/auth/login">Sign in</a>
-    }
+    <LoginBox />
   </div>)
 }
