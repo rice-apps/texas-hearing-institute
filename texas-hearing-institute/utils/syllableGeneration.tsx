@@ -1,9 +1,9 @@
 import {
-	ConsonantCategories,
-	ConsonantFlower,
-	ConsonantSegment,
 	Segment,
+	ConsonantFlower,
+	ConsonantCategories,
 	VowelSegment,
+	ConsonantSegment,
 } from './Segment';
 import { AllSegments } from './AllSegmentsHardcoded';
 
@@ -18,22 +18,26 @@ export function syllableGeneration(
 	practiceTarget: ConsonantCategories | null,
 	numberOfWords: number,
 ): string[] {
-	let petalConsonants: ConsonantSegment[] = [];
-	const words: string[] = [];
+	let petalConsonants: Segment[] = [];
+	// Each array in syllable really represents a word.
+	let syllables: string[][] = [];
 	const vowels: VowelSegment[] = AllSegments.getAllSegmentsHardcoded().filter(
 		(seg) => seg instanceof VowelSegment,
 	); // dummy data
 	const consonants: ConsonantSegment[] =
 		AllSegments.getAllSegmentsHardcoded().filter(
-			(seg) => seg instanceof ConsonantSegment,
+			(seg) =>
+				seg instanceof ConsonantSegment &&
+				seg.categories.includes(practiceTarget!),
 		) as ConsonantSegment[];
+	// TODO - listening practice has practiceTarget null! something about the line above has to be fixed.
 
 	if (segment === null) {
 		segment = getRandomElement(consonants)!;
 	}
 
 	if (segment instanceof VowelSegment) {
-		const randomConsonantSegment = getRandomElement(consonants);
+		let randomConsonantSegment = getRandomElement(consonants);
 		petalConsonants =
 			randomConsonantSegment!.fetchConsonantSiblings(consonantFlower);
 	} else if (segment instanceof ConsonantSegment) {
@@ -43,62 +47,54 @@ export function syllableGeneration(
 	}
 
 	if (segment instanceof VowelSegment) {
-		// Generate the first word
-		const randomConsonantSegment = getRandomElement(
+		let randomConsonantSegment = getRandomElement(
 			consonants.filter(
 				(consonant) => consonant.getPetalIds(consonantFlower).length != 0,
 			),
 		);
-		words[0] = randomConsonantSegment!.name + segment.name;
-
-		// Generate the other words
-		const petalConsonants =
+		syllables[0] = [randomConsonantSegment!.name, segment.name];
+		let petalConsonants =
 			randomConsonantSegment!.fetchConsonantSiblings(consonantFlower);
-
-		// If we're doing variegated vowels, keep track of the vowels used.
-		// We don't want a vowel to repeat more than once.
-		const vowelsUsed: VowelSegment[] = [segment];
-
-		// i starts at 1 because we want to start with the 2nd word. The first word is already completed
-		for (let i = 1; i < numberOfWords; i++) {
-			words[i] = generateWordWithVowelSegment(
-				isVariegatedVowel,
-				petalConsonants,
-				vowels,
-				vowelsUsed,
-				segment,
-			);
+		console.log('petalConsonats:', petalConsonants);
+		if (isVariegatedVowel) {
+			syllables[1] = [
+				getRandomElement(petalConsonants)!.name,
+				getRandomElement(
+					vowels.filter((vowel) => vowel.name !== segment!.name),
+				)!.name,
+			];
+		} else {
+			syllables[1] = [getRandomElement(petalConsonants)!.name, segment.name];
 		}
 	} else {
-		// Filter petalConsonants to be of .initial or .final depending on practiceTarget
 		petalConsonants = petalConsonants.filter((segment) => {
-			const consonantSegment = segment as ConsonantSegment;
+			let consonantSegment = segment as ConsonantSegment;
 			return consonantSegment.categories.includes(practiceTarget!);
 		});
+		console.log('petalConsoants:', petalConsonants);
 
-		// Pick a random vowel for the first word
-		const randomVowel = getRandomElement(vowels)!;
-
-		// Generate the first word
-		words[0] = segment!.name + randomVowel.name;
-
-		// Generate other words
-
-		// If we're doing variegated vowels, keep track of the vowels used.
-		// We don't want a vowel to repeat more than once.
-		const vowelsUsed: VowelSegment[] = [randomVowel];
-
-		// i starts at 1 because we want to start with the 2nd word. The first word is already completed
-		for (let i = 1; i < numberOfWords; i++) {
-			words[i] = generateWordWithVowelSegment(
-				isVariegatedVowel,
-				petalConsonants,
-				vowels,
-				vowelsUsed,
-				randomVowel,
-			);
+		// Store random vowel in case isVariegatedVowel is false.
+		let randomVowel = getRandomElement(vowels)!.name;
+		syllables[0] = [segment!.name, randomVowel];
+		if (isVariegatedVowel) {
+			syllables[1] = [
+				getRandomElement(petalConsonants)!.name,
+				getRandomElement(vowels.filter((vowel) => vowel.name !== randomVowel))!
+					.name,
+			];
+		} else {
+			syllables[1] = [getRandomElement(petalConsonants)!.name, randomVowel];
 		}
 	}
+	console.log('words:', syllables);
+
+	let words: string[] = [];
+	if (practiceTarget == ConsonantCategories.Initial) {
+		words = syllables.map((wordArray) => wordArray[0] + wordArray[1]);
+	} else {
+		words = syllables.map((wordArray) => wordArray[1] + wordArray[0]);
+	}
+
 	return words;
 }
 
@@ -112,51 +108,28 @@ function getRandomElement<T>(array: T[]): T | undefined {
 	return array[randomIndex];
 }
 
-function generateWordWithVowelSegment(
-	isVariegatedVowel: boolean,
-	petalConsonants: ConsonantSegment[],
-	vowels: VowelSegment[],
-	vowelsUsed: VowelSegment[],
-	vowelSegment: VowelSegment,
-) {
-	if (isVariegatedVowel) {
-		// Generate a word with any vowel EXCEPT our segment's vowel
-		const newVowel = getRandomElement(
-			vowels.filter((vowel) => {
-				// Compare "name" of every vowelsUsed to our vowel.name
-				return !vowelsUsed.map((value) => value.name).includes(vowel.name);
-			}),
-		)!;
-		vowelsUsed.push(newVowel);
-		return getRandomElement(petalConsonants)!.name + newVowel.name;
-	} else {
-		// Generate a word with our segment's vowel
-		return getRandomElement(petalConsonants)!.name + vowelSegment.name;
-	}
-}
-
 // Testing:
-console.log(
-	'result:',
-	syllableGeneration(
-		new ConsonantSegment('t', [ConsonantCategories.Initial], {
-			manner: [0],
-			voice: [3],
-			place: [3],
-		}),
-		ConsonantFlower.Manner,
-		false,
-		ConsonantCategories.Initial,
-		4,
-	),
-);
-
 // console.log("result:",
 //     syllableGeneration(
-//         new VowelSegment('eye'),
+//         new ConsonantSegment('t', [ConsonantCategories.Initial], {
+//             manner: [0],
+//             voice: [3],
+//             place: [3],
+//         }),
 //         ConsonantFlower.Manner,
 //         true,
 //         ConsonantCategories.Initial,
-//         4
+//         2
 //     )
 // )
+
+console.log(
+	'result:',
+	syllableGeneration(
+		new VowelSegment('oo'),
+		ConsonantFlower.Manner,
+		true,
+		ConsonantCategories.Final,
+		2,
+	),
+);
