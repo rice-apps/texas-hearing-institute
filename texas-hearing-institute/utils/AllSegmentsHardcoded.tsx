@@ -24,6 +24,7 @@ export class AllSegments {
 					manner: [0],
 					voice: [3],
 					place: [3],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -33,6 +34,7 @@ export class AllSegments {
 					manner: [0],
 					voice: [0],
 					place: [1],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -41,10 +43,12 @@ export class AllSegments {
 				{
 					manner: [0],
 					place: [1],
+					all: [0],
 				},
 			),
 			new ConsonantSegment('y', [ConsonantCategories.Initial], {
 				manner: [0, 1],
+				all: [0],
 			}),
 			new ConsonantSegment(
 				'n',
@@ -52,6 +56,7 @@ export class AllSegments {
 				{
 					manner: [0, 1],
 					place: [0],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -59,6 +64,7 @@ export class AllSegments {
 				[ConsonantCategories.Initial, ConsonantCategories.Final],
 				{
 					manner: [0, 1],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -68,6 +74,7 @@ export class AllSegments {
 					manner: [1],
 					voice: [0],
 					place: [2],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -77,11 +84,13 @@ export class AllSegments {
 					manner: [1],
 					voice: [3],
 					place: [4],
+					all: [0],
 				},
 			),
 			new ConsonantSegment('zh', [ConsonantCategories.Final], {
 				manner: [1],
 				place: [2],
+				all: [0],
 			}),
 			new ConsonantSegment(
 				'g',
@@ -90,6 +99,7 @@ export class AllSegments {
 					manner: [2, 3],
 					voice: [1],
 					place: [4],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -97,6 +107,7 @@ export class AllSegments {
 				[ConsonantCategories.Initial, ConsonantCategories.Final],
 				{
 					manner: [2, 3, 4, 5],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -104,17 +115,20 @@ export class AllSegments {
 				[ConsonantCategories.Initial, ConsonantCategories.Final],
 				{
 					manner: [2, 4],
+					all: [0],
 				},
 			),
 			new ConsonantSegment('ng', [ConsonantCategories.Final], {
 				manner: [2, 3, 4, 5],
 				place: [0],
+				all: [0],
 			}),
 			new ConsonantSegment(
 				'ch',
 				[ConsonantCategories.Initial, ConsonantCategories.Final],
 				{
 					manner: [3, 5],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -124,6 +138,7 @@ export class AllSegments {
 					manner: [4, 5],
 					voice: [1],
 					place: [3],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -133,14 +148,17 @@ export class AllSegments {
 					manner: [6],
 					voice: [4],
 					place: [3],
+					all: [0],
 				},
 			),
 			new ConsonantSegment('h', [ConsonantCategories.Initial], {
 				manner: [6, 7],
 				place: [1],
+				all: [0],
 			}),
 			new ConsonantSegment('w', [ConsonantCategories.Initial], {
 				manner: [6, 7],
+				all: [0],
 			}),
 			new ConsonantSegment(
 				'm',
@@ -148,6 +166,7 @@ export class AllSegments {
 				{
 					manner: [6, 7],
 					place: [0],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -157,6 +176,7 @@ export class AllSegments {
 					manner: [7],
 					voice: [4],
 					place: [4],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -165,6 +185,7 @@ export class AllSegments {
 				{
 					voice: [2],
 					place: [1],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -173,6 +194,7 @@ export class AllSegments {
 				{
 					voice: [2],
 					place: [2],
+					all: [0],
 				},
 			),
 			new ConsonantSegment(
@@ -180,6 +202,7 @@ export class AllSegments {
 				[ConsonantCategories.Initial, ConsonantCategories.Final],
 				{
 					place: [2],
+					all: [0],
 				},
 			),
 		];
