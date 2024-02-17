@@ -9,8 +9,12 @@ import { AllSegments } from './AllSegmentsHardcoded';
 
 // syllableGeneration returns an array of 2-4 words (i.e. [pee, paw]).
 // Inputs:
-// segment: is null during listening practice.
-// practiceTarget: is null to represent vowel targetting
+// segment: is some Segment during speaking preactice; null during listening practice.
+// consonantFlower: one of Voice/Manner/Place
+// isVariegatedVowel: true
+// practiceTarget: is initial/final in speaking practice; null to represent vowel targetting
+// numberOfWords: # of words
+
 export function syllableGeneration(
 	segment: Segment | null,
 	consonantFlower: ConsonantFlower,
@@ -33,7 +37,12 @@ export function syllableGeneration(
 	// TODO - listening practice has practiceTarget null! something about the line above has to be fixed.
 
 	if (segment === null) {
-		segment = getRandomElement(consonants)!;
+		segment = getRandomElement(
+			// Filter out empty consonant flowers b/c otherwise we have nothing to pick from for the other consonant.
+			consonants.filter(
+				(consonant) => consonant.getPetalIds(consonantFlower).length != 0,
+			),
+		)!;
 	}
 
 	if (segment instanceof VowelSegment) {
@@ -149,20 +158,7 @@ function generateWordWithVowelSegment(
 }
 
 // Testing:
-console.log(
-	'result:',
-	syllableGeneration(
-		new ConsonantSegment('t', [ConsonantCategories.Initial], {
-			manner: [0],
-			voice: [3],
-			place: [3],
-		}),
-		ConsonantFlower.Manner,
-		false,
-		ConsonantCategories.Initial,
-		4,
-	),
-);
+// ================ SPEECH GENERATION =================
 
 // console.log("result:",
 //     syllableGeneration(
@@ -174,13 +170,83 @@ console.log(
 //     )
 // )
 
-console.log(
-	'result:',
-	syllableGeneration(
-		new VowelSegment('oo'),
-		ConsonantFlower.Manner,
-		true,
-		ConsonantCategories.Final,
-		2,
-	),
-);
+// console.log(
+// 	'result:',
+// 	syllableGeneration(
+// 		new VowelSegment('oo'),
+// 		ConsonantFlower.Manner,
+// 		true,
+// 		ConsonantCategories.Final,
+// 		2,
+// 	),
+// );
+
+// console.log(
+// 	'result:',
+// 	syllableGeneration(
+// 		new ConsonantSegment(
+// 			'z',
+// 			[ConsonantCategories.Initial, ConsonantCategories.Final],
+// 			{
+// 				manner: [1],
+// 				voice: [0],
+// 				place: [2],
+// 				all: [0],
+// 			},
+// 		),
+// 		ConsonantFlower.Voice,
+// 		false,
+// 		ConsonantCategories.Final,
+// 		2,
+// 	),
+// );
+
+// console.log(
+// 	'result:',
+// 	syllableGeneration(
+// 		new ConsonSegment('t', [ConsonantCategories.Initial], {
+//             manner: [0],
+//             voice: [3],
+//             place: [3],
+//         }),
+// 		ConsonantFlower.Voice,
+// 		true,
+// 		ConsonantCategories.Initial,
+// 		2,
+// 	),
+// );
+
+// ================ LISTENING GENERATION =================
+
+// console.log(
+// 	'result:',
+// 	syllableGeneration(
+// 		null,
+// 		ConsonantFlower.All,
+// 		true,
+// 		ConsonantCategories.Final,
+// 		3,
+// 	),
+// );
+
+// console.log(
+// 	'result:',
+// 	syllableGeneration(
+// 		null,
+// 		ConsonantFlower.Voice,
+// 		false,
+// 		ConsonantCategories.Final,
+// 		2,
+// 	),
+// );
+
+// console.log(
+// 	'result:',
+// 	syllableGeneration(
+// 		null,
+// 		ConsonantFlower.All,
+// 		true,
+// 		ConsonantCategories.Initial,
+// 		3,
+// 	),
+// );
