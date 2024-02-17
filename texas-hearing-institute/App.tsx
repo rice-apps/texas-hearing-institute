@@ -1,114 +1,114 @@
-//APP STUFF===============================================================================================================
-import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
-import Constants from 'expo-constants';
-import { NavigationContainer } from '@react-navigation/native';
-import tw from 'tailwind-react-native-classnames';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import React, { useState } from 'react';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import Swiper from 'react-native-deck-swiper';
 
-// import PropTypes from 'prop-types';
-// import * as Speech from 'expo-speech';
-// import PracticeCard from './components/PracticeCard';
-// import 
+const DATA = [1,2,3,4]; // Your array of data items
 
-// import ProgressBar from "../Progress";
-/*
-TODO: custom audio button
-link to consonants page
-text-to-speech
-track correct/incorrect answers
-*/
+const App: React.FC = () => {
+  const renderCard = (item: any) => {
+    return (
+      <View style={styles.cardContainer}>
+        <View style={styles.card}>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardText}>{item.title}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
-export default function App() {
+  const onSwiped = () => {
+    // Handle swipe action
+  };
+
+  const onSwipedAll = () => {
+    // Handle when all cards have been swiped
+  };
+
   return (
-    <NavigationContainer>{
-    <View style={[styles.container, 
-    {
-      flexDirection: 'column',
-    }]}>
-      <Text style={tw`text-3xl font-bold pt-10`}>Good morning Bob!</Text>
-      <Text style={tw`text-base pt-6`}>Let's get practicing!</Text>
-   
-      <Icon style={tw `p-5`} name="circle" size={25} color="black">
-      <Text style={tw`text-2xl font-bold pt-6`}>  Speech Babble</Text>
-            </Icon>
-      
-      <Pressable style={({ pressed }) => [
-          styles.box, pressed? styles.pressed : styles.box
-        ]}>
-          <Text style={tw `text-lg pt-2 pl-2 mx-5 mt-1`}>Vowels</Text>
-      </Pressable>
-        
-      <Pressable style={({ pressed }) => [
-          styles.box, pressed? styles.pressed : styles.box
-        ]}>
-          <Text style={tw `text-lg pt-2 pl-2 mx-5 mt-1`}>Initial Consonants</Text>
-      </Pressable> 
-        <Pressable style={({ pressed }) => [
-          styles.box, pressed? styles.pressed : styles.box
-        ]}>
-          <Text style={tw `text-lg pt-2 pl-2 mx-5 mt-1`}>Final Consonants</Text>
-        </Pressable>
-
-        <Icon style={tw `p-5`} name="circle" size={25} color="black">
-      <Text style={tw`text-2xl font-bold pt-6 mx-5 mt-1`}>  Listening Babble</Text>
-            </Icon>
-       <Pressable style={({ pressed }) => [
-          styles.box, pressed? styles.pressed : styles.box
-        ]}>
-          <Text style={tw `text-lg pt-2 pl-2 mx-5 mt-1`}>Variegated Vowels</Text>
-        </Pressable>
-        <Pressable style={({ pressed }) => [
-          styles.box, pressed? styles.pressed : styles.box
-        ]}>
-          <Text style={tw `text-lg pt-2 pl-2 mx-5 mt-1`}>Voicing</Text>
-        </Pressable>
-        <Pressable style={({ pressed }) => [
-          styles.box, pressed? styles.pressed : styles.box
-        ]}>
-          <Text style={tw `text-lg pt-2 pl-2 mx-5 mt-1`}>Manner</Text>
-        </Pressable>
-        <Pressable style={({ pressed }) => [
-          styles.box, pressed? styles.pressed : styles.box
-        ]}>
-          <Text style={tw `text-lg pt-2 pl-2 mx-5 mt-1`}>Place Cue</Text>
-        </Pressable>
-        
-        
-      <StatusBar style="auto" />
-      
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Swiper
+        cards={DATA}
+        renderCard={renderCard}
+        onSwiped={onSwiped}
+        onSwipedAll={onSwipedAll}
+        cardIndex={0}
+        stackSize={2}
+        stackSeparation={15}
+        overlayLabels={{
+          left: {
+            title: 'still learning',
+            style: {
+              label: {
+                backgroundColor: 'red',
+                borderColor: 'red',
+                color: 'white',
+                borderWidth: 1,
+              },
+              wrapper: {
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                justifyContent: 'flex-start',
+                marginTop: 100,
+                marginLeft: 90,
+              },
+            },
+          },
+          right: {
+            title: 'correct!',
+            style: {
+              label: {
+                backgroundColor: 'green',
+                borderColor: 'green',
+                color: 'white',
+                borderWidth: 1,
+              },
+              wrapper: {
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                marginTop: 100,
+                marginLeft: 10,
+              },
+            },
+          },
+        }}
+      />
     </View>
-
-     //<View style={styles.container}><Text>Hello world</Text></View>
-     ////   <Text>Speech Babble</Text>
-     //<Button>button</Button>
-     //
-
-    }</NavigationContainer>);
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    //alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 20,
-    
+    justifyContent: 'center',
+    alignItems: 'center',
+    //backgroundColor: 'black',
   },
-  box: {
-    flex: 0.25,
-    backgroundColor: '#e3dfde',
-    justifyContent: 'space-between',
-    //alignItems: 'center',
-    marginTop: 20,
-    borderRadius: 20,
+  cardContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    //backgroundColor: 'white',
   },
-  pressed: {
-    backgroundColor: '#a19e9d',
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderWidth: 4,
+    borderColor: 'lightgray',
+    elevation: 5,
+    width: 250,
+    aspectRatio:0.8,
+  },
+  cardContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%', // Set the height of the card content
+  },
+  cardText: {
+    textAlign: 'center',
+  },
+});
 
-  }
-}
-);
-    
+export default App;
