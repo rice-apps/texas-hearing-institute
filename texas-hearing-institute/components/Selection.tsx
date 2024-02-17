@@ -4,9 +4,9 @@ import tw from 'tailwind-react-native-classnames';
 import SelectionButton from './SelectionButton';
 import { useState } from 'react';
 
-type SelectionProps = {
+interface SelectionProps {
 	buttonNames: string[];
-};
+}
 
 const Selection = ({ buttonNames }: SelectionProps) => {
 	const [mode, setMode] = useState(-1);
