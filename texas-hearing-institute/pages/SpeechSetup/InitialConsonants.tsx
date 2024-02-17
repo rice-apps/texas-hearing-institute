@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Heading from '../../components/Heading';
-import Subheading from '../../components/SubHeading';
+import Subheading from '../../components/Subheading';
 import GridButton from '../../components/GridButton';
 import Selection from '../../components/Selection';
 import BigButton from '../../components/Button';

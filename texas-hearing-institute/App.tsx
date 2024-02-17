@@ -1,14 +1,19 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { AccountPage } from './pages/AccountPage/AccountPageMain';
+import { User } from './user/User';
 
 export default function App() {
 	return (
 		<View style={styles.container}>
-			<Text style={tw`text-3xl font-bold underline`}>
-				Open up App.tsx to start working on your app!
-			</Text>
+			<SafeAreaView
+				style={{
+					width: '100%',
+				}}
+			>
+				<AccountPage user={new User()} />
+			</SafeAreaView>
 			<StatusBar style="auto" />
 		</View>
 	);
