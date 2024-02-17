@@ -72,9 +72,10 @@ export function syllableGeneration(
 		throw 'segment is neither Vowel or Consonant segments!';
 	}
 
-	// If our target Segment is a vowel:
+	// This bundle of expressions generates all `syllables` to be practiced.
 	if (segment instanceof VowelSegment) {
 		// —— Generate the first word ——
+
 		// Pick a random consonant to go with our vowel in the first word.
 		const randomConsonantSegment = getRandomElement(petalConsonants);
 		// Consonant first, then vowel (our targeted segment)
@@ -98,19 +99,22 @@ export function syllableGeneration(
 			);
 		}
 	} else {
+		// —— Generate the first word ——
+
 		// Filter petalConsonants to be of .initial or .final depending on practiceTarget
 		petalConsonants = petalConsonants.filter((segment) => {
 			const consonantSegment = segment as ConsonantSegment;
 			return consonantSegment.categories.includes(practiceTarget!);
 		});
 
-		// Pick a random vowel for the first word
+		// Pick a random vowel to go with our consonant in the first word
 		const randomVowel = getRandomElement(vowels)!;
 
-		// Generate the first word
+		// Consonant first (our targeted segment), then vowel
+		// This guarantees our target segment is in the first word.
 		syllables[0] = [segment!.name, randomVowel.name];
 
-		// Generate other words
+		// —— Generate the other words ——
 
 		// If we're doing `isUniqueVowels`, keep track of the vowels used.
 		// We don't want a vowel to repeat more than once.
@@ -128,6 +132,7 @@ export function syllableGeneration(
 		}
 	}
 
+	// This bundle of expressions converts `syllables` into a list of `words` (strings).
 	let words: string[];
 	if (practiceTarget == ConsonantCategories.Initial) {
 		words = syllables.map((wordArray) => wordArray[0] + wordArray[1]);
@@ -148,7 +153,8 @@ function getRandomElement<T>(array: T[]): T | undefined {
 	return array[randomIndex];
 }
 
-// A word is an array of two segments. EG: ['z', 'oo']
+// A word is an array of two segments.
+// EG: Would return ['z', 'oo']
 function generateWordWithVowelSegment(
 	isUniqueVowels: boolean,
 	petalConsonants: ConsonantSegment[],
@@ -157,17 +163,19 @@ function generateWordWithVowelSegment(
 	vowelSegment: VowelSegment,
 ) {
 	if (isUniqueVowels) {
-		// Generate a word with any vowel EXCEPT our segment's vowel
+		// Generate a word with any vowel EXCEPT those already used (in the list `vowelsUsed`)
 		const newVowel = getRandomElement(
 			vowels.filter((vowel) => {
-				// Compare "name" of every vowelsUsed to our vowel.name
+				// Ensure the current iteration's `vowel.name` is not in `vowelsUsed` (mapped into names)
 				return !vowelsUsed.map((value) => value.name).includes(vowel.name);
 			}),
 		)!;
+		// We're using this vowel now! So add it to the `vowelsUsed` list.
 		vowelsUsed.push(newVowel);
+		// Return a word: This newly chosen vowel, with a random sibling consonant prepended
 		return [getRandomElement(petalConsonants)!.name, newVowel.name];
 	} else {
-		// Generate a word with our segment's vowel
+		// Return a word: Our target VowelSegment, with a random sibling consonant prepended
 		return [getRandomElement(petalConsonants)!.name, vowelSegment.name];
 	}
 }
@@ -175,16 +183,16 @@ function generateWordWithVowelSegment(
 // Testing:
 // ================ SPEECH GENERATION =================
 
-console.log(
-	'result:',
-	syllableGeneration(
-		new VowelSegment('eye'),
-		ConsonantFlower.Manner,
-		true,
-		ConsonantCategories.Initial,
-		4,
-	),
-);
+// console.log(
+// 	'result:',
+// 	syllableGeneration(
+// 		new VowelSegment('eye'),
+// 		ConsonantFlower.Manner,
+// 		true,
+// 		ConsonantCategories.Initial,
+// 		4,
+// 	),
+// );
 
 // console.log(
 // 	'result:',
