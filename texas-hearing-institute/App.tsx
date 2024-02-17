@@ -1,29 +1,14 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { AccountPage } from './pages/AccountPage/AccountPageMain';
-import { User } from './user/User';
+import { StatusBar } from 'react-native';
+import { ApplicationProvider } from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
+import PracticeNavigator from './pages/PracticeNavigator';
 
 export default function App() {
 	return (
-		<View style={styles.container}>
-			<SafeAreaView
-				style={{
-					width: '100%',
-				}}
-			>
-				<AccountPage user={new User()} />
-			</SafeAreaView>
-			<StatusBar style="auto" />
-		</View>
+		<ApplicationProvider {...eva} theme={eva.light}>
+			<StatusBar barStyle="dark-content" />
+			<PracticeNavigator />
+		</ApplicationProvider>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});
