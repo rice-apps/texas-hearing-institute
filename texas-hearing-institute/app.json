@@ -28,7 +28,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-    }
+    "plugins": ["@react-native-google-signin/google-signin"]
   }
 }
