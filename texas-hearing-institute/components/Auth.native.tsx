@@ -3,7 +3,7 @@ import {
 	GoogleSigninButton,
 	statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { supabase } from '../lib/supabase';
 
@@ -15,9 +15,10 @@ export default function Auth() {
 		iosClientId:
 			'238625413111-n13uhletv4i0q5b85kvat11jcp1e11la.apps.googleusercontent.com',
 	});
-	if (Platform.OS === 'ios')
+
+	if (Platform.OS === 'ios') {
 		return (
-			(
+			<View>
 				<AppleAuthentication.AppleAuthenticationButton
 					buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
 					buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
@@ -56,7 +57,6 @@ export default function Auth() {
 						}
 					}}
 				/>
-			) && (
 				<GoogleSigninButton
 					size={GoogleSigninButton.Size.Wide}
 					color={GoogleSigninButton.Color.Dark}
@@ -90,8 +90,9 @@ export default function Auth() {
 						}
 					}}
 				/>
-			)
+			</View>
 		);
+	}
 
 	return (
 		<GoogleSigninButton
