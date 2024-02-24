@@ -7,19 +7,26 @@ type OAuthButtonProps = {
 }
 
 export default function OAuthButton({ provider }: OAuthButtonProps) {
+    let finalProvider = provider;
+    if (provider.toLowerCase() === 'microsoft') {
+        finalProvider = 'azure';
+    } 
+
     return (
         <div>
-            <button>
-                <div className="p-3 border border border-gray-300 m-2 w-96 flex items-center justify-between">
-                    <img className="h-8 mx-3" src={
-                        provider.toLowerCase() == 'microsoft' ? microsoft_logo.src :
-                        provider.toLowerCase() == 'google' ? google_logo.src :
-                        provider.toLowerCase() == 'apple' ? apple_logo.src : ''
+            <form action={`/auth/${finalProvider}`} method='get'> 
+                <button className="m-2" type="submit">
+                    <div className="p-3 border border border-stone-300 w-96 flex items-center justify-between rounded-sm">
+                        <img className="h-8 mx-3" src={
+                            provider.toLowerCase() == 'microsoft' ? microsoft_logo.src :
+                                provider.toLowerCase() == 'google' ? google_logo.src :
+                                    provider.toLowerCase() == 'apple' ? apple_logo.src : ''
                         }></img>
-                    <h1 className="text-gray-700 font-medium">Continue with {provider.charAt(0).toUpperCase() + provider.slice(1).toLowerCase()}</h1>
-                    <div className="w-8 mx-3"></div>
-                </div>
-            </button>
+                        <h1 className="text-stone-600 font-medium">Continue with {provider.charAt(0).toUpperCase() + provider.slice(1).toLowerCase()}</h1>
+                        <div className="w-8 mx-3"></div>
+                    </div>
+                </button>
+            </form>
         </div>
     )
 }
