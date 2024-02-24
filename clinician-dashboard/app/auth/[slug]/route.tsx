@@ -11,6 +11,7 @@ export async function GET(
   
     let options: { redirectTo: string; scopes?: string } = {
       redirectTo: `${new URL(req.url).origin}/auth/callback`,
+      scopes: provider == 'azure' ? 'email' : ''
     };
   
     if (provider) {
