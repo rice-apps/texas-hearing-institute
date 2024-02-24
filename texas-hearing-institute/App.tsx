@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
 import Auth from './components/Auth.native';
 //import Account from './components/Account'
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { Session } from '@supabase/supabase-js';
 import { Button } from 'react-native-elements';
 
@@ -29,6 +29,13 @@ export default function App() {
 
 	return (
 		<View>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
 			<Auth />
 			{session && session.user && <Button title="Sign Out" onPress={signOut} />}
 		</View>
