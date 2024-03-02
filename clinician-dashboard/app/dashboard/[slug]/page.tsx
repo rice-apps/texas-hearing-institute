@@ -1,7 +1,7 @@
 'use client'
 import {createClient} from "@supabase/supabase-js";
 import {useEffect, useState} from 'react';
-import Header from "../../components/Header"
+import Header from "../../../components/Header"
 import PatientDropdown from "@/components/PatientDropdown";
 import PatientReport from "@/components/PatientReport";
 
