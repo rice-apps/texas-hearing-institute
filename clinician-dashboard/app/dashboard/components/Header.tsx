@@ -1,4 +1,4 @@
-import thi_logo from '../app/thi_logo.png'
+import thi_logo from '../../../app/thi_logo.png'
 
 export default function Header() {
 
@@ -11,7 +11,7 @@ export default function Header() {
           <img src={thi_logo.src} className="w-20" alt="THI logo"/>
         </div>
         <div>
-          <h1 className="text-lg">Clinician Dashboard</h1>
+          <h1 className="text-lg text-white">Clinician Dashboard</h1>
         </div>
         <div className="mx-10">
           <form action="/auth/logout" method="post">
