@@ -9,7 +9,7 @@ import { supabase } from '../lib/supabase';
 
 export default function Auth() {
 	GoogleSignin.configure({
-		scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+		scopes: [],
 		webClientId:
 			'238625413111-ps04v28r5o19v7lssabudkr123cjtnrf.apps.googleusercontent.com',
 		iosClientId:
@@ -27,11 +27,10 @@ export default function Auth() {
 					onPress={async () => {
 						try {
 							const credential = await AppleAuthentication.signInAsync({
-								requestedScopes: [
-									AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-									AppleAuthentication.AppleAuthenticationScope.EMAIL,
-								],
+								requestedScopes: [],
 							});
+							console.log('Apple credentials');
+							console.log(credential);
 							// Sign in via Supabase Auth.
 							if (credential.identityToken) {
 								const {

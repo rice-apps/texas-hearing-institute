@@ -12,7 +12,7 @@ const PillButtonView = ({ title, type }: PillButtonProps) => {
 			style={{
 				...{
 					height: 54,
-					width: 278,
+					width: '100%',
 					borderRadius: 27,
 					alignItems: 'center',
 					justifyContent: 'center',

@@ -65,7 +65,7 @@ const FormView = ({
 			{heading == null ? null : (
 				<View
 					style={{
-						marginLeft: 10,
+						marginLeft: 5,
 						marginBottom: 16,
 					}}
 				>
@@ -83,42 +83,54 @@ const FormView = ({
 				}}
 			>
 				{labels.map((item, index) => (
-					<View /* Each row in the form */ key={index}>
-						<View /* the row itself */
-							style={{
-								height: 48,
-								marginHorizontal: 16,
-								flexDirection: 'row',
-								alignItems: 'center',
-								justifyContent: 'space-between',
-							}}
-						>
-							<Text
+					<View>
+						{index != 0 ? (
+							<View
 								style={{
-									color: '#333',
-									fontSize: 16,
-									fontWeight: '500',
+									width: '100%',
+									height: 2,
+									backgroundColor: 'rgba(217, 217, 217, 0.50)',
+								}}
+								key={`separator-${index}`}
+							/>
+						) : null}
+						<View /* Each row in the form */ key={index}>
+							<View /* the row itself */
+								style={{
+									height: 47,
+									marginHorizontal: 14,
+									flexDirection: 'row',
+									alignItems: 'center',
+									justifyContent: 'space-between',
 								}}
 							>
-								{labels[index]}
-							</Text>
-							<TextInput
-								secureTextEntry={data[index].properties?.password === true}
-								value={data[index].text}
-								onChangeText={(newValue) => {
-									setData[index](newValue);
-								}}
-								placeholder={data[index].properties?.placeholder}
-								editable={
-									!readonly && !(data[index].properties?.readonly === true)
-								}
-								keyboardType={getKeyboardType(data[index].properties)}
-								textContentType={getTextContentType(data[index].properties)}
-								style={{
-									width: 170,
-									textAlign: 'right',
-								}}
-							/>
+								<Text
+									style={{
+										color: '#333',
+										fontSize: 16,
+										fontWeight: '500',
+									}}
+								>
+									{labels[index]}
+								</Text>
+								<TextInput
+									secureTextEntry={data[index].properties?.password === true}
+									value={data[index].text}
+									onChangeText={(newValue) => {
+										setData[index](newValue);
+									}}
+									placeholder={data[index].properties?.placeholder}
+									editable={
+										!readonly && !(data[index].properties?.readonly === true)
+									}
+									keyboardType={getKeyboardType(data[index].properties)}
+									textContentType={getTextContentType(data[index].properties)}
+									style={{
+										width: 170,
+										textAlign: 'right',
+									}}
+								/>
+							</View>
 						</View>
 					</View>
 				))}

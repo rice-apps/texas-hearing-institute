@@ -14,12 +14,9 @@ interface AccountPageMainProps {
 
 export const AccountPage = ({ user }: AccountPageMainProps) => {
 	const [editMode, setEditMode] = useState(false);
-	const [userEmail] = useState(() => {
-		return user.getEmail();
-	});
 
-	const [userName, setUserName] = useState(() => {
-		return user.getName();
+	const [userAlias, setUserAlias] = useState(() => {
+		return user.getAlias();
 	});
 
 	const [userGroupID, setUserGroupID] = useState(() => {
@@ -27,7 +24,7 @@ export const AccountPage = ({ user }: AccountPageMainProps) => {
 	});
 
 	const commitChangesToUser = () => {
-		user.setName(userName);
+		user.setAlias(userAlias);
 		user.setGroupId(userGroupID);
 	};
 
@@ -82,7 +79,7 @@ export const AccountPage = ({ user }: AccountPageMainProps) => {
 							color: '#333',
 						}}
 					>
-						{editMode ? 'Edit Avatar' : userName + "'s Profile"}
+						{editMode ? 'Edit Avatar' : userAlias + "'s Profile"}
 					</Text>
 				</View>
 
@@ -131,20 +128,12 @@ export const AccountPage = ({ user }: AccountPageMainProps) => {
 			>
 				<FormView
 					heading="Account information"
-					labels={['Email', 'Name', 'Group ID']}
+					labels={['Alias', 'Group ID']}
 					data={[
 						{
-							text: userEmail,
+							text: userAlias,
 							properties: {
-								placeholder: 'name@example.com',
-								email: true,
-								readonly: true,
-							},
-						},
-						{
-							text: userName,
-							properties: {
-								placeholder: 'Johnny Appleseed',
+								placeholder: 'Eager Elephant',
 							},
 						},
 						{
@@ -157,11 +146,8 @@ export const AccountPage = ({ user }: AccountPageMainProps) => {
 					]}
 					readonly={!editMode}
 					setData={[
-						() => {
-							// email is immutable
-						},
 						(newValue) => {
-							setUserName(newValue);
+							setUserAlias(newValue);
 						},
 						(newValue) => {
 							setUserGroupID(newValue);
@@ -174,6 +160,7 @@ export const AccountPage = ({ user }: AccountPageMainProps) => {
 				style={{
 					width: '100%',
 					opacity: editMode ? 1 : 0,
+					marginHorizontal: 5,
 				}}
 			>
 				<TouchableOpacity /* Edit button */

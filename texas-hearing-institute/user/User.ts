@@ -16,8 +16,7 @@ export class User {
 
 	// Actual fields
 	#id = '%0';
-	#email = '%0';
-	#name = '%0'; // user-updatable
+	#alias = '%0'; // user-updatable
 	#clinicianId = '%0';
 	#clinicianUserId = '%0';
 	#groupId = '%0'; // user-updatable
@@ -33,8 +32,7 @@ export class User {
 		copy.#lastSyncedToServer = new Date(this.#lastSyncedToServer.getTime());
 
 		copy.#id = this.#id;
-		copy.#email = this.#email;
-		copy.#name = this.#name;
+		copy.#alias = this.#alias;
 		copy.#clinicianId = this.#clinicianId;
 		copy.#clinicianUserId = this.#clinicianUserId;
 		copy.#groupId = this.#groupId;
@@ -97,12 +95,12 @@ export class User {
 	}
 
 	// Setters
-	setName(newValue: string): Promise<boolean> {
+	setAlias(newValue: string): Promise<boolean> {
 		const newUser = this.deepCopy();
-		newUser.#name = newValue;
+		newUser.#alias = newValue;
 		return this.#syncImmediatelyWithServer(newUser).then((success) => {
 			if (success) {
-				this.#name = newValue;
+				this.#alias = newValue;
 				this.#saveToDiskCache();
 			}
 
@@ -137,12 +135,8 @@ export class User {
 		return this.#id;
 	}
 
-	getEmail(): string {
-		return this.#email;
-	}
-
-	getName(): string {
-		return this.#name;
+	getAlias(): string {
+		return this.#alias;
 	}
 
 	getGroupId() {
