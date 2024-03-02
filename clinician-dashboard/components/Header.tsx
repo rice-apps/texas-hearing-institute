@@ -14,7 +14,9 @@ export default function Header() {
           <h1 className="text-lg">Clinician Dashboard</h1>
         </div>
         <div className="mx-10">
-          <button className="bg-red-600 px-5 py-2 text-white dark:text-white rounded-lg hover:bg-red-500">Logout</button>
+          <form action="/auth/logout" method="post">
+            <button type="submit" className="bg-red-600 px-5 py-2 text-white dark:text-white rounded-lg hover:bg-red-500">Logout</button>
+          </form>
         </div>
       </div>
     </nav>
