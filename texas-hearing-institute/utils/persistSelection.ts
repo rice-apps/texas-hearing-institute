@@ -1,14 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
 	consonantInventoryPersistenceKey,
+	consonants,
 	vowelInventoryPersistenceKey,
+	vowels,
 } from './soundInventoryDataAndKeys';
-import {
-	ConsonantCategories,
-	ConsonantSegment,
-	Segment,
-	VowelSegment,
-} from './Segment';
+import { ConsonantSegment, VowelSegment } from './Segment';
 import { AllSegments } from './AllSegmentsHardcoded';
 
 // Store selection
@@ -46,10 +43,8 @@ export const retrieveItemSelections = async (
 			itemSelectionMap = new Map(itemSelectionArray);
 		}
 
-		const itemsSelected: boolean[] = items.map(
-			(item) => itemSelectionMap.get(item) ?? false,
-		);
-		return itemsSelected;
+		// Items selected =
+		return items.map((item) => itemSelectionMap.get(item) ?? false);
 	} catch (e) {
 		console.log(e);
 		return items.map(() => false);
@@ -86,135 +81,37 @@ export const retrieveSelectedItems = async (
 };
 
 export const retrieveVowels = async (): Promise<VowelSegment[]> => {
-	try {
-		const vowelSelectionJson = await AsyncStorage.getItem(
-			vowelInventoryPersistenceKey,
-		);
+	const result = await retrieveItemSelections(
+		vowelInventoryPersistenceKey,
+		vowels,
+	);
+	// `result` is a boolean array — it maps to the `vowels` you can select
+	// EG: vowels            = ['oo', 'eye', 'ay']
+	//     result            = [false, true, true]
+	//     enabledVowels     =       ['eye', 'ah']
+	const enabledVowels = vowels.filter((_, index) => result[index]);
+	// We want to map this string array of `enabledVowels` to actual VowelSegment objects.
+	// Get all segments and then filter by the string / phoneme
 
-		let vowelSelectionMap = new Map<string, boolean>();
-
-		if (vowelSelectionJson !== null) {
-			const vowelSelectionArray: [string, boolean][] =
-				JSON.parse(vowelSelectionJson);
-			vowelSelectionMap = new Map(vowelSelectionArray);
-		}
-
-		const selectedVowels = Array.from(vowelSelectionMap.keys()).filter((s) =>
-			vowelSelectionMap.get(s),
-		);
-
-		const segments = AllSegments.getAllSegmentsHardcoded();
-
-		return segments.filter((seg: Segment) => selectedVowels.includes(seg.name));
-	} catch (e) {
-		console.log(e);
-		return [];
-	}
-};
-
-export const retrieveInitialConsonants = async (): Promise<
-	ConsonantSegment[]
-> => {
-	try {
-		const consonantSelectionJson = await AsyncStorage.getItem(
-			consonantInventoryPersistenceKey,
-		);
-		let consonantSelectionMap = new Map<string, boolean>();
-
-		if (consonantSelectionJson !== null) {
-			const consonantSelectionArray: [string, boolean][] = JSON.parse(
-				consonantSelectionJson,
-			);
-			consonantSelectionMap = new Map(consonantSelectionArray);
-		}
-
-		const selectedConsonants = Array.from(consonantSelectionMap.keys()).filter(
-			(s) => consonantSelectionMap.get(s),
-		);
-
-		const segments = AllSegments.getAllSegmentsHardcoded();
-
-		const consonantSegments: ConsonantSegment[] = segments.filter(
-			(seg) => seg instanceof ConsonantSegment,
-		) as ConsonantSegment[];
-
-		return consonantSegments.filter(
-			(seg: ConsonantSegment) =>
-				selectedConsonants.includes(seg.name) &&
-				seg.categories.includes(ConsonantCategories.Initial),
-		);
-	} catch (e) {
-		console.log(e);
-		return [];
-	}
-};
-
-export const retrieveFinalConsonants = async (): Promise<
-	ConsonantSegment[]
-> => {
-	try {
-		const consonantSelectionJson = await AsyncStorage.getItem(
-			consonantInventoryPersistenceKey,
-		);
-		let consonantSelectionMap = new Map<string, boolean>();
-
-		if (consonantSelectionJson !== null) {
-			const consonantSelectionArray: [string, boolean][] = JSON.parse(
-				consonantSelectionJson,
-			);
-			consonantSelectionMap = new Map(consonantSelectionArray);
-		}
-
-		const selectedConsonants = Array.from(consonantSelectionMap.keys()).filter(
-			(s) => consonantSelectionMap.get(s),
-		);
-
-		const segments = AllSegments.getAllSegmentsHardcoded();
-
-		const consonantSegments: ConsonantSegment[] = segments.filter(
-			(seg) => seg instanceof ConsonantSegment,
-		) as ConsonantSegment[];
-
-		return consonantSegments.filter(
-			(seg: ConsonantSegment) =>
-				selectedConsonants.includes(seg.name) &&
-				seg.categories.includes(ConsonantCategories.Final),
-		);
-	} catch (e) {
-		console.log(e);
-		return [];
-	}
+	return AllSegments.getAllSegmentsHardcoded().filter((value) => {
+		enabledVowels.includes(value.name);
+	}) as VowelSegment[]; // We can map to VowelSegment[] bc we know `enabledVowels` are only vowels
 };
 
 export const retrieveConsonants = async (): Promise<ConsonantSegment[]> => {
-	try {
-		const consonantSelectionJson = await AsyncStorage.getItem(
-			consonantInventoryPersistenceKey,
-		);
-		let consonantSelectionMap = new Map<string, boolean>();
+	const result = await retrieveItemSelections(
+		consonantInventoryPersistenceKey,
+		consonants,
+	);
+	// `result` is a boolean array — it maps to the `consonants` you can select
+	// EG: consonants        = ['t', 'ch', 'zh']
+	//     result            = [false, true, true]
+	//     enabledConsonants =      ['ch', 'zh']
+	const enabledConsonants = consonants.filter((_, index) => result[index]);
+	// We want to map this string array of `enabledConsonants` to actual ConsonantSegment objects.
+	// Get all segments and then filter by the string / phoneme
 
-		if (consonantSelectionJson !== null) {
-			const consonantSelectionArray: [string, boolean][] = JSON.parse(
-				consonantSelectionJson,
-			);
-			consonantSelectionMap = new Map(consonantSelectionArray);
-		}
-
-		const selectedConsonants = Array.from(consonantSelectionMap.keys()).filter(
-			(s) => consonantSelectionMap.get(s),
-		);
-
-		const segments = AllSegments.getAllSegmentsHardcoded();
-
-		const consonantSegments: ConsonantSegment[] = segments.filter(
-			(seg) => seg instanceof ConsonantSegment,
-		) as ConsonantSegment[];
-
-		return consonantSegments.filter((seg: ConsonantSegment) =>
-			selectedConsonants.includes(seg.name),
-		);
-	} catch (e) {
-		console.log(e);
-		return [];
-	}
+	return AllSegments.getAllSegmentsHardcoded().filter((value) => {
+		enabledConsonants.includes(value.name);
+	}) as ConsonantSegment[]; // We can map to ConsonantSegment[] bc we know `enabledConsonants` are only consonants
 };
