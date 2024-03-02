@@ -6,12 +6,14 @@ import Auth from './components/Auth.native';
 import { View, Text } from 'react-native';
 import { Session } from '@supabase/supabase-js';
 import { Button } from 'react-native-elements';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 async function signOut() {
 	const { error } = await supabase.auth.signOut();
 	if (error) {
 		throw error;
 	}
+	await GoogleSignin.signOut();
 }
 
 export default function App() {
