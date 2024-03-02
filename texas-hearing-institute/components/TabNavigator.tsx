@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Text } from 'react-native';
 import PracticeNavigator from '../pages/PracticeNavigator';
 import { SoundInventory } from '../pages/SoundInventory/SoundInventory';
+import Testing from '../pages/Testing';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,8 @@ export default function TabNavigator() {
 				<Tab.Screen name="Practice" component={PracticeNavigator} />
 				<Tab.Screen name="Sound Inventory" component={SoundInventory} />
 				{/* TODO: replace below with account screen component */}
-				<Tab.Screen name="Account" component={SoundInventory} />
+				{/* <Tab.Screen name="Account" component={SoundInventory} /> */}
+				<Tab.Screen name="Testing" component={Testing} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);
