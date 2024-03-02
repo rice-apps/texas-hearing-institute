@@ -94,7 +94,7 @@ export const retrieveVowels = async (): Promise<VowelSegment[]> => {
 	// Get all segments and then filter by the string / phoneme
 
 	return AllSegments.getAllSegmentsHardcoded().filter((value) => {
-		enabledVowels.includes(value.name);
+		return enabledVowels.includes(value.name);
 	}) as VowelSegment[]; // We can map to VowelSegment[] bc we know `enabledVowels` are only vowels
 };
 
@@ -112,6 +112,6 @@ export const retrieveConsonants = async (): Promise<ConsonantSegment[]> => {
 	// Get all segments and then filter by the string / phoneme
 
 	return AllSegments.getAllSegmentsHardcoded().filter((value) => {
-		enabledConsonants.includes(value.name);
+		return enabledConsonants.includes(value.name);
 	}) as ConsonantSegment[]; // We can map to ConsonantSegment[] bc we know `enabledConsonants` are only consonants
 };
