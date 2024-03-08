@@ -1,5 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
+import {
+	Pressable,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	Button,
+} from 'react-native';
 import Constants from 'expo-constants';
 //import { Button } from 'react-native-elements';
 import tw from 'tailwind-react-native-classnames';
@@ -18,12 +25,16 @@ import VarVowelsScreen from './pages/listening-settings/tabs/VarVowelsScreen';
 import VoicingScreen from './pages/listening-settings/tabs/VoicingScreen';
 import ReportScreen from './pages/ReportScreen';
 import Home from './pages/Home/Home';
-import { RootStackParamList,PhonemeListProps, ReportInfo} from './pages/Home/types'
+import {
+	RootStackParamList,
+	PhonemeListProps,
+	ReportInfo,
+} from './pages/Home/types';
 import { Phoneme } from './pages/Home/types';
 
 // type RootStackParamList = {
 //   Home: undefined, // undefined because you aren't passing any params to the home screen
-//   InitialConsonants: { name: string }; 
+//   InitialConsonants: { name: string };
 //   PlaceCueTab: undefined;
 //   VariegatedVowels: undefined;
 //   Manner: undefined;
@@ -35,63 +46,61 @@ const [phonemes, setPhonemes] = useState<PhonemeListProps>();
 const [report, setReport] = useState<ReportInfo>();
 
 const sampleReport: ReportInfo = {
-  child: "Bob",
-  createdAt: "uhhh",
-  type: "idk",
-  subtype: "idk",
-  sound: "string",
-  mode: "string",
-  voweltype: "string",
-  combinations: ['a','x','b'],
-  numSyllables: 5,
-  correct: [false, false, false],
-}
+	child: 'Bob',
+	createdAt: 'uhhh',
+	type: 'idk',
+	subtype: 'idk',
+	sound: 'string',
+	mode: 'string',
+	voweltype: 'string',
+	combinations: ['a', 'x', 'b'],
+	numSyllables: 5,
+	correct: [false, false, false],
+};
 
-const p1: Phoneme = {name: 'lol', correct: false}
-const p2: Phoneme = {name: 'lmao', correct: false}
-const p3: Phoneme = {name: 'rofl', correct: false}
-const p4: Phoneme = {name: 'wtf', correct: false}
-const p5: Phoneme = {name: 'omw', correct: false}
-const p6: Phoneme = {name: 'ngl', correct: false}
-const p7: Phoneme = {name: 'tbh', correct: false} 
+const p1: Phoneme = { name: 'lol', correct: false };
+const p2: Phoneme = { name: 'lmao', correct: false };
+const p3: Phoneme = { name: 'rofl', correct: false };
+const p4: Phoneme = { name: 'wtf', correct: false };
+const p5: Phoneme = { name: 'omw', correct: false };
+const p6: Phoneme = { name: 'ngl', correct: false };
+const p7: Phoneme = { name: 'tbh', correct: false };
 const sampleCards: Phoneme[] = [p1, p2, p3, p4, p5, p6, p7];
 
-
 export default function App() {
-  const sampleCards = [p1, p2, p3, p4, p5, p6, p7]
-  const sProps: PhonemeListProps = { phonemes: sampleCards, user: sampleReport.child};
-  return (
+	const sampleCards = [p1, p2, p3, p4, p5, p6, p7];
+	const sProps: PhonemeListProps = {
+		phonemes: sampleCards,
+		user: sampleReport.child,
+	};
+	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Screen
-					name="Home"
-					component={Home}
-				/>
+				<Stack.Screen name="Home" component={Home} />
 				<Stack.Screen name="InitialConsonants" component={InitialConsonants} />
-        <Stack.Screen name="PlaceCueTab" component={PlaceCueTab} />
-					<Stack.Screen name="VariegatedVowels" component={VarVowelsScreen} />
-					<Stack.Screen name="Manner" component={MannerScreen} />
-					<Stack.Screen name="Voicing" component={VoicingScreen} />
-          <Stack.Screen 
-  name="ReportScreen" 
-  component={() => <ReportScreen phonemes={sampleCards} report={sampleReport} />} 
-/>
-          {/* <Stack.Screen name="ReportScreen" component={ReportScreen} /> */}
-          {/* <Stack.Screen 
+				<Stack.Screen name="PlaceCueTab" component={PlaceCueTab} />
+				<Stack.Screen name="VariegatedVowels" component={VarVowelsScreen} />
+				<Stack.Screen name="Manner" component={MannerScreen} />
+				<Stack.Screen name="Voicing" component={VoicingScreen} />
+				<Stack.Screen
+					name="ReportScreen"
+					component={() => (
+						<ReportScreen phonemes={sampleCards} report={sampleReport} />
+					)}
+				/>
+				{/* <Stack.Screen name="ReportScreen" component={ReportScreen} /> */}
+				{/* <Stack.Screen 
           name="ReportScreen" 
           component={() => <ReportScreen phonemes={{phonemes:[]}} report={report} />} 
         /> */}
-        {/* <Stack.Screen 
+				{/* <Stack.Screen 
           name="ReportScreen" 
           component={() => <ReportScreen phonemes={[]} report={sampleReport} />} 
 /> */}
-
-        
 			</Stack.Navigator>
 		</NavigationContainer>
-);
+	);
 }
-
 
 // import React, { useState } from 'react';
 // import { View, Text, StyleSheet, Dimensions } from 'react-native';
@@ -102,7 +111,7 @@ export default function App() {
 // import { Phoneme, PhonemeListProps, ReportInfo } from './pages/Home/types'
 
 // const { height, width } = Dimensions.get('window');
-// const CARD_WIDTH = width - 40; 
+// const CARD_WIDTH = width - 40;
 
 // const p1: Phoneme = {name: 'lol', correct: false}
 // const p2: Phoneme = {name: 'lmao', correct: false}
@@ -111,7 +120,6 @@ export default function App() {
 // const p5: Phoneme = {name: 'omw', correct: false}
 // const p6: Phoneme = {name: 'ngl', correct: false}
 // const p7: Phoneme = {name: 'tbh', correct: false}
-
 
 // const sampleReport: ReportInfo = {
 //   child: "Bob",
@@ -131,7 +139,7 @@ export default function App() {
 
 // type Props = {
 //   navigation: ReportScreenNavigationProp;
-// }; 
+// };
 
 // const App = ({navigation}: Props) => {
 //   //const cards = ['lol', 'lmao', 'rofl', 'wtf', 'omw', 'ngl','tbh'];
@@ -223,7 +231,7 @@ export default function App() {
 //     borderWidth: 2,
 //     justifyContent: 'center',
 //     alignItems: 'center',
-  
+
 //   },
 //   text: {
 //     fontSize: 30,
@@ -244,16 +252,11 @@ export default function App() {
 
 // export default App;
 
-
-
-
-
 // //SWIPE VERSION 2, this one logs swipe history
 // import React from 'react';
 // import { View, Text, StyleSheet } from 'react-native';
 // import Swiper from 'react-native-deck-swiper';
 // import { useState } from 'react';
-
 
 // const App = () => {
 //   const cards = ['lol', 'lmao', 'rofl', 'wtf', 'omw', 'ngl','tbh'];
@@ -271,7 +274,7 @@ export default function App() {
 //       <Swiper
 //         cards={cards}
 //         renderCard={(card) => (
-//           <View style={[styles.card, isSwipedRight && styles.greenBorder, 
+//           <View style={[styles.card, isSwipedRight && styles.greenBorder,
 //           isSwipedLeft && styles.yellowBorder]}>
 //             <Text style={styles.text}>{card}</Text>
 //           </View>
@@ -312,7 +315,7 @@ export default function App() {
 //     height: 200,
 //     backgroundColor: 'white',
 //     borderRadius: 10,
-    
+
 //     borderWidth: 2,
 //     borderColor: 'lightgray',
 //     // width: 200,
