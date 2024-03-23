@@ -46,35 +46,19 @@ export async function syllableGeneration(
 		)!;
 	}
 
-	// This bundle of expressions just sets `petalConsonants`.
-	if (segment instanceof ConsonantSegment) {
-		// Fetch the petalConsonants (sibling consonants) to our ConsonantSegment!
-		petalConsonants = segment!.fetchConsonantSiblings(
-			consonantFlower,
-			consonants,
-		);
-	} else if (segment instanceof VowelSegment) {
-		// If the targeted segment is a vowel, it won't have siblings.
-		// Thus, pick a random ConsonantSegment just to assign petalConsonants to its siblings.
-		const randomConsonantSegment = getRandomElement(consonants)!;
-		// Fetch its siblings
-		petalConsonants = randomConsonantSegment!.fetchConsonantSiblings(
-			consonantFlower,
-			consonants,
-		);
-		// We can use this randomly chosen consonant later—it only existed to pick a random petal.
-		// It hasn't been "used" yet.
-		petalConsonants.push(randomConsonantSegment);
-	} else {
-		throw 'segment is neither Vowel or Consonant segments!';
-	}
-
 	// This bundle of expressions generates all `syllables` to be practiced.
 	if (segment instanceof VowelSegment) {
 		// —— Generate the first word ——
 
 		// Pick a random consonant to go with our vowel in the first word.
-		const randomConsonantSegment = getRandomElement(petalConsonants);
+		const randomConsonantSegment = getRandomElement(consonants)!;
+		// If our input targeted `segment` is a vowel, it won't have siblings.
+		// Thus, we will assign petalConsonants = this random ConsonantSegment's siblings.
+		petalConsonants = randomConsonantSegment!.fetchConsonantSiblings(
+			consonantFlower,
+			consonants,
+		);
+
 		// Consonant first, then vowel (our targeted segment)
 		// This guarantees our target segment is in the first word.
 		syllables[0] = [randomConsonantSegment!.name, segment.name];
@@ -95,14 +79,16 @@ export async function syllableGeneration(
 				segment,
 			);
 		}
-	} else {
+	} else if (segment instanceof ConsonantSegment) {
 		// —— Generate the first word ——
 
-		// Filter petalConsonants to be of .initial or .final depending on practiceTarget
-		petalConsonants = petalConsonants.filter((segment) => {
-			const consonantSegment = segment as ConsonantSegment;
-			return consonantSegment.categories.includes(practiceTarget!);
-		});
+		// Fetch the petalConsonants (sibling consonants) to our ConsonantSegment, of
+		// .initial or .final depending on `practiceTarget`.
+		petalConsonants = segment!.fetchConsonantSiblings(
+			consonantFlower,
+			consonants,
+			practiceTarget,
+		);
 
 		// Pick a random vowel to go with our consonant in the first word
 		const randomVowel = getRandomElement(vowels)!;

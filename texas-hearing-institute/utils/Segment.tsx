@@ -28,6 +28,7 @@ export class ConsonantSegment extends Segment {
 	fetchConsonantSiblings(
 		flower: ConsonantFlower,
 		canSayInventory: ConsonantSegment[],
+		practiceTarget?: ConsonantCategories | null,
 	): ConsonantSegment[] {
 		const petalIds = this.getPetalIds(flower);
 
@@ -40,9 +41,10 @@ export class ConsonantSegment extends Segment {
 		const consonantSiblings = consonantSegments.filter(
 			(x: ConsonantSegment) =>
 				x.name != this.name && // Don't include our own ConsonantSegment as a sibling
+				(practiceTarget ? x.categories.includes(practiceTarget) : true) && // Make sure it matches the requested .initial or .final
 				x
 					.getPetalIds(flower)
-					.some((petalId: number) => petalIds.includes(petalId)),
+					.some((petalId: number) => petalIds.includes(petalId)), // Make sure it's a sibling
 		);
 		return consonantSiblings;
 	}
