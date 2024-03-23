@@ -1,5 +1,3 @@
-import { AllSegments } from './AllSegmentsHardcoded';
-
 export class Segment {
 	name = '';
 
@@ -27,12 +25,11 @@ export class ConsonantSegment extends Segment {
 	}
 
 	// Fetch other ConsonantSegments from canSayInventory that share any of the petalIds in this.getPetalIds
-	fetchConsonantSiblings(flower: ConsonantFlower): ConsonantSegment[] {
+	fetchConsonantSiblings(
+		flower: ConsonantFlower,
+		canSayInventory: ConsonantSegment[],
+	): ConsonantSegment[] {
 		const petalIds = this.getPetalIds(flower);
-
-		// TODO: Assuming canSayInventory is an array of Segments
-		//  We would want to read this from async storage
-		const canSayInventory: Segment[] = AllSegments.getAllSegmentsHardcoded();
 
 		// Use filter to ensure x is of type ConsonantSegment
 		const consonantSegments: ConsonantSegment[] = canSayInventory.filter(
