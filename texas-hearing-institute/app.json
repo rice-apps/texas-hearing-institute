@@ -36,6 +36,9 @@
 		"web": {
 			"favicon": "./assets/favicon.png"
 		},
-		"plugins": ["@react-native-google-signin/google-signin", "expo-apple-authentication"]
+		"plugins": [
+			"@react-native-google-signin/google-signin",
+			"expo-apple-authentication"
+		]
 	}
 }
