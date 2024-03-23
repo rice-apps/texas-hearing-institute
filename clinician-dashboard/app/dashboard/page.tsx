@@ -77,18 +77,19 @@ const Dashboard = () => {
   
 
     return (
-        <>
+        <div>
             <Header/>
             <div className="bg-gray-200 dark:bg-gray-700 rounded-md">
               <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-10 py-2.5">
-                <h2>View Patient Reports:</h2>
+                <h2 className="text-white">View Patient Reports:</h2>
                 <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>
               </div>
-              <PatientReport reports={childReports}/>
+              <div className="">
+                <PatientReport reports={childReports}/>
+              </div>
             </div>
 
-            <h1>{selectedChildID}</h1>
-        </>
+        </div>
     )
 }
 

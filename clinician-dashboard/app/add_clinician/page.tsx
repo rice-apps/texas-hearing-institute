@@ -11,6 +11,7 @@ const Add_Clinician = () => {
         <>
             <Header/>
             <ClinicianForm/>
+            
         </>
     )
 }
