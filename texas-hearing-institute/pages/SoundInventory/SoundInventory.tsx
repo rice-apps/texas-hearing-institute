@@ -209,12 +209,12 @@ export const SoundInventory = () => {
 						width: 300,
 						borderRadius: 15,
 					}}
-					onPress={() => setEditModeEnabled(!editModeEnabled, true)}
+					onPress={() => setEditModeEnabled(!editModeEnabled, false)}
 				>
 					<Text
 						style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}
 					>
-						Save Changes
+						Discard Changes
 					</Text>
 				</Pressable>
 				<Pressable
@@ -225,12 +225,12 @@ export const SoundInventory = () => {
 						width: 300,
 						borderRadius: 15,
 					}}
-					onPress={() => setEditModeEnabled(!editModeEnabled, false)}
+					onPress={() => setEditModeEnabled(!editModeEnabled, true)}
 				>
 					<Text
 						style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}
 					>
-						Discard Changes
+						Save Changes
 					</Text>
 				</Pressable>
 			</View>

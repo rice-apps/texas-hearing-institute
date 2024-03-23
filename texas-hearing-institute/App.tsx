@@ -7,14 +7,12 @@ import { View, Text } from 'react-native';
 import { Session } from '@supabase/supabase-js';
 import { Button } from 'react-native-elements';
 
-/*
 async function signOut() {
 	const { error } = await supabase.auth.signOut();
 	if (error) {
 		throw error;
 	}
 }
-*/
 
 export default function App() {
 	const [session, setSession] = useState<Session | null>(null);
