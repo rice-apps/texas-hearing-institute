@@ -18,7 +18,11 @@ export default function InitialConsonants() {
 		// which will update `speakableConsonantSegments` as soon as it receives the inventory.
 		async function fetchSpeakableConsonants() {
 			try {
-				const consonantSegments = await retrieveConsonants();
+				let consonantSegments = await retrieveConsonants();
+				// Make sure only initial consonants are shown
+				consonantSegments = consonantSegments.filter((value) => {
+					return value.categories.includes(ConsonantCategories.Initial);
+				});
 				setSpeakableConsonantSegments(consonantSegments);
 			} catch (error) {
 				console.error('Error retrieving consonants:', error);

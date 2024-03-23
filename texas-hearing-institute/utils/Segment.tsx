@@ -39,12 +39,28 @@ export class ConsonantSegment extends Segment {
 
 		// Use filter and intersection logic to check if there are common petalIds
 		const consonantSiblings = consonantSegments.filter(
-			(x: ConsonantSegment) =>
-				x.name != this.name && // Don't include our own ConsonantSegment as a sibling
-				(practiceTarget ? x.categories.includes(practiceTarget) : true) && // Make sure it matches the requested .initial or .final
-				x
-					.getPetalIds(flower)
-					.some((petalId: number) => petalIds.includes(petalId)), // Make sure it's a sibling
+			(x: ConsonantSegment) => {
+				// Don't include our own ConsonantSegment as a sibling
+				if (x.name == this.name) {
+					return false;
+				}
+				// If it doesn't match the requested .initial or .final, return false
+				if (practiceTarget != null) {
+					if (!x.categories.includes(practiceTarget)) {
+						return false;
+					}
+				}
+				// If it's not a sibling, return false
+				if (
+					!x
+						.getPetalIds(flower)
+						.some((petalId: number) => petalIds.includes(petalId))
+				) {
+					return false;
+				}
+
+				return true;
+			},
 		);
 		return consonantSiblings;
 	}
