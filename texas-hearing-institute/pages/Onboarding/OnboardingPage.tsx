@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, Pressable } from 'react-native';
+import { View, Button, Pressable, Alert } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
@@ -15,36 +15,49 @@ import {
 	setupPageElements,
 } from '../../utils/soundInventoryDataAndKeys';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-// commented out typing, teporarily said to be 'any' in parameters
+interface RootStackParamList {
+	Onboarding1: OnboardingRouteParams;
+	Onboarding2: OnboardingRouteParams;
+	Onboarding3: OnboardingRouteParams;
+	Onboarding4: OnboardingRouteParams;
+}
 
-// type RootStackParamList = {
-//     Onboarding1: OnboardingRouteParams;
-//     Onboarding2: OnboardingRouteParams;
-//     Onboarding3: OnboardingRouteParams;
-//     Onboarding4: OnboardingRouteParams;
-// };
-
-// type Onboarding1NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding1'>;
+// type Onboarding1NavigationProp = StackNavigationProp<
+// 	RootStackParamList,
+// 	'Onboarding1'
+// >;
 // type Onboarding1ScreenRouteProp = RouteProp<RootStackParamList, 'Onboarding1'>;
-// type Onboarding2NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding2'>;
+// type Onboarding2NavigationProp = StackNavigationProp<
+// 	RootStackParamList,
+// 	'Onboarding2'
+// >;
 // type Onboarding2ScreenRouteProp = RouteProp<RootStackParamList, 'Onboarding2'>;
-// type Onboarding3NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding3'>;
+// type Onboarding3NavigationProp = StackNavigationProp<
+// 	RootStackParamList,
+// 	'Onboarding3'
+// >;
 // type Onboarding3ScreenRouteProp = RouteProp<RootStackParamList, 'Onboarding3'>;
-// type Onboarding4NavigationProp = StackNavigationProp<RootStackParamList, 'Onboarding4'>;
+// type Onboarding4NavigationProp = StackNavigationProp<
+// 	RootStackParamList,
+// 	'Onboarding4'
+// >;
 // type Onboarding4ScreenRouteProp = RouteProp<RootStackParamList, 'Onboarding4'>;
 
-// type OnboardingRouteParams = {
-//     prompt: string;
-//     pageNumber: number;
-//     persistenceKey: string;
-//     setupElements: string[];
-// };
+interface OnboardingRouteParams {
+	prompt: string;
+	pageNumber: number;
+	persistenceKey: string;
+	setupElements: string[];
+}
 
-const Onboarding: React.FC<{ route: any; navigation: any }> = ({
-	route,
-	navigation,
-}) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding1'>;
+
+// Minimum number of sounds that must be selected for consonants and vowels
+const MIN_SELECTED = 4;
+
+function Onboarding({ route, navigation }: Props) {
 	const prompt: string = route.params.prompt;
 	const pageNumber: number = route.params.pageNumber;
 	const persistenceKey: string = route.params.persistenceKey;
@@ -83,7 +96,8 @@ const Onboarding: React.FC<{ route: any; navigation: any }> = ({
 				) : (
 					<Pressable
 						onPress={() =>
-							navigation.navigate(`Onboarding${pageNumber}` as any, {
+							// FIX THIS @baylee
+							navigation.navigate(`Onboarding1`, {
 								prompt: setupPrompts[pageNumber - 1],
 								pageNumber: pageNumber - 1,
 								persistenceKey: setupPersistenceKeys[pageNumber - 1],
@@ -137,20 +151,27 @@ const Onboarding: React.FC<{ route: any; navigation: any }> = ({
 				<View>
 					<Button
 						title="Continue"
-						onPress={() =>
-							navigation.navigate(`Onboarding${pageNumber + 2}` as any, {
-								prompt: setupPrompts[pageNumber + 1],
-								pageNumber: pageNumber + 1,
-								persistenceKey: setupPersistenceKeys[pageNumber + 1],
-								setupElements: setupPageElements[pageNumber + 1],
-							})
-						}
+						onPress={() => {
+							if (itemsSelected.filter((x) => x).length < MIN_SELECTED) {
+								Alert.alert('', 'Select at least 4 of each sound', [
+									{ text: 'OK' },
+								]);
+							} else {
+								// FIX THIS @baylee
+								navigation.navigate(`Onboarding3`, {
+									prompt: setupPrompts[pageNumber + 1],
+									pageNumber: pageNumber + 1,
+									persistenceKey: setupPersistenceKeys[pageNumber + 1],
+									setupElements: setupPageElements[pageNumber + 1],
+								});
+							}
+						}}
 					/>
 					<Button title="Not sure, let's find out" />
 				</View>
 			</View>
 		</CustomSafeAreaView>
 	);
-};
+}
 
 export default Onboarding;
