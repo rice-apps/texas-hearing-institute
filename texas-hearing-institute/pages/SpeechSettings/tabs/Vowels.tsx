@@ -11,8 +11,8 @@ const Vowels = () => {
 	// Fetch vowels that child can say from async storage.
 	useEffect(() => {
 		// We immediately run this async function when page is loaded,
-		// which will update `sounds` as soon as it receives the inventory.
-		async function fetchVowels() {
+		// which will update `speakableVowelSegments` as soon as it receives the inventory.
+		async function fetchSpeakableVowels() {
 			try {
 				const vowelSegments = await retrieveVowels();
 				setSpeakableVowelSegments(vowelSegments);
@@ -22,7 +22,7 @@ const Vowels = () => {
 			}
 		}
 
-		fetchVowels();
+		fetchSpeakableVowels();
 	}, []);
 
 	const [speakableVowelSegments, setSpeakableVowelSegments] = useState<
@@ -50,7 +50,10 @@ const Vowels = () => {
 				<SoundGrid
 					sounds={speakableVowelSegments}
 					selected={segment}
-					setSegment={setSegment}
+					setSegment={(sound) => {
+						// SoundGrid returns a Segment, convert to VowelSegment
+						setSegment(sound as VowelSegment);
+					}}
 				/>
 				{segment != null && (
 					<View>
