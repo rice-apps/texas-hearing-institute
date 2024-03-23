@@ -5,7 +5,7 @@ interface RadioButtonProps<Value> {
 	label: string;
 	value: Value;
 	onPress: (value: Value) => void;
-	selectedRadio: Value;
+	selectedRadio: Value | undefined;
 }
 
 export default function RadioButton<Value>({
