@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Heading from '../../components/Heading';
-import Subheading from '../../components/SubHeading';
+import SubHeading from '../../components/SubHeading';
 import BigButton from '../../components/Button';
 import tw from 'tailwind-react-native-classnames';
 import { Alert } from 'react-native';
@@ -23,7 +23,7 @@ export default function SpeechSetting() {
 		<ScrollView>
 			<View style={tw`flex flex-col`}>
 				<Heading title={'Speech Babble'}></Heading>
-				<Subheading title={'Let’s get practicing'}></Subheading>
+				<SubHeading title={'Let’s get practicing'}></SubHeading>
 				<BigButton label={'Vowels'} onPress={showAlert} />
 				<BigButton
 					label={'Inital Consonants'}

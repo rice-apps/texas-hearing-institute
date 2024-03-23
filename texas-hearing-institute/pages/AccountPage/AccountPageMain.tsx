@@ -160,10 +160,10 @@ export const AccountPage = ({ user }: AccountPageMainProps) => {
 						() => {
 							// email is immutable
 						},
-						(newValue) => {
+						(newValue: string) => {
 							setUserName(newValue);
 						},
-						(newValue) => {
+						(newValue: string) => {
 							setUserGroupID(newValue);
 						},
 					]}

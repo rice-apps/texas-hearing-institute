@@ -3,20 +3,13 @@
 // 	Pressable,
 // 	StyleSheet,
 // 	Text,
-// 	TouchableOpacity,
 // 	View,
-// 	Button,
 // } from 'react-native';
-// import Constants from 'expo-constants';
 // //import { Button } from 'react-native-elements';
 // import tw from 'tailwind-react-native-classnames';
 // import Icon from 'react-native-vector-icons/FontAwesome';
-// import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
-// import * as Speech from 'expo-speech';
-// import InitialConsonants from '../SpeechSetup/InitialConsonants';
+// import React from 'react';
 // import { StackNavigationProp } from '@react-navigation/stack';
-// import ListeningNavigator from '../ListeningSettings/ListeningNavigator';
 // import { RootStackParamList } from './types';
 
 // // import PracticeCard from './components/PracticeCard';
@@ -35,9 +28,9 @@
 // 	'Home'
 // >;
 
-// type Props = {
+// interface Props {
 // 	navigation: ProfileScreenNavigationProp;
-// };
+// }
 
 // const Home = ({ navigation }: Props) => {
 // 	return (

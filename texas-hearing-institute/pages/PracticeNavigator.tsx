@@ -8,6 +8,8 @@ import PlaceCueScreen from './ListeningSettings/tabs/PlaceCueScreen';
 import InitialConsonants from './SpeechSettings/tabs/InitialConsonants';
 import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
+import ReportScreen from './ReportScreen';
+import ActivePractice from '../Active';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +41,9 @@ export default function PracticeNavigator() {
 			<Stack.Screen name="Variegated Vowels" component={VarVowelsScreen} />
 			<Stack.Screen name="Manner" component={MannerScreen} />
 			<Stack.Screen name="Voicing" component={VoicingScreen} />
+			<Stack.Screen name="Active Practice" component={ActivePractice} />
+			<Stack.Screen name="ReportScreen" component={ReportScreen} />
+			{/*stack screen for active practice and report*/}
 		</Stack.Navigator>
 	);
 }

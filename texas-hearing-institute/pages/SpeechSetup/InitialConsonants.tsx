@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Heading from '../../components/Heading';
-import Subheading from '../../components/SubHeading';
+import SubHeading from '../../components/SubHeading';
 // import GridButton from '../../components/GridButton';
 import Selection from '../../components/Selection';
 import BigButton from '../../components/Button';
@@ -22,9 +22,9 @@ const InitialConsonants = () => {
 	return (
 		<ScrollView>
 			<Heading title={'Initial Consonants'}></Heading>
-			<Subheading
+			<SubHeading
 				title={'Select a consonant and blahblah to blahblah practise speaking'}
-			></Subheading>
+			></SubHeading>
 			{/* <GridButton/> */}
 			<Selection
 				buttonNames={['Variegated Vowels', 'Voicing', 'Manner', 'Place Cue']}

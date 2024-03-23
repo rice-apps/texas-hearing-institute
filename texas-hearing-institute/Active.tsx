@@ -5,6 +5,7 @@ import ProgressBar from 'react-native-progress/Bar';
 import { RootStackParamList } from './pages/Home/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Phoneme, PhonemeListProps, ReportInfo } from './pages/Home/types';
+import { useNavigation } from '@react-navigation/core';
 
 const { height, width } = Dimensions.get('window');
 const CARD_WIDTH = width - 40;
@@ -30,17 +31,18 @@ const sampleReport: ReportInfo = {
 	correct: [false, false, false],
 };
 
-type ReportScreenNavigationProp = StackNavigationProp<
-	RootStackParamList,
-	'ReportScreen'
->;
+// export type RootStackParam = {
+// 	phonemes: PhonemeListProps;
+// 	report: ReportInfo;
+//   };
 
-type Props = {
-	navigation: ReportScreenNavigationProp;
-};
+// type Props = {
+// 	navigation: ReportScreenNavigationProp;
+// };
 
-const App = ({ navigation }: Props) => {
+const Active = () => {
 	//const cards = ['lol', 'lmao', 'rofl', 'wtf', 'omw', 'ngl','tbh'];
+	const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 	const sampleCards = [p1, p2, p3, p4, p5, p6, p7];
 	const sProps: PhonemeListProps = {
 		phonemes: sampleCards,
@@ -100,7 +102,7 @@ const App = ({ navigation }: Props) => {
 					onSwipedAll={() => {
 						//after all cards are seen, navigate to report screen
 						navigation.navigate('ReportScreen', {
-							phonemes: { phonemes: sampleCards, user: sampleReport.child },
+							phonemes: sProps,
 							report: sampleReport,
 						});
 						console.log('All cards have been swiped');
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default App;
+export default Active;
 
 //old stuff from before:
 // import { StatusBar } from 'expo-status-bar';

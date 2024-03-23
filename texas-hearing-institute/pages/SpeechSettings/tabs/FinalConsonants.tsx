@@ -3,8 +3,10 @@ import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import SoundGrid from '../components/SoundGrid';
 import RadioButton from '../../../components/RadioButton';
 import FloatingButton from '../../../components/FloatingButton';
+import { useNavigation } from '@react-navigation/native';
 
 export default function FinalConsonants() {
+	const navigation = useNavigation();
 	// TODO: pull from sound inventory (need to change sound inventory data structure)
 	const sounds = [
 		'p',
@@ -106,9 +108,7 @@ export default function FinalConsonants() {
 				<View style={styles.float}>
 					<FloatingButton
 						label={"Let's Practice"}
-						onPress={function (label: string): void {
-							throw new Error(label);
-						}}
+						onPress={() => navigation.navigate('Active Practice' as never)}
 					/>
 				</View>
 			)}

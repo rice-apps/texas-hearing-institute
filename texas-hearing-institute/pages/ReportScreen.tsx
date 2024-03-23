@@ -12,12 +12,18 @@ import PieChart from 'react-native-pie-chart';
 import { AntDesign } from '@expo/vector-icons';
 import { supabase } from '../lib/supabase';
 import PillButtonView from '../components/PillButtonView';
+import { Phoneme } from './Home/types';
 
-const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
+/* WARNING: PARAMETERS CAST TO ANY -- might need to fix using props instead */
+/* Active Practice reroutes to Report Screen */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const ReportScreen = ({ route }: any) => {
+	const { phonemes, report } = route.params;
 	// frequency of correct/incorrect array
 	const cCount: number[] = [
-		phonemes.phonemes.filter((x) => x.correct == false).length,
-		phonemes.phonemes.filter((x) => x.correct == true).length,
+		phonemes.phonemes.filter((x: Phoneme) => x.correct == false).length,
+		phonemes.phonemes.filter((x: Phoneme) => x.correct == true).length,
 	];
 
 	const handleReportEntry = async () => {
@@ -29,9 +35,9 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 			sound: report.sound,
 			mode: report.mode,
 			voweltype: report.voweltype,
-			combinations: phonemes.phonemes.map((p) => p.name),
+			combinations: phonemes.phonemes.map((p: Phoneme) => p.name),
 			num_syllables: report.numSyllables,
-			correct_incorrect: phonemes.phonemes.map((p) => p.correct),
+			correct_incorrect: phonemes.phonemes.map((p: Phoneme) => p.correct),
 		});
 		if (error) {
 			alert(error);
@@ -67,7 +73,7 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 				</View>
 			</View>
 			<ScrollView>
-				{phonemes.phonemes.map((phoneme) => {
+				{phonemes.phonemes.map((phoneme: Phoneme) => {
 					const color = phoneme.correct ? 'green' : 'red';
 					const iName = phoneme.correct ? 'check' : 'close';
 					return (

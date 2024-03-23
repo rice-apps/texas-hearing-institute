@@ -1,4 +1,4 @@
-export type RootStackParamList = {
+export interface RootStackParamList {
 	Home: undefined; // undefined because you aren't passing any params to the home screen
 	App: undefined;
 	ReportScreen: { phonemes: PhonemeListProps; report: ReportInfo };
@@ -7,19 +7,20 @@ export type RootStackParamList = {
 	VariegatedVowels: undefined;
 	Manner: undefined;
 	Voicing: undefined;
-};
+	Active: undefined;
+}
 
-export type Phoneme = {
+export interface Phoneme {
 	name: string;
 	correct: boolean;
-};
+}
 
-export type PhonemeListProps = {
+export interface PhonemeListProps {
 	phonemes: Phoneme[];
 	user: string;
-};
+}
 
-export type ReportInfo = {
+export interface ReportInfo {
 	child: string;
 	createdAt: string;
 	type: string;
@@ -30,7 +31,7 @@ export type ReportInfo = {
 	combinations: string[];
 	numSyllables: number;
 	correct: boolean[];
-};
+}
 // export type RootStackParamList = {
 //     Home: undefined, // undefined because you aren't passing any params to the home screen
 //     InitialConsonants: undefined;
