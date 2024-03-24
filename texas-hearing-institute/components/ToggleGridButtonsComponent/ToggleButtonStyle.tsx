@@ -11,21 +11,15 @@ export default StyleSheet.create({
 		borderWidth: 1,
 	},
 	buttonActive: {
-		backgroundColor: 'blue',
+		backgroundColor: '#AFE4F9',
 		borderColor: 'white',
 	},
 	buttonInactive: {
-		backgroundColor: '#F5F5F5',
-		borderColor: '#D9D9D9',
-		color: 'black',
+		backgroundColor: '#fff',
+		borderColor: '#E1E1E1',
+		borderWidth: 2,
 	},
 	buttonText: {
-		fontSize: 20,
-	},
-	buttonTextActive: {
-		color: 'white',
-	},
-	buttonTextInactive: {
-		color: 'black',
+		fontSize: 16,
 	},
 });
