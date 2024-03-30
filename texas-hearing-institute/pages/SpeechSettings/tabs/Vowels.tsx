@@ -114,23 +114,21 @@ const Vowels = () => {
 			</ScrollView>
 			{/* TODO: button routes to active practice */}
 			{settingsReady() && (
-				<View style={styles.float}>
-					<FloatingButton
-						label={"Let's Practice"}
-						onPress={async () => {
-							// Call syllable generation. We can use ! on vars because we validated
-							// that they were all selected with settingsReady() before this button appeared.
-							const words = await syllableGeneration(
-								segment!,
-								modeFlower!,
-								isUniqueVowels!,
-								null,
-								2,
-							);
-							console.log(words);
-						}}
-					/>
-				</View>
+				<FloatingButton
+					label={"Let's Practice"}
+					onPress={async () => {
+						// Call syllable generation. We can use ! on vars because we validated
+						// that they were all selected with settingsReady() before this button appeared.
+						const words = await syllableGeneration(
+							segment!,
+							modeFlower!,
+							isUniqueVowels!,
+							null,
+							2,
+						);
+						console.log(words);
+					}}
+				/>
 			)}
 		</>
 	);
@@ -157,13 +155,6 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		fontWeight: 'bold',
 		fontSize: 22,
-	},
-	float: {
-		width: '100%',
-		alignItems: 'center',
-		zIndex: 1,
-		position: 'absolute',
-		bottom: 52,
 	},
 });
 

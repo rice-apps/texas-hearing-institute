@@ -122,44 +122,42 @@ export default function FinalConsonants() {
 			</ScrollView>
 			{/* TODO: button routes to active practice */}
 			{settingsReady() && (
-				<View style={styles.float}>
-					<FloatingButton
-						label={"Let's Practice"}
-						onPress={async () => {
-							// Make sure we have at least one sibling. numOfSiblings includes self.
-							const numOfSiblings = segment?.fetchConsonantSiblings(
+				<FloatingButton
+					label={"Let's Practice"}
+					onPress={async () => {
+						// Make sure we have at least one sibling. numOfSiblings includes self.
+						const numOfSiblings = segment?.fetchConsonantSiblings(
+							modeFlower!,
+							speakableConsonantSegments,
+							ConsonantCategories.Final,
+						).length;
+
+						if (numOfSiblings == null || numOfSiblings < 1) {
+							throw Error(
+								'Child cannot say enough siblings to be able to practice this segment! Or this segment has no siblings for the selected mode / flower.',
+							);
+						}
+
+						// Generate 10 "pages" of practice word lists
+						// EG: [["peye, pow"], ["noo", "pam"], ... ] with 10 sublists
+						const pages = [];
+
+						for (let i = 0; i < 10; i++) {
+							// Call syllable generation. We can use ! on vars because we validated
+							// that they were all selected with settingsReady() before this button appeared.
+							const words = await syllableGeneration(
+								segment!,
 								modeFlower!,
-								speakableConsonantSegments,
+								isUniqueVowels!,
 								ConsonantCategories.Final,
-							).length;
-
-							if (numOfSiblings == null || numOfSiblings < 1) {
-								throw Error(
-									'Child cannot say enough siblings to be able to practice this segment! Or this segment has no siblings for the selected mode / flower.',
-								);
-							}
-
-							// Generate 10 "pages" of practice word lists
-							// EG: [["peye, pow"], ["noo", "pam"], ... ] with 10 sublists
-							const pages = [];
-
-							for (let i = 0; i < 10; i++) {
-								// Call syllable generation. We can use ! on vars because we validated
-								// that they were all selected with settingsReady() before this button appeared.
-								const words = await syllableGeneration(
-									segment!,
-									modeFlower!,
-									isUniqueVowels!,
-									ConsonantCategories.Final,
-									2,
-								);
-								pages.push(words);
-							}
-							// TODO: Route to active practice
-							console.log(pages);
-						}}
-					/>
-				</View>
+								2,
+							);
+							pages.push(words);
+						}
+						// TODO: Route to active practice
+						console.log(pages);
+					}}
+				/>
 			)}
 		</>
 	);
@@ -186,12 +184,5 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		fontWeight: 'bold',
 		fontSize: 22,
-	},
-	float: {
-		width: '100%',
-		alignItems: 'center',
-		zIndex: 1,
-		position: 'absolute',
-		bottom: 52,
 	},
 });
