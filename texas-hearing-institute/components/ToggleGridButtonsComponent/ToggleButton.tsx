@@ -32,14 +32,7 @@ const ToggleButton: React.FC<Props> = ({
 			}}
 			disabled={!enabled}
 		>
-			<Text
-				style={[
-					styles.buttonText,
-					isToggled ? styles.buttonTextActive : styles.buttonTextInactive,
-				]}
-			>
-				{title}
-			</Text>
+			<Text style={[styles.buttonText]}>{title}</Text>
 		</TouchableOpacity>
 	);
 };
