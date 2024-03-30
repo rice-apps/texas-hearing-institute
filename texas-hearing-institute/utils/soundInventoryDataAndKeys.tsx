@@ -1,6 +1,3 @@
-const prompt1 = 'What phenomes can your child **say**?';
-const prompt2 = 'What vowels can your child **say**?';
-
 export const consonants = [
 	't',
 	's',
@@ -41,10 +38,3 @@ export const vowels = [
 
 export const consonantInventoryPersistenceKey = 'consonantInventory';
 export const vowelInventoryPersistenceKey = 'vowelInventory';
-
-export const setupPrompts = [prompt1, prompt2];
-export const setupPersistenceKeys = [
-	consonantInventoryPersistenceKey,
-	vowelInventoryPersistenceKey,
-];
-export const setupPageElements = [consonants, vowels];
