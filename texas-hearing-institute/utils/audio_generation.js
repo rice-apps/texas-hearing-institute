@@ -135,13 +135,13 @@ var AllSegments = /** @class */ (function () {
             new VowelSegment('oo', 'u'),
             new VowelSegment('ee', 'i'),
             new VowelSegment('uh', 'ʌ'),
-            new VowelSegment('ow', 'əʊ'),
+            new VowelSegment('ow', 'aʊ'),
             new VowelSegment('eye', 'aɪ'),
-            new VowelSegment('oh', 'o'),
+            new VowelSegment('oh', 'əʊ'),
             new VowelSegment('oy', 'ɔɪ'),
             new VowelSegment('ih', 'ɪ'),
             new VowelSegment('ah', 'ɑ'),
-            new VowelSegment('ay', 'ɛ'),
+            new VowelSegment('ay', 'eɪ'),
             // Consonants
             new ConsonantSegment('t', 't', [ConsonantCategories.Initial, ConsonantCategories.Final], {
                 manner: [0],
@@ -209,7 +209,7 @@ var AllSegments = /** @class */ (function () {
                 place: [0],
                 all: [0],
             }),
-            new ConsonantSegment('ch', 'tʃ⁠', [ConsonantCategories.Initial, ConsonantCategories.Final], {
+            new ConsonantSegment('ch', 'ʧ', [ConsonantCategories.Initial, ConsonantCategories.Final], {
                 manner: [3, 5],
                 all: [0],
             }),
@@ -273,7 +273,7 @@ var util = require('util');
 var client = new textToSpeech.TextToSpeechClient();
 function generateAudio() {
     return __awaiter(this, void 0, void 0, function () {
-        var _i, _a, vowel, _b, _c, consonant, text, ipa, request, response, writeFile, fileName;
+        var _i, _a, vowel, _b, _c, consonant, text, ipa, query, request, response, writeFile, fileName;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
@@ -293,9 +293,11 @@ function generateAudio() {
                     consonant = _c[_b];
                     text = consonant.name + vowel.name;
                     ipa = consonant.ipa + vowel.ipa;
+                    query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>';
+                    console.log(query);
                     request = {
                         input: {
-                            'ssml': '<phoneme alphabet=ipa ph="a">a</phoneme>'
+                            'ssml': query
                         },
                         // Select the language and SSML voice gender (optional)
                         voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
@@ -310,7 +312,7 @@ function generateAudio() {
                     return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
                 case 4:
                     _d.sent();
-                    console.log('Audio content written to file: output.mp3');
+                    console.log('Audio content written to file: ' + fileName);
                     _d.label = 5;
                 case 5:
                     _b++;

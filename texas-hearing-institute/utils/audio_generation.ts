@@ -1,3 +1,20 @@
+/*
+A not very in-depth guide to running this file:
+
+0: set up google CLI and a project, add the speech-to-text api
+1: tsc [this file]
+ - to convert to java script
+2: node [this file]
+ - to run it
+
+Notes:
+
+- This file is completely self-contained and also contains some modifications to the Segment class to include IPA.
+- Google API is really fussy and does NOT have error handling.
+- Need to wrap <phoneme> in a <speak> tag.
+*/
+
+
 class Segment {
 	name = '';
 	ipa = '';
@@ -99,13 +116,13 @@ class AllSegments {
 			new VowelSegment('oo', 'u'),
 			new VowelSegment('ee', 'i'),
 			new VowelSegment('uh', 'ʌ'),
-			new VowelSegment('ow', 'əʊ'),
+			new VowelSegment('ow', 'aʊ'),
 			new VowelSegment('eye', 'aɪ'),
-			new VowelSegment('oh', 'o'),
+			new VowelSegment('oh', 'əʊ'),
 			new VowelSegment('oy', 'ɔɪ'),
 			new VowelSegment('ih', 'ɪ'),
 			new VowelSegment('ah', 'ɑ'),
-			new VowelSegment('ay', 'ɛ'),
+			new VowelSegment('ay', 'eɪ'),
 
 			// Consonants
 			new ConsonantSegment(
@@ -232,7 +249,7 @@ class AllSegments {
 			}),
 			new ConsonantSegment(
 				'ch',
-				'tʃ⁠',
+				'ʧ',
 				[ConsonantCategories.Initial, ConsonantCategories.Final],
 				{
 					manner: [3, 5],
@@ -349,11 +366,13 @@ async function generateAudio() {
     })) {
       const text = consonant.name + vowel.name;
 	  const ipa = consonant.ipa + vowel.ipa;
+	  const query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>'
+	  console.log(query)
 
       // Construct the request
       const request = {
         input: {
-			'ssml': '<phoneme alphabet=ipa ph="a">a</phoneme>'
+			'ssml': query
 		},
         // Select the language and SSML voice gender (optional)
         voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
@@ -367,7 +386,7 @@ async function generateAudio() {
       const writeFile = util.promisify(fs.writeFile);
       const fileName = text + '.mp3'
       await writeFile(fileName, response.audioContent, 'binary');
-      console.log('Audio content written to file: output.mp3');
+      console.log('Audio content written to file: ' + fileName);
     }
   }
 }
