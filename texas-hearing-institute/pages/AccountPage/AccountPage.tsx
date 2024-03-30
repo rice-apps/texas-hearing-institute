@@ -1,18 +1,16 @@
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import { Pressable, View, Text, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ProfileIconView from '../../components/ProfileIconView';
 import pencil from '../../icons/pencil';
 import FormView from '../../components/FormView/FormView';
-import { User } from '../../user/User';
 import PillButtonView from '../../components/PillButtonView';
+import { UserContext } from '../../user/UserContext';
 
-interface AccountPageMainProps {
-	user: User;
-}
+export default function AccountPage() {
+	const user = useContext(UserContext);
 
-export const AccountPage = ({ user }: AccountPageMainProps) => {
 	const [editMode, setEditMode] = useState(false);
 	const [userEmail] = useState(() => {
 		return user.getEmail();
@@ -187,4 +185,4 @@ export const AccountPage = ({ user }: AccountPageMainProps) => {
 			</View>
 		</View>
 	);
-};
+}
