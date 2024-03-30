@@ -10,7 +10,7 @@ import { retrieveConsonants, retrieveVowels } from './persistSelection';
 // syllableGeneration returns an array of `numberOfWords` words (i.e. ['pee', 'paw']).
 // Inputs:
 // - segment: is the desired `Segment` to practice for speaking practice; null for listening practice.
-// - consonantFlower: one of Voice/Manner/Place, or All for listening practice, "Variegated Vowels" mode
+// - consonantFlower: one of Voice/Manner/Place, or All for listening practice's "Variegated Vowels" mode
 // - isUniqueVowels: Select Vowel Type: "Same Vowels"? Set this to false; "Different Vowels"? Set this to true.
 //   - Always set this to true if you're doing "Variegated Vowels" listening babble practice
 // - practiceTarget: is initial/final in speaking practice; null to represent vowel targeting
@@ -37,12 +37,32 @@ export async function syllableGeneration(
 	if (segment === null) {
 		segment = getRandomElement(
 			// Before we pick a random consonant:
-			// Filter out consonants that don't have a petal in the provided consonantFlower.
-			// - EG: "ch" doesn't exist in Place or Voice flowers.
-			consonants.filter(
-				(consonant) => consonant.getPetalIds(consonantFlower).length != 0,
-			),
-			// TODO -- there will be an error if a child can only say one member of a flower.
+			consonants.filter((consonant) => {
+				// Filter out consonants that don't have a petal in the provided consonantFlower.
+				// - EG: "ch" doesn't exist in Place or Voice flowers.
+				if (consonant.getPetalIds(consonantFlower).length == 0) {
+					return false;
+				}
+				// Filter out consonants that don't match our practiceTarget
+				if (
+					practiceTarget != null &&
+					!consonant.categories.includes(practiceTarget)
+				) {
+					return false;
+				}
+				// Filter out consonants with no siblings
+				// Make sure we have at least one sibling. numOfSiblings includes self.
+				const numOfSiblings = consonant.fetchConsonantSiblings(
+					consonantFlower,
+					consonants,
+					practiceTarget,
+				).length;
+				if (numOfSiblings == null || numOfSiblings < 1) {
+					return false;
+				}
+
+				return true;
+			}),
 		)!;
 	}
 
