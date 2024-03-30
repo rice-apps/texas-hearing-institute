@@ -164,11 +164,7 @@ function generateWordWithVowelSegment(
 function pickRandomConsonant(
 	consonants: ConsonantSegment[],
 	consonantFlower: ConsonantFlower,
-	practiceTarget:
-		| ConsonantCategories
-		| null
-		| ConsonantCategories.Initial
-		| ConsonantCategories.Final,
+	practiceTarget: ConsonantCategories | null,
 ) {
 	return getRandomElement(
 		// Before we pick a random consonant:
