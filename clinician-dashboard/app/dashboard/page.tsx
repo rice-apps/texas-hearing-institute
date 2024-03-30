@@ -79,13 +79,16 @@ const Dashboard = () => {
     return (
         <div>
             <Header/>
-            <div className="bg-gray-200 dark:bg-gray-700 rounded-md">
-              <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-10 py-2.5">
-                <h2 className="text-white">View Patient Reports:</h2>
-                <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>
-              </div>
-              <div className="">
-                <PatientReport reports={childReports}/>
+            <br />
+            <div className="flex justify-center content-center items-center ">
+              <div className="bg-white dark:bg-gray-800 rounded-md w-11/12 border-gray-300 dark:border-black border">
+                <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-5 py-2.5">
+                  <h2 className="text-black dark:text-white">Search Patients:</h2>
+                  <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>
+                </div>
+                <div className="">
+                  <PatientReport reports={childReports}/>
+                </div>
               </div>
             </div>
 
