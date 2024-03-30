@@ -13,12 +13,17 @@ import { AntDesign } from '@expo/vector-icons';
 import { supabase } from '../lib/supabase';
 import PillButtonView from '../components/PillButtonView';
 import { Phoneme } from './Home/types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { PracticeParamList } from './PracticeNavigator';
 
 /* WARNING: PARAMETERS CAST TO ANY -- might need to fix using props instead */
 /* Active Practice reroutes to Report Screen */
 
+type Props = NativeStackScreenProps<PracticeParamList, 'ReportScreen'>;
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const ReportScreen = ({ route }: any) => {
+//function ReportScreen({route, navigation}: Props) {
+function ReportScreen({ route }: Props) {
 	const { phonemes, report } = route.params;
 	// frequency of correct/incorrect array
 	const cCount: number[] = [
@@ -105,7 +110,7 @@ const ReportScreen = ({ route }: any) => {
 			</TouchableOpacity>
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	container: {
