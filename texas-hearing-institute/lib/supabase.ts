@@ -12,14 +12,18 @@ console.log(supabaseAnonKey);
 // there is a ts-ignore here because for some reason code doesn't work with `supabaseUrl!` but does work with `supabaseUrl`
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-	auth: {
-		storage: AsyncStorage,
-		autoRefreshToken: true,
-		persistSession: true,
-		detectSessionInUrl: false,
+export const supabase = createClient(
+	process.env.NEXT_PUBLIC_SUPABASE_URL!,
+	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+	{
+		auth: {
+			storage: AsyncStorage,
+			autoRefreshToken: true,
+			persistSession: true,
+			detectSessionInUrl: false,
+		},
 	},
-});
+);
 
 // Tells Supabase Auth to continuously refresh the session automatically
 // if the app is in the foreground. When this is added, you will continue
