@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import ProgressBar from 'react-native-progress/Bar';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Phoneme, PhonemeListProps, ReportInfo } from './pages/Home/types';
+import { Phoneme, PhonemeListProps, ReportInfo } from './Home/types';
 import { useNavigation } from '@react-navigation/core';
-import { PracticeParamList } from './pages/PracticeNavigator';
+import { PracticeParamList } from './PracticeNavigator';
 
 const { height, width } = Dimensions.get('window');
 const CARD_WIDTH = width - 40;

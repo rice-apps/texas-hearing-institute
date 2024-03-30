@@ -9,11 +9,7 @@ import InitialConsonants from './SpeechSettings/tabs/InitialConsonants';
 import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
 import ReportScreen from './ReportScreen';
-// import ActivePractice from '../Active';
-import { PhonemeListProps, ReportInfo } from './Home/types';
-//import { Phoneme, PhonemeListProps, ReportInfo } from './Home/types';
-import Active from '../Active';
-// import { ParamListBase } from '@react-navigation/native';
+import Active from './Active';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type PracticeParamList = {
@@ -28,18 +24,26 @@ export type PracticeParamList = {
 	ActivePractice: undefined;
 	ReportScreen: { phonemes: PhonemeListProps; report: ReportInfo };
 };
-// interface PracticeParamList extends ParamListBase{
-// 	Home: undefined;
-// 	Vowels: undefined;
-// 	InitialConsonants: undefined;
-// 	FinalConsonants: undefined;
-// 	PlaceCue: undefined;
-// 	VariegatedVowels: undefined;
-// 	Manner: undefined;
-// 	Voicing: undefined;
-// 	ActivePractice: undefined;
-// 	ReportScreen: { phonemes: PhonemeListProps; report: ReportInfo };
-//   }
+export interface Phoneme {
+	name: string;
+	correct: boolean;
+}
+export interface PhonemeListProps {
+	phonemes: Phoneme[];
+	user: string;
+}
+export interface ReportInfo {
+	child: string;
+	createdAt: string;
+	type: string;
+	subtype: string;
+	sound: string;
+	mode: string;
+	voweltype: string;
+	combinations: string[];
+	numSyllables: number;
+	correct: boolean[];
+}
 
 const Stack = createNativeStackNavigator<PracticeParamList>();
 

@@ -1,27 +1,43 @@
-import React from 'react';
-// import TabNavigator from './components/TabNavigator'; -
+import 'react-native-url-polyfill/auto';
+import { useState, useEffect } from 'react';
+import { supabase } from './lib/supabase';
+import Auth from './components/Auth.native';
+//import Account from './components/Account'
+import { View, Text } from 'react-native';
+import { Session } from '@supabase/supabase-js';
+import { Button } from 'react-native-elements';
 
-// export default function App() { -
-
-// } -
-
-//====================================================
-
-// import React, { useState } from 'react';
-// import { View, Text, StyleSheet, Dimensions } from 'react-native';
-// import Swiper from 'react-native-deck-swiper';
-// import ProgressBar from 'react-native-progress/Bar';
-// import { RootStackParamList } from './pages/Home/types';
-// import { StackNavigationProp } from '@react-navigation/stack';
-// import { Phoneme, PhonemeListProps, ReportInfo } from './pages/Home/types'
-import { ApplicationProvider } from '@ui-kitten/components';
-import TabNavigator from './components/TabNavigator';
-import * as eva from '@eva-design/eva';
+async function signOut() {
+	const { error } = await supabase.auth.signOut();
+	if (error) {
+		throw error;
+	}
+}
 
 export default function App() {
+	const [session, setSession] = useState<Session | null>(null);
+
+	useEffect(() => {
+		supabase.auth.getSession().then(({ data: { session } }) => {
+			setSession(session);
+		});
+
+		supabase.auth.onAuthStateChange((_event, session) => {
+			setSession(session);
+		});
+	}, []);
+
 	return (
-		<ApplicationProvider {...eva} theme={eva.light}>
-			<TabNavigator />
-		</ApplicationProvider>
+		<View>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Text>Hello</Text>
+			<Auth />
+			{session && session.user && <Button title="Sign Out" onPress={signOut} />}
+		</View>
 	);
 }
