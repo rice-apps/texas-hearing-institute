@@ -5,7 +5,7 @@ import {
 	VowelSegment,
 	ConsonantSegment,
 } from './Segment';
-import { AllSegments } from './AllSegmentsHardcoded';
+import { retrieveConsonants, retrieveVowels } from './persistSelection';
 
 // syllableGeneration returns an array of `numberOfWords` words (i.e. ['pee', 'paw']).
 // Inputs:
@@ -28,17 +28,9 @@ export async function syllableGeneration(
 	// The subarray will always have two items: the first is a consonant, the second is a vowel.
 	// If we're doing "final consonant" practice, we'll swap the order **at the end**.
 	const syllables: string[][] = [];
-	// List of all 10 vowels
-	const vowels: VowelSegment[] = AllSegments.getAllSegmentsHardcoded().filter(
-		(seg) => seg instanceof VowelSegment,
-	);
+	const vowels = await retrieveVowels();
 	// List of consonants for our practiceTarget (initial/final)
-	const consonants: ConsonantSegment[] =
-		AllSegments.getAllSegmentsHardcoded().filter(
-			(seg) =>
-				seg instanceof ConsonantSegment &&
-				seg.categories.includes(practiceTarget!),
-		) as ConsonantSegment[];
+	const consonants = await retrieveConsonants();
 	// TODO - listening practice has practiceTarget null! something about the line above has to be fixed.
 
 	// If we're not targeting a specific Segment (listening practice), choose a random "target"
@@ -57,14 +49,19 @@ export async function syllableGeneration(
 	// This bundle of expressions just sets `petalConsonants`.
 	if (segment instanceof ConsonantSegment) {
 		// Fetch the petalConsonants (sibling consonants) to our ConsonantSegment!
-		petalConsonants = segment!.fetchConsonantSiblings(consonantFlower);
+		petalConsonants = segment!.fetchConsonantSiblings(
+			consonantFlower,
+			consonants,
+		);
 	} else if (segment instanceof VowelSegment) {
 		// If the targeted segment is a vowel, it won't have siblings.
 		// Thus, pick a random ConsonantSegment just to assign petalConsonants to its siblings.
 		const randomConsonantSegment = getRandomElement(consonants)!;
 		// Fetch its siblings
-		petalConsonants =
-			randomConsonantSegment!.fetchConsonantSiblings(consonantFlower);
+		petalConsonants = randomConsonantSegment!.fetchConsonantSiblings(
+			consonantFlower,
+			consonants,
+		);
 		// We can use this randomly chosen consonant later—it only existed to pick a random petal.
 		// It hasn't been "used" yet.
 		petalConsonants.push(randomConsonantSegment);
