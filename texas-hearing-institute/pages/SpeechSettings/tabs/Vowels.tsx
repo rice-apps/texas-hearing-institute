@@ -1,35 +1,45 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import SoundGrid from '../components/SoundGrid';
 import RadioButton from '../../../components/RadioButton';
 import FloatingButton from '../../../components/FloatingButton';
-import { useNavigation } from '@react-navigation/native';
+import { retrieveVowels } from '../../../utils/persistSelection';
+import { syllableGeneration } from '../../../utils/syllableGeneration';
+import { ConsonantFlower, VowelSegment } from '../../../utils/Segment';
 
 const Vowels = () => {
-	const navigation = useNavigation();
-	// TODO: pull from sound inventory (need to change sound inventory data structure)
-	const sounds = [
-		'ee',
-		'I',
-		'A',
-		'E',
-		'a',
-		'ah',
-		'uh',
-		'aw',
-		'o',
-		'oo',
-		'ow',
-		'eye',
-		'oi',
-	];
-	const [segment, setSegment] = useState('');
-	const [mode, setMode] = useState('');
-	const [vowelType, setVowelType] = useState('');
+	// Fetch vowels that child can say from async storage.
+	useEffect(() => {
+		// We immediately run this async function when page is loaded,
+		// which will update `speakableVowelSegments` as soon as it receives the inventory.
+		async function fetchSpeakableVowels() {
+			try {
+				const vowelSegments = await retrieveVowels();
+				setSpeakableVowelSegments(vowelSegments);
+			} catch (error) {
+				console.error('Error retrieving vowels:', error);
+				// Handle error appropriately, e.g., show an error message to the user
+			}
+		}
+
+		fetchSpeakableVowels();
+	}, []);
+
+	const [speakableVowelSegments, setSpeakableVowelSegments] = useState<
+		VowelSegment[]
+	>([]);
+	const [segment, setSegment] = useState<VowelSegment>();
+	const [modeFlower, setModeFlower] = useState<ConsonantFlower>();
+	const [isUniqueVowels, setIsUniqueVowels] = useState<boolean>();
 	const [speed, setSpeed] = useState(1);
 
 	const settingsReady = () => {
-		return segment != '' && mode != '' && vowelType != '' && speed != 1;
+		return (
+			segment != null &&
+			modeFlower != null &&
+			isUniqueVowels != null &&
+			speed != 1
+		);
 	};
 
 	return (
@@ -37,43 +47,50 @@ const Vowels = () => {
 			<ScrollView style={styles.screen}>
 				<Text style={styles.title}>Vowels</Text>
 				<Text style={styles.subtitle}>SELECT A VOWEL</Text>
-				<SoundGrid sounds={sounds} selected={segment} setSegment={setSegment} />
-				{segment != '' && (
+				<SoundGrid
+					sounds={speakableVowelSegments}
+					selected={segment}
+					setSegment={(sound) => {
+						// SoundGrid returns a Segment, convert to VowelSegment
+						setSegment(sound as VowelSegment);
+					}}
+				/>
+				{segment != null && (
 					<View>
 						<Text style={styles.subtitle}>SELECT MODE</Text>
 						<View>
-							<RadioButton<string>
+							<RadioButton<ConsonantFlower>
 								label={'Voicing'}
-								value={'Voicing'}
-								onPress={setMode}
-								selectedRadio={mode}
+								value={ConsonantFlower.Voice}
+								onPress={setModeFlower}
+								selectedRadio={modeFlower}
 							/>
-							<RadioButton<string>
+							<RadioButton<ConsonantFlower>
 								label={'Manner'}
-								value={'Manner'}
-								onPress={setMode}
-								selectedRadio={mode}
+								value={ConsonantFlower.Manner}
+								onPress={setModeFlower}
+								selectedRadio={modeFlower}
 							/>
-							<RadioButton<string>
+							<RadioButton<ConsonantFlower>
 								label={'Place Cue'}
-								value={'Place Cue'}
-								onPress={setMode}
-								selectedRadio={mode}
+								value={ConsonantFlower.Place}
+								onPress={setModeFlower}
+								selectedRadio={modeFlower}
 							/>
 						</View>
 						<Text style={styles.subtitle}>SELECT VOWEL TYPE</Text>
 						<View>
-							<RadioButton<string>
+							<RadioButton<boolean>
 								label={'Same Vowels'}
-								value={'Same'}
-								onPress={setVowelType}
-								selectedRadio={vowelType}
+								value={false}
+								onPress={setIsUniqueVowels}
+								selectedRadio={isUniqueVowels}
 							/>
-							<RadioButton<string>
+							<RadioButton<boolean>
 								label={'Different Vowels'}
-								value={'Different'}
-								onPress={setVowelType}
-								selectedRadio={vowelType}
+								value={true}
+								onPress={setIsUniqueVowels}
+								selectedRadio={isUniqueVowels}
 							/>
 						</View>
 						<Text style={styles.subtitle}>SELECT SPEED</Text>
@@ -97,12 +114,21 @@ const Vowels = () => {
 			</ScrollView>
 			{/* TODO: button routes to active practice */}
 			{settingsReady() && (
-				<View style={styles.float}>
-					<FloatingButton
-						label={"Let's Practice"}
-						onPress={() => navigation.navigate('Active Practice' as never)}
-					/>
-				</View>
+				<FloatingButton
+					label={"Let's Practice"}
+					onPress={async () => {
+						// Call syllable generation. We can use ! on vars because we validated
+						// that they were all selected with settingsReady() before this button appeared.
+						const words = await syllableGeneration(
+							segment!,
+							modeFlower!,
+							isUniqueVowels!,
+							null,
+							2,
+						);
+						console.log(words);
+					}}
+				/>
 			)}
 		</>
 	);
@@ -129,13 +155,6 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		fontWeight: 'bold',
 		fontSize: 22,
-	},
-	float: {
-		width: '100%',
-		alignItems: 'center',
-		zIndex: 1,
-		position: 'absolute',
-		bottom: 52,
 	},
 });
 
