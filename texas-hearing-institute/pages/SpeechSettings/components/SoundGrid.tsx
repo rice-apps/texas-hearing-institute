@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import GridButton from '../../../components/GridButton';
+import { Segment } from '../../../utils/Segment';
 
 interface SoundGridProps {
-	sounds: string[];
-	selected: string;
-	setSegment: (sound: string) => void;
+	sounds: Segment[];
+	selected: Segment | undefined;
+	setSegment: (sound: Segment) => void;
 }
 
 export default function SoundGrid({
@@ -18,8 +19,8 @@ export default function SoundGrid({
 			{sounds.map((s, i) => (
 				<GridButton
 					key={i}
-					label={s}
-					selected={selected == s ? true : false}
+					label={s.name}
+					selected={selected == s}
 					onPress={() => setSegment(s)}
 				/>
 			))}

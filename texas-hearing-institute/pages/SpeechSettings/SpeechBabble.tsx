@@ -5,6 +5,7 @@ import ButtonGroup from '../ListeningSettings/components/ButtonGroup';
 const headerText = 'Speech Babble';
 
 const buttons = ['Vowels', 'Initial Consonants', 'Final Consonants'];
+const routes = ['Vowels', 'InitialConsonants', 'FinalConsonants'];
 
 export default function SpeechBabble() {
 	return (
@@ -12,7 +13,7 @@ export default function SpeechBabble() {
 			<ButtonGroup
 				headerText={headerText}
 				buttonLabels={buttons}
-				buttonRoutes={buttons}
+				buttonRoutes={routes}
 			/>
 		</View>
 	);

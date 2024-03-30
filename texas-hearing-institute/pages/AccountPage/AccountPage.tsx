@@ -158,10 +158,10 @@ export default function AccountPage() {
 						() => {
 							// email is immutable
 						},
-						(newValue) => {
+						(newValue: string) => {
 							setUserName(newValue);
 						},
-						(newValue) => {
+						(newValue: string) => {
 							setUserGroupID(newValue);
 						},
 					]}

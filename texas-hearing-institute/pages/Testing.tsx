@@ -7,9 +7,7 @@ import {
 	ConsonantCategories,
 	ConsonantFlower,
 	ConsonantSegment,
-	VowelSegment,
 } from '../utils/Segment';
-import OnboardingMain from './Onboarding/OnboardingMain';
 import { retrieveVowels } from '../utils/persistSelection';
 
 export default function Testing() {
