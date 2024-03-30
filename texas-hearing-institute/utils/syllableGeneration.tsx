@@ -35,35 +35,7 @@ export async function syllableGeneration(
 
 	// If we're not targeting a specific Segment (listening practice), choose a random "target"
 	if (segment === null) {
-		segment = getRandomElement(
-			// Before we pick a random consonant:
-			consonants.filter((consonant) => {
-				// Filter out consonants that don't have a petal in the provided consonantFlower.
-				// - EG: "ch" doesn't exist in Place or Voice flowers.
-				if (consonant.getPetalIds(consonantFlower).length == 0) {
-					return false;
-				}
-				// Filter out consonants that don't match our practiceTarget
-				if (
-					practiceTarget != null &&
-					!consonant.categories.includes(practiceTarget)
-				) {
-					return false;
-				}
-				// Filter out consonants with no siblings
-				// Make sure we have at least one sibling. numOfSiblings includes self.
-				const numOfSiblings = consonant.fetchConsonantSiblings(
-					consonantFlower,
-					consonants,
-					practiceTarget,
-				).length;
-				if (numOfSiblings == null || numOfSiblings < 1) {
-					return false;
-				}
-
-				return true;
-			}),
-		)!;
+		segment = pickRandomConsonant(consonants, consonantFlower, practiceTarget)!;
 	}
 
 	// This bundle of expressions generates all `syllables` to be practiced.
@@ -71,7 +43,11 @@ export async function syllableGeneration(
 		// —— Generate the first word ——
 
 		// Pick a random consonant to go with our vowel in the first word.
-		const randomConsonantSegment = getRandomElement(consonants)!;
+		const randomConsonantSegment = pickRandomConsonant(
+			consonants,
+			consonantFlower,
+			practiceTarget,
+		);
 		// If our input targeted `segment` is a vowel, it won't have siblings.
 		// Thus, we will assign petalConsonants = this random ConsonantSegment's siblings.
 		petalConsonants = randomConsonantSegment!.fetchConsonantSiblings(
@@ -181,6 +157,48 @@ function generateWordWithVowelSegment(
 		// Return a word: Our target VowelSegment, with a random sibling consonant prepended
 		return [getRandomElement(petalConsonants)!.name, vowelSegment.name];
 	}
+}
+
+// Picks a random consonant from provided `consonants`, ensuring that it matches the `practiceTarget`
+// and has siblings in `consonantFlower`.
+function pickRandomConsonant(
+	consonants: ConsonantSegment[],
+	consonantFlower: ConsonantFlower,
+	practiceTarget:
+		| ConsonantCategories
+		| null
+		| ConsonantCategories.Initial
+		| ConsonantCategories.Final,
+) {
+	return getRandomElement(
+		// Before we pick a random consonant:
+		consonants.filter((consonant) => {
+			// Filter out consonants that don't have a petal in the provided consonantFlower.
+			// - EG: "ch" doesn't exist in Place or Voice flowers.
+			if (consonant.getPetalIds(consonantFlower).length == 0) {
+				return false;
+			}
+			// Filter out consonants that don't match our practiceTarget
+			if (
+				practiceTarget != null &&
+				!consonant.categories.includes(practiceTarget)
+			) {
+				return false;
+			}
+			// Filter out consonants with no siblings
+			// Make sure we have at least one sibling. numOfSiblings includes self.
+			const numOfSiblings = consonant.fetchConsonantSiblings(
+				consonantFlower,
+				consonants,
+				practiceTarget,
+			).length;
+			if (numOfSiblings == null || numOfSiblings < 1) {
+				return false;
+			}
+
+			return true;
+		}),
+	);
 }
 
 // Testing:
