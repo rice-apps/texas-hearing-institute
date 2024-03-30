@@ -103,14 +103,12 @@ export default function InitialConsonants() {
 			</ScrollView>
 			{/* TODO: button routes to active practice */}
 			{settingsReady() && (
-				<View style={styles.float}>
-					<FloatingButton
-						label={"Let's Practice"}
-						onPress={function (label: string): void {
-							throw new Error(label);
-						}}
-					/>
-				</View>
+				<FloatingButton
+					label={"Let's Practice"}
+					onPress={function (label: string): void {
+						throw new Error(label);
+					}}
+				/>
 			)}
 		</>
 	);
@@ -137,12 +135,5 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		fontWeight: 'bold',
 		fontSize: 22,
-	},
-	float: {
-		width: '100%',
-		alignItems: 'center',
-		zIndex: 1,
-		position: 'absolute',
-		bottom: 52,
 	},
 });

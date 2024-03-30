@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
+import {
+	View,
+	Text,
+	Pressable,
+	ScrollView,
+	StyleSheet,
+	Alert,
+} from 'react-native';
 import ToggleGridButtons from '../../components/ToggleGridButtonsComponent/ToggleGridButtons';
 import styles from '../Onboarding/OnboardingStyle';
 import { SvgXml } from 'react-native-svg';
@@ -16,6 +23,9 @@ import {
 	storeItemSelection,
 } from '../../utils/persistSelection';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
+
+// Minimum number of sounds that must be selected for consonants and vowels
+const MIN_SELECTED = 4;
 
 export const SoundInventory = () => {
 	// hashmap/dictionary to keep track of all consonants and their toggled state, update via useState to rerender componetns
@@ -225,7 +235,17 @@ export const SoundInventory = () => {
 						width: 300,
 						borderRadius: 15,
 					}}
-					onPress={() => setEditModeEnabled(!editModeEnabled, true)}
+					onPress={() => {
+						if (
+							draftInventoryConsonants.filter((x) => x).length < MIN_SELECTED
+						) {
+							Alert.alert('', 'Select at least 4 of each sound', [
+								{ text: 'OK' },
+							]);
+						} else {
+							setEditModeEnabled(!editModeEnabled, true);
+						}
+					}}
 				>
 					<Text
 						style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}
