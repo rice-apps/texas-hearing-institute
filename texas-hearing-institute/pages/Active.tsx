@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-import ProgressBar from 'react-native-progress/Bar';
+//import ProgressBar from 'react-native-progress/Bar';
+import * as Progress from 'react-native-progress';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Phoneme, PhonemeListProps, ReportInfo } from './Home/types';
+import { Phoneme, PhonemeListProps, ReportInfo } from './types';
 import { useNavigation } from '@react-navigation/core';
 import { PracticeParamList } from './PracticeNavigator';
 
@@ -34,7 +35,6 @@ const sampleReport: ReportInfo = {
 type StackNav = StackNavigationProp<PracticeParamList>;
 
 export default function Active() {
-	//const cards = ['lol', 'lmao', 'rofl', 'wtf', 'omw', 'ngl','tbh'];
 	const navigation = useNavigation<StackNav>();
 	const sampleCards = [p1, p2, p3, p4, p5, p6, p7];
 	const sProps: PhonemeListProps = {
@@ -70,7 +70,7 @@ export default function Active() {
 
 	return (
 		<View style={styles.container}>
-			<ProgressBar
+			<Progress.Bar
 				progress={progress / 100}
 				width={Dimensions.get('window').width - 40} //same width as card
 				color="#2196F3"

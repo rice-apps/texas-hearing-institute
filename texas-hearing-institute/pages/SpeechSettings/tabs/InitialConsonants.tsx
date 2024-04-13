@@ -11,6 +11,11 @@ import {
 } from '../../../utils/Segment';
 import { syllableGeneration } from '../../../utils/syllableGeneration';
 
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PracticeParamList } from '../../PracticeNavigator';
+type StackNav = StackNavigationProp<PracticeParamList>;
+
 export default function InitialConsonants() {
 	// Fetch consonants that child can say from async storage.
 	useEffect(() => {
@@ -49,6 +54,7 @@ export default function InitialConsonants() {
 			speed != 1
 		);
 	};
+	const navigation = useNavigation<StackNav>();
 
 	return (
 		<>
@@ -154,6 +160,7 @@ export default function InitialConsonants() {
 							pages.push(words);
 						}
 						// TODO: Route to active practice
+						navigation.navigate('ActivePractice'); // Navigate to Active screen
 						console.log(pages);
 					}}
 				/>

@@ -11,6 +11,11 @@ import {
 } from '../../../utils/Segment';
 import { syllableGeneration } from '../../../utils/syllableGeneration';
 
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PracticeParamList } from '../../PracticeNavigator';
+type StackNav = StackNavigationProp<PracticeParamList>;
+
 export default function FinalConsonants() {
 	// Fetch consonants that child can say from async storage.
 	useEffect(() => {
@@ -49,6 +54,7 @@ export default function FinalConsonants() {
 			speed != 1
 		);
 	};
+	const navigation = useNavigation<StackNav>();
 
 	return (
 		<>
@@ -120,6 +126,7 @@ export default function FinalConsonants() {
 				)}
 				<View style={{ height: 140 }} />
 			</ScrollView>
+			// STILL TODO
 			{/* TODO: button routes to active practice */}
 			{settingsReady() && (
 				<FloatingButton
@@ -155,6 +162,7 @@ export default function FinalConsonants() {
 							pages.push(words);
 						}
 						// TODO: Route to active practice
+						navigation.navigate('ActivePractice'); // Navigate to Active screen
 						console.log(pages);
 					}}
 				/>

@@ -10,6 +10,8 @@ import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
 import ReportScreen from './ReportScreen';
 import Active from './Active';
+import SettingsPage from './ListeningSettings/components/SettingsPage';
+import { PhonemeListProps, ReportInfo } from './types';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type PracticeParamList = {
@@ -23,27 +25,8 @@ export type PracticeParamList = {
 	Voicing: undefined;
 	ActivePractice: undefined;
 	ReportScreen: { phonemes: PhonemeListProps; report: ReportInfo };
+	SettingsPage: undefined;
 };
-export interface Phoneme {
-	name: string;
-	correct: boolean;
-}
-export interface PhonemeListProps {
-	phonemes: Phoneme[];
-	user: string;
-}
-export interface ReportInfo {
-	child: string;
-	createdAt: string;
-	type: string;
-	subtype: string;
-	sound: string;
-	mode: string;
-	voweltype: string;
-	combinations: string[];
-	numSyllables: number;
-	correct: boolean[];
-}
 
 const Stack = createNativeStackNavigator<PracticeParamList>();
 
@@ -77,6 +60,7 @@ export default function PracticeNavigator() {
 			<Stack.Screen name="Voicing" component={VoicingScreen} />
 			<Stack.Screen name="ActivePractice" component={Active} />
 			<Stack.Screen name="ReportScreen" component={ReportScreen} />
+			<Stack.Screen name="SettingsPage" component={SettingsPage} />
 			{/*stack screen for active practice and report*/}
 		</Stack.Navigator>
 	);

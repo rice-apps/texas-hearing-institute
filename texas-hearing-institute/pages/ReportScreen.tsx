@@ -14,34 +14,14 @@ import { supabase } from '../lib/supabase';
 import PillButtonView from '../components/PillButtonView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { PracticeParamList } from './PracticeNavigator';
+import { Phoneme } from './types';
 
 /* WARNING: PARAMETERS CAST TO ANY -- might need to fix using props instead */
 /* Active Practice reroutes to Report Screen */
 
 type Props = NativeStackScreenProps<PracticeParamList, 'ReportScreen'>;
-export interface Phoneme {
-	name: string;
-	correct: boolean;
-}
-export interface PhonemeListProps {
-	phonemes: Phoneme[];
-	user: string;
-}
-export interface ReportInfo {
-	child: string;
-	createdAt: string;
-	type: string;
-	subtype: string;
-	sound: string;
-	mode: string;
-	voweltype: string;
-	combinations: string[];
-	numSyllables: number;
-	correct: boolean[];
-}
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-//function ReportScreen({route, navigation}: Props) {
 function ReportScreen({ route }: Props) {
 	const { phonemes, report } = route.params;
 	// frequency of correct/incorrect array

@@ -5,11 +5,16 @@ import FloatingButton from '../../../components/FloatingButton';
 import { ConsonantCategories, ConsonantFlower } from '../../../utils/Segment';
 import { syllableGeneration } from '../../../utils/syllableGeneration';
 
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PracticeParamList } from '../../PracticeNavigator';
+
 interface SettingsPageProps {
 	title: string;
 	showVowelType: boolean;
 	modeFlower: ConsonantFlower;
 }
+type StackNav = StackNavigationProp<PracticeParamList>;
 
 export default function SettingsPage({
 	title,
@@ -22,7 +27,7 @@ export default function SettingsPage({
 		showVowelType ? undefined : true,
 	);
 	const [numSyllables, setNumSyllables] = useState(-1);
-
+	const navigation = useNavigation<StackNav>();
 	const settingsReady = () => {
 		return (
 			// Only check isUniqueVowels if showVowelType is true.
@@ -99,6 +104,7 @@ export default function SettingsPage({
 								pages.push(words);
 							}
 							// TODO: Route to active practice
+							navigation.navigate('ActivePractice'); // Navigate to Active screen
 							console.log(pages);
 						}}
 					/>

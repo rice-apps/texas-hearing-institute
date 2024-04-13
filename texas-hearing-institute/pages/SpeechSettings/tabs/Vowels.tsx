@@ -7,6 +7,11 @@ import { retrieveVowels } from '../../../utils/persistSelection';
 import { syllableGeneration } from '../../../utils/syllableGeneration';
 import { ConsonantFlower, VowelSegment } from '../../../utils/Segment';
 
+//import { useNavigation } from '@react-navigation/core';
+//import { StackNavigationProp } from '@react-navigation/stack';
+//import { PracticeParamList } from '../../PracticeNavigator';
+//type StackNav = StackNavigationProp<PracticeParamList>;
+
 const Vowels = () => {
 	// Fetch vowels that child can say from async storage.
 	useEffect(() => {
@@ -41,6 +46,7 @@ const Vowels = () => {
 			speed != 1
 		);
 	};
+	//const navigation = useNavigation<StackNav>();
 
 	return (
 		<>
@@ -112,6 +118,7 @@ const Vowels = () => {
 				)}
 				<View style={{ height: 140 }} />
 			</ScrollView>
+			// STILL TODO
 			{/* TODO: button routes to active practice */}
 			{settingsReady() && (
 				<FloatingButton
