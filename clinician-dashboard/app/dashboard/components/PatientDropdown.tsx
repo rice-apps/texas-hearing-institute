@@ -21,7 +21,7 @@ const PatientDropdown: React.FC<DropdownButtonProps> = ({patients, updateSelecte
             <button
                 onClick={toggleDropdown}
                 type="button"
-                className="inline-flex justify-center w-full shadow-sm px-4 py-2 bg-blue-700 hover:bg-blue-800 text-sm font-medium text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 "
+                className="inline-flex justify-center w-full shadow-sm px-4 py-2 bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white  font-medium rounded-lg px-5 py-2.5 "
                 id="dropdown-menu-button"
                 aria-expanded="true"
                 aria-haspopup="true"

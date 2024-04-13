@@ -102,16 +102,16 @@ const ClinicianForm: React.FC = () => {
   };
 
   return (
-    <form className="grid grid-cols-2 grid-rows-2 gap-5 bg-slate-600 p-10 rounded-md mt-40" onSubmit={handleSubmit}>
-      <h1 className="text-white text-xl text-center col-span-2">Assign User as Clinician</h1>
-      <label className="text-white col-span-2">
+    <form className="grid grid-cols-2 grid-rows-2 gap-5 bg-gray-300 dark:bg-slate-600 p-10 rounded-md mt-40" onSubmit={handleSubmit}>
+      <h1 className="text-black dark:text-white text-xl text-center col-span-2">Assign User as Clinician</h1>
+      <label className="text-black dark:text-white col-span-2">
         Clinician Email: 
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          className="text-white px-3 py-2 ml-2 rounded-lg"
+          className="text-black dark:text-white px-3 py-2 ml-2 rounded-lg"
         />
       </label>
       <div className="col-span-2 text-center">
@@ -120,7 +120,7 @@ const ClinicianForm: React.FC = () => {
         {/* success label */}
         <h2 className="inline text-green-500">{formSuccess}</h2>
       </div>
-      <button type="submit" className="col-span-2 bg-green-600 px-3 py-1 text-white dark:text-white rounded-lg hover:bg-green-500">Submit</button>
+      <button type="submit" className="col-span-2 bg-blue-700 px-3 py-1 text-white dark:text-white rounded-lg hover:bg-blue-600">Submit</button>
     </form>
   );
 };

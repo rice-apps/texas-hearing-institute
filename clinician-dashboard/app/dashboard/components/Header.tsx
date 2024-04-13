@@ -14,11 +14,11 @@ export default function Header() {
         </div>
         <div className="flex flex-row gap-x-5">
           <Link href="/dashboard">
-            <h1 className="text-lg text-white hover:text-blue-500 transition-colors duration-300">Clinician Dashboard
+            <h1 className="text-lg text-black dark:text-white hover:text-blue-500 transition-colors duration-300">Clinician Dashboard
             </h1>
           </Link>
           <Link href="/add_clinician">
-          <h1 className="text-lg text-white hover:text-blue-500 transition-colors duration-300">Add Clinician</h1>
+          <h1 className="text-lg text-black dark:text-white hover:text-blue-500 transition-colors duration-300 ">Add Clinician</h1>
           </Link>
 
         </div>

@@ -42,11 +42,11 @@
 }
 
 main{
-  background-color: white;
+  background-color: rgb(245, 245, 245);
 }
 
 @media (prefers-color-scheme: dark) {
   main{
-    background-color: rgb(89, 101, 117);
+    background-color: rgb(45, 48, 53);
   }
 }

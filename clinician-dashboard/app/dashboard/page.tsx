@@ -27,10 +27,10 @@ const Dashboard = () => {
           if (error) {
             throw error;
           }
-          // const userId = data['user']['id'];
+          const userId = data['user']['id'];
           // currently using dummy clinician UID because the give user can be any auth user
           // replace the uuid passed into 2nd param of eq with userID to check logged in Users
-          const userId = '0b04fa32-c264-4102-86d3-511fb18f8ecb';
+          // const userId = '0b04fa32-c264-4102-86d3-511fb18f8ecb';
           const{data:clinicianUID, error:error2} = await supabase.from('clinicians').select('id').eq('user',userId);
           if(error2){
             throw error2;
@@ -81,7 +81,9 @@ const Dashboard = () => {
             <Header/>
             <br />
             <div className="flex justify-center content-center items-center ">
+              
               <div className="bg-white dark:bg-gray-800 rounded-md w-11/12 border-gray-300 dark:border-black border">
+                
                 <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-5 py-2.5">
                   <h2 className="text-black dark:text-white">Search Patients:</h2>
                   <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>

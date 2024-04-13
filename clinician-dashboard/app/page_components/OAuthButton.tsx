@@ -22,7 +22,7 @@ export default function OAuthButton({ provider }: OAuthButtonProps) {
                                 provider.toLowerCase() == 'google' ? google_logo.src :
                                     provider.toLowerCase() == 'apple' ? apple_logo.src : ''
                         }></img>
-                        <h1 className="text-stone-600 font-medium">Continue with {provider.charAt(0).toUpperCase() + provider.slice(1).toLowerCase()}</h1>
+                        <h1 className="text-black dark:text-white font-medium">Continue with {provider.charAt(0).toUpperCase() + provider.slice(1).toLowerCase()}</h1>
                         <div className="w-8 mx-3"></div>
                     </div>
                 </button>
