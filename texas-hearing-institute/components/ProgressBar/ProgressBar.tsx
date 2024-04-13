@@ -3,17 +3,16 @@ import { View, StyleSheet } from 'react-native';
 
 interface Props {
 	progress: number;
-	height: number;
 }
 
-const ProgressBar: React.FC<Props> = ({ progress, height }) => {
+export default function ProgressBar({ progress }: Props) {
 	return (
 		<View
 			style={[
 				styles.backBar,
 				{
-					height: height,
-					borderRadius: height / 2,
+					height: 12,
+					borderRadius: 20,
 					width: '100%',
 				},
 			]}
@@ -23,23 +22,21 @@ const ProgressBar: React.FC<Props> = ({ progress, height }) => {
 					styles.frontBar,
 					{
 						width: `${progress}%`,
-						borderRadius: height / 2,
+						borderRadius: 20,
 					},
 				]}
 			/>
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	backBar: {
-		backgroundColor: '#D9D9D9',
+		backgroundColor: '#EBEBEB',
 		overflow: 'hidden',
 	},
 	frontBar: {
 		height: '100%',
-		backgroundColor: '#000',
+		backgroundColor: '#AFE4F9',
 	},
 });
-
-export default ProgressBar;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text } from 'react-native-elements';
 
-interface SubheadingProps {
+interface SubHeadingProps {
 	title: string;
 }
 
-const Subheading = ({ title }: SubheadingProps) => {
+const SubHeading = ({ title }: SubHeadingProps) => {
 	return (
 		<Text
 			style={{
@@ -20,4 +20,4 @@ const Subheading = ({ title }: SubheadingProps) => {
 	);
 };
 
-export default Subheading;
+export default SubHeading;

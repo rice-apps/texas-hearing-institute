@@ -28,10 +28,10 @@ const PillButtonView = ({ title, type }: PillButtonProps) => {
 					...(type == 'primary'
 						? {
 								fontWeight: '700',
-						  }
+							}
 						: {
 								fontWeight: '600',
-						  }),
+							}),
 				}}
 			>
 				{title}
