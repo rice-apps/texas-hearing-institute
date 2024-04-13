@@ -1,3 +1,18 @@
+/*
+A not very in-depth guide to running this file:
+
+0: set up google CLI and a project, add the speech-to-text api
+1: tsc [this file]
+ - to convert to java script
+2: node [this file]
+ - to run it
+
+Notes:
+
+- This file is completely self-contained and also contains some modifications to the Segment class to include IPA.
+- Google API is really fussy and does NOT have error handling.
+- Need to wrap <phoneme> in a <speak> tag.
+*/
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -273,21 +288,21 @@ var util = require('util');
 var client = new textToSpeech.TextToSpeechClient();
 function generateAudio() {
     return __awaiter(this, void 0, void 0, function () {
-        var _i, _a, vowel, _b, _c, consonant, text, ipa, query, request, response, writeFile, fileName;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var _i, _a, vowel, _b, _c, consonant, text, ipa, query, request, response, writeFile, fileName, _d, _e, vowel, _f, _g, consonant, text, ipa, query, request, response, writeFile, fileName, _h, _j, vowel, text, ipa, query, request, response, writeFile, fileName;
+        return __generator(this, function (_k) {
+            switch (_k.label) {
                 case 0:
                     _i = 0, _a = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
                         return value instanceof VowelSegment;
                     });
-                    _d.label = 1;
+                    _k.label = 1;
                 case 1:
                     if (!(_i < _a.length)) return [3 /*break*/, 7];
                     vowel = _a[_i];
                     _b = 0, _c = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
                         return value instanceof ConsonantSegment;
                     });
-                    _d.label = 2;
+                    _k.label = 2;
                 case 2:
                     if (!(_b < _c.length)) return [3 /*break*/, 6];
                     consonant = _c[_b];
@@ -306,21 +321,99 @@ function generateAudio() {
                     };
                     return [4 /*yield*/, client.synthesizeSpeech(request)];
                 case 3:
-                    response = (_d.sent())[0];
+                    response = (_k.sent())[0];
                     writeFile = util.promisify(fs.writeFile);
                     fileName = text + '.mp3';
                     return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
                 case 4:
-                    _d.sent();
+                    _k.sent();
                     console.log('Audio content written to file: ' + fileName);
-                    _d.label = 5;
+                    _k.label = 5;
                 case 5:
                     _b++;
                     return [3 /*break*/, 2];
                 case 6:
                     _i++;
                     return [3 /*break*/, 1];
-                case 7: return [2 /*return*/];
+                case 7:
+                    _d = 0, _e = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
+                        return value instanceof VowelSegment;
+                    });
+                    _k.label = 8;
+                case 8:
+                    if (!(_d < _e.length)) return [3 /*break*/, 14];
+                    vowel = _e[_d];
+                    _f = 0, _g = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
+                        return value instanceof ConsonantSegment;
+                    });
+                    _k.label = 9;
+                case 9:
+                    if (!(_f < _g.length)) return [3 /*break*/, 13];
+                    consonant = _g[_f];
+                    text = consonant.name + vowel.name;
+                    ipa = consonant.ipa + vowel.ipa;
+                    query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>';
+                    console.log(query);
+                    request = {
+                        input: {
+                            'ssml': query
+                        },
+                        // Select the language and SSML voice gender (optional)
+                        voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+                        // select the type of audio encoding
+                        audioConfig: { audioEncoding: 'MP3' },
+                    };
+                    return [4 /*yield*/, client.synthesizeSpeech(request)];
+                case 10:
+                    response = (_k.sent())[0];
+                    writeFile = util.promisify(fs.writeFile);
+                    fileName = text + '.mp3';
+                    return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
+                case 11:
+                    _k.sent();
+                    console.log('Audio content written to file: ' + fileName);
+                    _k.label = 12;
+                case 12:
+                    _f++;
+                    return [3 /*break*/, 9];
+                case 13:
+                    _d++;
+                    return [3 /*break*/, 8];
+                case 14:
+                    _h = 0, _j = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
+                        return value instanceof VowelSegment;
+                    });
+                    _k.label = 15;
+                case 15:
+                    if (!(_h < _j.length)) return [3 /*break*/, 19];
+                    vowel = _j[_h];
+                    text = vowel.name;
+                    ipa = vowel.ipa;
+                    query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>';
+                    console.log(query);
+                    request = {
+                        input: {
+                            'ssml': query
+                        },
+                        // Select the language and SSML voice gender (optional)
+                        voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+                        // select the type of audio encoding
+                        audioConfig: { audioEncoding: 'MP3' },
+                    };
+                    return [4 /*yield*/, client.synthesizeSpeech(request)];
+                case 16:
+                    response = (_k.sent())[0];
+                    writeFile = util.promisify(fs.writeFile);
+                    fileName = text + '.mp3';
+                    return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
+                case 17:
+                    _k.sent();
+                    console.log('Audio content written to file: ' + fileName);
+                    _k.label = 18;
+                case 18:
+                    _h++;
+                    return [3 /*break*/, 15];
+                case 19: return [2 /*return*/];
             }
         });
     });
