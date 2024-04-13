@@ -66,7 +66,9 @@ export async function middleware(request: NextRequest) {
     if (request.nextUrl.pathname === '/dashboard') {
       return NextResponse.redirect(new URL('/', request.url));
     }
-
+    if (request.nextUrl.pathname === '/add_clinician') {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
     // More space down here for future redirects if needed
   }
 

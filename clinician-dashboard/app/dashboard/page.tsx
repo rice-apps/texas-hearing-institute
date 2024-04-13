@@ -2,6 +2,7 @@
 import {useEffect, useState} from 'react';
 import Header from "@/app/dashboard/components/Header"
 import PatientDropdown from "@/app/dashboard/components/PatientDropdown";
+import PatientSearchBar from './components/PatientSearchBar';
 import PatientReport from "@/app/dashboard/components/PatientReport";
 import { createClient } from "@/utils/supabase/client";
 
@@ -57,12 +58,13 @@ const Dashboard = () => {
     }, []); 
   
 
+    // updates current selected children upon selection from dropdown
     useEffect(() => {
       const getReport = async () => {
         try{
           const{data:reportData, error} = await supabase.from('reports').select().eq('child',selectedChildID);
           if(error) {
-            throw error
+            throw error;
           }
           setChildReports(reportData||[]);
         }
@@ -74,8 +76,41 @@ const Dashboard = () => {
         getReport();
     },[selectedChildID])
  
-  
 
+    const getReport = async (childId:string) => {
+      try{
+        const{data:reportData, error} = await supabase.from('reports').select().eq('child',childId);
+        if(error) {
+          throw error;
+        }
+        return reportData;
+      }
+      catch(error){
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    // updates "selected children" to default to all assigned children to the clinician
+    useEffect(() => {
+
+
+      const getAllReports = async () => {
+        try{
+          var allReports:any[] = [];
+          for (const child of children) {
+            var reports:any[] = await getReport(child['id'])||[];
+            allReports = [...allReports, ...reports];
+            console.log(allReports)  
+          }
+          setChildReports(allReports);
+        }
+        catch (error){
+          console.error("Error fetching user data: ",error)
+        }
+      }
+      getAllReports();
+    },[children])
+    console.log(children)
     return (
         <div>
             <Header/>
@@ -86,7 +121,8 @@ const Dashboard = () => {
                 
                 <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-5 py-2.5">
                   <h2 className="text-black dark:text-white">Search Patients:</h2>
-                  <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>
+                  {/* <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/> */}
+                  <PatientSearchBar data={children}/>
                 </div>
                 <div className="">
                   <PatientReport reports={childReports}/>
