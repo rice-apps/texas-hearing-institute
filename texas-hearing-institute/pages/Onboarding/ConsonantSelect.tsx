@@ -22,7 +22,8 @@ type Props = NativeStackScreenProps<OnboardingStackParamList, 'Consonants'>;
 // Minimum number of consonants that must be selected
 const MIN_SELECTED = 4;
 
-export default function ConsonantSelect({ navigation }: Props) {
+export default function ConsonantSelect({ navigation, route }: Props) {
+	const { name, groupID, vowels } = route.params;
 	const [itemsSelected, setItemsSelected] = useState(() => {
 		// Start load from storage and set state once load completes
 		retrieveItemSelections(consonantInventoryPersistenceKey, consonants).then(
@@ -109,7 +110,18 @@ export default function ConsonantSelect({ navigation }: Props) {
 								{ text: 'OK' },
 							]);
 						} else {
-							navigation.navigate(`Done`);
+							const selectedConsonants = [];
+							for (let i = 0; i < vowels.length; i++) {
+								if (itemsSelected[i] == true) {
+									selectedConsonants.push(vowels[i]);
+								}
+							}
+							navigation.navigate(`Done`, {
+								name: name,
+								groupID: groupID,
+								vowels: vowels,
+								consonants: selectedConsonants,
+							});
 						}
 					}}
 				/>

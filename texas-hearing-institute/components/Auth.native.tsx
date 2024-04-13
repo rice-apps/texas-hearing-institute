@@ -1,20 +1,32 @@
-import {
-	GoogleSignin,
-	GoogleSigninButton,
-	statusCodes,
-} from '@react-native-google-signin/google-signin';
 import { View, Platform } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { supabase } from '../lib/supabase';
 
 export default function Auth() {
-	GoogleSignin.configure({
-		scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-		webClientId:
-			'238625413111-ps04v28r5o19v7lssabudkr123cjtnrf.apps.googleusercontent.com',
-		iosClientId:
-			'238625413111-n13uhletv4i0q5b85kvat11jcp1e11la.apps.googleusercontent.com',
-	});
+	// GoogleSignin.configure({
+	// 	scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+	// 	webClientId:
+	// 		'238625413111-ps04v28r5o19v7lssabudkr123cjtnrf.apps.googleusercontent.com',
+	// 	iosClientId:
+	// 		'238625413111-n13uhletv4i0q5b85kvat11jcp1e11la.apps.googleusercontent.com',
+	// });
+
+	// const isExistingUser = async(uuid: String) => {
+	// 	// const { data, error } = await supabase
+	// 	// .from('children')
+	// 	// .select()
+	// 	// .eq('parentuser', uuid);
+
+	// 	// if (error) {
+	// 	// 	alert(error);
+	// 	// }
+
+	// 	const { data: { user } } = await supabase.auth.getUser()
+	// 	// if(data != null && data.length > 0) {
+	// 	// 	return true;
+	// 	// }
+	// 	// return false;
+	// }
 
 	if (Platform.OS === 'ios') {
 		return (
@@ -57,7 +69,7 @@ export default function Auth() {
 						}
 					}}
 				/>
-				<GoogleSigninButton
+				{/* <GoogleSigninButton
 					size={GoogleSigninButton.Size.Wide}
 					color={GoogleSigninButton.Color.Dark}
 					onPress={async () => {
@@ -89,42 +101,42 @@ export default function Auth() {
 							}
 						}
 					}}
-				/>
+				/> */}
 			</View>
 		);
 	}
 
-	return (
-		<GoogleSigninButton
-			size={GoogleSigninButton.Size.Wide}
-			color={GoogleSigninButton.Color.Dark}
-			onPress={async () => {
-				try {
-					await GoogleSignin.hasPlayServices();
-					const userInfo = await GoogleSignin.signIn();
-					if (userInfo.idToken) {
-						const { data, error } = await supabase.auth.signInWithIdToken({
-							provider: 'google',
-							token: userInfo.idToken,
-						});
-						console.log(error, data);
-					} else {
-						throw new Error('no ID token present!');
-					}
-					//
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				} catch (error: any) {
-					if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-						// user cancelled the login flow
-					} else if (error.code === statusCodes.IN_PROGRESS) {
-						// operation (e.g. sign in) is in progress already
-					} else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-						// play services not available or outdated
-					} else {
-						// some other error happened
-					}
-				}
-			}}
-		/>
-	);
+	// return (
+	// 	<GoogleSigninButton
+	// 		size={GoogleSigninButton.Size.Wide}
+	// 		color={GoogleSigninButton.Color.Dark}
+	// 		onPress={async () => {
+	// 			try {
+	// 				await GoogleSignin.hasPlayServices();
+	// 				const userInfo = await GoogleSignin.signIn();
+	// 				if (userInfo.idToken) {
+	// 					const { data, error } = await supabase.auth.signInWithIdToken({
+	// 						provider: 'google',
+	// 						token: userInfo.idToken,
+	// 					});
+	// 					console.log(error, data);
+	// 				} else {
+	// 					throw new Error('no ID token present!');
+	// 				}
+	// 				//
+	// 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// 			} catch (error: any) {
+	// 				if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+	// 					// user cancelled the login flow
+	// 				} else if (error.code === statusCodes.IN_PROGRESS) {
+	// 					// operation (e.g. sign in) is in progress already
+	// 				} else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+	// 					// play services not available or outdated
+	// 				} else {
+	// 					// some other error happened
+	// 				}
+	// 			}
+	// 		}}
+	// 	/>
+	// );
 }

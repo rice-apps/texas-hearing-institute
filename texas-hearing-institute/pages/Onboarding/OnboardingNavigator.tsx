@@ -11,9 +11,14 @@ import Done from './Done';
 export type OnboardingStackParamList = {
 	SignIn: undefined;
 	InfoInput: undefined;
-	Vowels: undefined;
-	Consonants: undefined;
-	Done: undefined;
+	Vowels: { name: string; groupID: string };
+	Consonants: { name: string; groupID: string; vowels: string[] };
+	Done: {
+		name: string;
+		groupID: string;
+		vowels: string[];
+		consonants: string[];
+	};
 };
 
 export default function OnboardingNavigator() {

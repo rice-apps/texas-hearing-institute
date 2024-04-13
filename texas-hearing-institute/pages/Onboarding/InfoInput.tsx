@@ -7,10 +7,49 @@ import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAr
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { OnboardingStackParamList } from './OnboardingNavigator';
 import FloatingButton from '../../components/FloatingButton';
+import { useState } from 'react';
 
 type Props = NativeStackScreenProps<OnboardingStackParamList, 'InfoInput'>;
 
 export default function InfoInput({ navigation }: Props) {
+	const [childname, setChildname] = useState<string>('');
+	const [groupid, setGroupid] = useState<string>('');
+	const handleChildname = (text: string) => {
+		setChildname(text);
+	};
+	const handleGroupid = (text: string) => {
+		setGroupid(text);
+	};
+
+	// const handleClinicianID = async (text: string) => {
+	// 	const { data, error } = await supabase.from('clinicians').select('clinician').eq('groupId', text)
+	// 	if (data != null && data.length > 0) {
+	// 		return data;
+	// 	}
+	// 	return null;
+	// }
+	// const clinID = handleClinicianID(groupid).then(res => {
+	// 	if (res != null) {
+	// 		return res;
+	// 	}
+	// 	return ""
+	// })
+
+	// const saveChildInfo = async(name: String, groupId: String) => {
+
+	// 	const { data: { user } } = await supabase.auth.getUser()
+	// 	const { error } = await supabase.from('children').insert(
+	// 		{
+	// 			name: name,
+	// 			parentID: user,
+	// 			clinician: null
+	// 		}
+	// 	)
+	// 	if (error) {
+	// 		alert("error saving child info " + error)
+	// 	}
+
+	// }
 	return (
 		<CustomSafeAreaView>
 			<View
@@ -56,13 +95,26 @@ export default function InfoInput({ navigation }: Props) {
 				</View>
 				<View>
 					<Text style={styles.inputLabel}>Your child’s name</Text>
-					<TextInput style={styles.input}></TextInput>
+					<TextInput
+						style={styles.input}
+						value={childname}
+						onChangeText={handleChildname}
+					></TextInput>
 					<Text style={styles.inputLabel}>Group ID</Text>
-					<TextInput style={styles.input}></TextInput>
+					<TextInput
+						value={groupid}
+						onChangeText={handleGroupid}
+						style={styles.input}
+					></TextInput>
 				</View>
 				<FloatingButton
 					label={'Continue'}
-					onPress={() => navigation.navigate(`Vowels`)}
+					onPress={() =>
+						navigation.navigate(`Vowels`, {
+							name: childname,
+							groupID: groupid,
+						})
+					}
 				/>
 			</View>
 		</CustomSafeAreaView>

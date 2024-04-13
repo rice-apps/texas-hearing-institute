@@ -97,25 +97,35 @@ export class User {
 	}
 
 	// Setters
-	setName(newValue: string): Promise<boolean> {
-		const newUser = this.deepCopy();
-		newUser.#name = newValue;
-		return this.#syncImmediatelyWithServer(newUser).then((success) => {
-			if (success) {
-				this.#name = newValue;
-				this.#saveToDiskCache();
-			}
+	setName(newValue: string) {
+		this.#name = newValue;
+		// const newUser = this.deepCopy();
+		// newUser.#name = newValue;
+		// return this.#syncImmediatelyWithServer(newUser).then((success) => {
+		// 	if (success) {
+		// 		this.#name = newValue;
+		// 		this.#saveToDiskCache();
+		// 	}
 
-			return success;
-		});
+		// 	return success;
+		// });
 	}
 
-	setGroupId(newGroupId: string): Promise<boolean> {
+	setID(newValue: string) {
+		this.#id = newValue;
+	}
+
+	setEmail(newValue: string) {
+		this.#email = newValue;
+	}
+
+	setGroupId(newGroupId: string) {
 		// TODO: this function
 		// IMPORTANT: Extra logic related to group ID
 
 		if (newGroupId !== this.#groupId) {
 			// TODO
+			this.#groupId = newGroupId;
 		}
 
 		// return this.#syncImmediatelyWithServer().then((success) => {

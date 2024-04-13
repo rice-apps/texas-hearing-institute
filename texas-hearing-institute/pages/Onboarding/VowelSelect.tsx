@@ -22,7 +22,8 @@ type Props = NativeStackScreenProps<OnboardingStackParamList, 'Vowels'>;
 // Minimum number of sounds that must be selected for consonants and vowels
 const MIN_SELECTED = 4;
 
-export default function VowelSelect({ navigation }: Props) {
+export default function VowelSelect({ navigation, route }: Props) {
+	const { name, groupID } = route.params;
 	const [itemsSelected, setItemsSelected] = useState(() => {
 		// Start load from storage and set state once load completes
 		retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
@@ -109,7 +110,33 @@ export default function VowelSelect({ navigation }: Props) {
 								{ text: 'OK' },
 							]);
 						} else {
-							navigation.navigate(`Consonants`);
+							// async function updateData() {
+							// 	try {
+							// 		const {data, error } = await supabase
+							// 		.from('children')
+							// 		.update({ name: 'Australia' })
+							// 		.eq('name', "George Washington")
+							// 		console.log(data)
+							// 	} catch (error) {
+							// 	  alert('Error updating data');
+
+							// 	  throw error;
+							// 	}
+							//   }
+							// updateData()
+							const selectedVowels = [];
+							for (let i = 0; i < vowels.length; i++) {
+								if (itemsSelected[i] == true) {
+									selectedVowels.push(vowels[i]);
+								}
+							}
+							console.log(selectedVowels);
+							console.log(vowels, itemsSelected);
+							navigation.navigate(`Consonants`, {
+								name: name,
+								groupID: groupID,
+								vowels: selectedVowels,
+							});
 						}
 					}}
 				/>

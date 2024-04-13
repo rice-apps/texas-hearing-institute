@@ -10,14 +10,53 @@ import { TabParamList } from '../../components/TabNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import FloatingButton from '../../components/FloatingButton';
+import { supabase } from '../../lib/supabase';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { parse, validate } from 'uuid';
 
 type TabNav = BottomTabNavigationProp<TabParamList>;
 type OnboardingNav = StackNavigationProp<OnboardingStackParamList>;
+type Props = NativeStackScreenProps<OnboardingStackParamList, 'Done'>;
 
-export default function Done() {
+export default function Done({ route }: Props) {
+	const { name, groupID } = route.params;
 	const tabNavigation = useNavigation<TabNav>();
 	const onboardingNavigation = useNavigation<OnboardingNav>();
 
+	const handleClinicianID = async (text: string) => {
+		const { data, error } = await supabase
+			.from('clinicians')
+			.select('id')
+			.eq('groupId', text);
+
+		if (error) {
+			return parse('');
+		}
+		if (data != null && data.length > 0) {
+			console.log('data[0] is ' + validate(data[0].id));
+			return data[0].id;
+		}
+	};
+
+	const saveChildInfo = async () => {
+		// const { data: { user } } = await supabase.auth.getUser()
+		// if (user == null) {
+		// 	alert("user does not exist");
+		// }
+		const uuid = '4e319837-169a-4d94-869b-21eecf29d7c3';
+		const cID = handleClinicianID(groupID).then((res) => {
+			return res.getId;
+		});
+		console.log('clin ID ' + cID);
+		const { error } = await supabase.from('children').insert({
+			name: name,
+			parentuser: uuid,
+			clinician: cID,
+		});
+		if (error) {
+			alert('error saving child info ' + error.message);
+		}
+	};
 	return (
 		<CustomSafeAreaView>
 			<View
@@ -80,6 +119,7 @@ export default function Done() {
 			<FloatingButton
 				label={'Continue'}
 				onPress={() => {
+					saveChildInfo();
 					onboardingNavigation.popToTop();
 					tabNavigation.navigate(`Practice`);
 				}}
