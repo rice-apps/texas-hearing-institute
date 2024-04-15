@@ -14,10 +14,10 @@ import {
 } from '../../utils/soundInventoryDataAndKeys';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'Vowels'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'Vowels'>;
 
 // Minimum number of sounds that must be selected for consonants and vowels
 const MIN_SELECTED = 4;

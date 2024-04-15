@@ -110,6 +110,10 @@ export class User {
 		});
 	}
 
+	setNameTest(newValue: string): void {
+		this.#name = newValue;
+	}
+
 	setGroupId(newGroupId: string): Promise<boolean> {
 		// TODO: this function
 		// IMPORTANT: Extra logic related to group ID

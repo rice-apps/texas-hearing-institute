@@ -5,10 +5,10 @@ import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'InfoInput'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'InfoInput'>;
 
 export default function InfoInput({ navigation }: Props) {
 	return (

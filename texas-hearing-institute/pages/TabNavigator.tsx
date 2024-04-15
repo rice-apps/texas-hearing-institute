@@ -1,11 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import { Text } from 'react-native';
-import PracticeNavigator from '../pages/PracticeNavigator';
-import { SoundInventory } from '../pages/SoundInventory/SoundInventory';
-import OnboardingNavigator from '../pages/Onboarding/OnboardingNavigator';
-import AccountPage from '../pages/AccountPage/AccountPage';
+import PracticeNavigator from './PracticeNavigator';
+import { SoundInventory } from './SoundInventory/SoundInventory';
+import AccountPage from './AccountPage/AccountPage';
+import { AppStackParamList } from './Onboarding/AppNavigator';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { UserContext } from '../user/UserContext';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type TabParamList = {
@@ -17,11 +18,14 @@ export type TabParamList = {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-export default function TabNavigator() {
+type Props = NativeStackScreenProps<AppStackParamList, 'Home'>;
+
+export default function TabNavigator({ route }: Props) {
+	const { user } = route.params;
 	return (
-		<NavigationContainer>
+		<UserContext.Provider value={user}>
 			<Tab.Navigator
-				initialRouteName="Onboarding"
+				initialRouteName="Practice"
 				screenOptions={({ route }) => ({
 					headerShown: false,
 					tabBarIconStyle: { display: 'none' },
@@ -49,13 +53,11 @@ export default function TabNavigator() {
 					},
 				})}
 			>
-				{/* Handles Login + Onboarding */}
-				<Tab.Screen name="Onboarding" component={OnboardingNavigator} />
+				{/* Make current user's info available to other screens */}
 				<Tab.Screen name="Practice" component={PracticeNavigator} />
 				<Tab.Screen name="SoundInventory" component={SoundInventory} />
-				{/* TODO: replace below with account screen component */}
 				<Tab.Screen name="Account" component={AccountPage} />
 			</Tab.Navigator>
-		</NavigationContainer>
+		</UserContext.Provider>
 	);
 }

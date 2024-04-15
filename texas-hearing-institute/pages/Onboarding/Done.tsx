@@ -4,19 +4,23 @@ import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
-import { OnboardingStackParamList } from './OnboardingNavigator';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { TabParamList } from '../../components/TabNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import FloatingButton from '../../components/FloatingButton';
+import { AppStackParamList } from './AppNavigator';
+import { User } from '../../user/User';
 
-type TabNav = BottomTabNavigationProp<TabParamList>;
-type OnboardingNav = StackNavigationProp<OnboardingStackParamList>;
+type AppNav = StackNavigationProp<AppStackParamList>;
+type OnboardingNav = StackNavigationProp<AuthStackParamList>;
 
 export default function Done() {
-	const tabNavigation = useNavigation<TabNav>();
+	const appNavigation = useNavigation<AppNav>();
 	const onboardingNavigation = useNavigation<OnboardingNav>();
+
+	// TODO: replace with actual user info gained from onboarding process
+	const user = new User();
+	user.setName('Baylee');
 
 	return (
 		<CustomSafeAreaView>
@@ -81,7 +85,7 @@ export default function Done() {
 				label={'Continue'}
 				onPress={() => {
 					onboardingNavigation.popToTop();
-					tabNavigation.navigate(`Practice`);
+					appNavigation.navigate(`Home`, { user: user });
 				}}
 			/>
 		</CustomSafeAreaView>

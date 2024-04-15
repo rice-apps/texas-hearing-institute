@@ -1,20 +1,28 @@
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
-import { Pressable, View, Text, TouchableOpacity } from 'react-native';
+import send from '../../icons/send';
+import {
+	Pressable,
+	View,
+	Text,
+	TouchableOpacity,
+	TextInput,
+} from 'react-native';
 import React, { useContext, useState } from 'react';
 import ProfileIconView from '../../components/ProfileIconView';
 import pencil from '../../icons/pencil';
 import FormView from '../../components/FormView/FormView';
 import PillButtonView from '../../components/PillButtonView';
 import { UserContext } from '../../user/UserContext';
+import { resetPassword } from '../../utils/resetPassword';
 
 export default function AccountPage() {
 	const user = useContext(UserContext);
 
 	const [editMode, setEditMode] = useState(false);
-	const [userEmail] = useState(() => {
-		return user.getEmail();
-	});
+	// const [userEmail] = useState(() => {
+	// 	return user.getEmail();
+	// });
 
 	const [userName, setUserName] = useState(() => {
 		return user.getName();
@@ -23,6 +31,10 @@ export default function AccountPage() {
 	const [userGroupID, setUserGroupID] = useState(() => {
 		return user.getGroupId();
 	});
+
+	const [resetPW, setResetPW] = useState(false);
+
+	const [email, setEmail] = useState('');
 
 	const commitChangesToUser = () => {
 		user.setName(userName);
@@ -129,16 +141,8 @@ export default function AccountPage() {
 			>
 				<FormView
 					heading="Account information"
-					labels={['Email', 'Name', 'Group ID']}
+					labels={['Name', 'Group ID']}
 					data={[
-						{
-							text: userEmail,
-							properties: {
-								placeholder: 'name@example.com',
-								email: true,
-								readonly: true,
-							},
-						},
 						{
 							text: userName,
 							properties: {
@@ -167,6 +171,53 @@ export default function AccountPage() {
 					]}
 				/>
 			</View>
+			{/* TODO: only show if android */}
+			<TouchableOpacity
+				onPress={() => {
+					setResetPW(!resetPW);
+				}}
+			>
+				<Text style={{ color: 'red', fontWeight: 500, marginBottom: 10 }}>
+					Reset password
+				</Text>
+			</TouchableOpacity>
+			{resetPW && (
+				<View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+					<TextInput
+						style={{
+							borderWidth: 2,
+							borderColor: '#E1E1E1',
+							padding: 10,
+							height: 54,
+							width: 326,
+							borderRadius: 10,
+							marginBottom: 16,
+						}}
+						placeholder="example@gmail.com"
+						onChangeText={setEmail}
+					/>
+					<TouchableOpacity
+						onPress={
+							() => resetPassword(email, '90486113-899b-4f70-acf2-039ab5b9a8b0') // TODO: make curr user id
+						}
+					>
+						<View
+							style={{
+								height: 54,
+								width: 50,
+								backgroundColor: 'rgba(217, 217, 217, 0.50)',
+								borderRadius: 10,
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'center',
+								opacity: editMode ? 0 : 1,
+							}}
+						>
+							<SvgXml xml={send} width={18} height={18} />
+						</View>
+					</TouchableOpacity>
+				</View>
+			)}
 
 			<View
 				style={{

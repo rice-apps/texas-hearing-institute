@@ -1,18 +1,22 @@
 import React from 'react';
 import { View, Button, Image } from 'react-native';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import { useNavigation } from '@react-navigation/native';
-import { TabParamList } from '../../components/TabNavigator';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from './AppNavigator';
+import { User } from '../../user/User';
 
-type TabNav = BottomTabNavigationProp<TabParamList>;
-type OnboardingNav = StackNavigationProp<OnboardingStackParamList>;
+type AppNav = StackNavigationProp<AppStackParamList>;
+type AuthNav = StackNavigationProp<AuthStackParamList>;
 
 export default function SignIn() {
-	const tabNavigation = useNavigation<TabNav>();
-	const onboardingNavigation = useNavigation<OnboardingNav>();
+	const appNavigation = useNavigation<AppNav>();
+	const authNavigation = useNavigation<AuthNav>();
+
+	// TODO: replace with actual user info gained from onboarding process
+	const user = new User();
+	user.setNameTest('Baylee');
 
 	return (
 		<CustomSafeAreaView>
@@ -35,14 +39,14 @@ export default function SignIn() {
 					<Button
 						title="Test Onboarding"
 						onPress={() => {
-							onboardingNavigation.navigate('InfoInput');
+							authNavigation.navigate('InfoInput');
 						}}
 					/>
 					<View style={{ marginBottom: 20 }} />
 					<Button
 						title="Test Signed In"
 						onPress={() => {
-							tabNavigation.navigate('Practice');
+							appNavigation.navigate('Home', { user: user });
 						}}
 					/>
 				</View>

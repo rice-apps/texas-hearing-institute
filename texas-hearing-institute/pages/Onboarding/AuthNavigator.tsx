@@ -8,7 +8,7 @@ import ConsonantSelect from './ConsonantSelect';
 import Done from './Done';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type OnboardingStackParamList = {
+export type AuthStackParamList = {
 	SignIn: undefined;
 	InfoInput: undefined;
 	Vowels: undefined;
@@ -16,9 +16,8 @@ export type OnboardingStackParamList = {
 	Done: undefined;
 };
 
-export default function OnboardingNavigator() {
-	const Stack = createNativeStackNavigator<OnboardingStackParamList>();
-
+export default function AuthNavigator() {
+	const Stack = createNativeStackNavigator<AuthStackParamList>();
 	return (
 		<Stack.Navigator
 			initialRouteName="SignIn"
