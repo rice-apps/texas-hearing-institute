@@ -93,6 +93,7 @@ export default function VowelSelect({ navigation, route }: Props) {
 					</View>
 					<ToggleGridButtons
 						items={vowels}
+						speak={true}
 						itemsSelected={itemsSelected}
 						setItemsSelected={(index: number, newValue: boolean) => {
 							const newItemsSelected = [...itemsSelected];

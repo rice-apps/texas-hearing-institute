@@ -93,6 +93,7 @@ export default function ConsonantSelect({ navigation, route }: Props) {
 					</View>
 					<ToggleGridButtons
 						items={consonants}
+						speak={false}
 						itemsSelected={itemsSelected}
 						setItemsSelected={(index: number, newValue: boolean) => {
 							const newItemsSelected = [...itemsSelected];

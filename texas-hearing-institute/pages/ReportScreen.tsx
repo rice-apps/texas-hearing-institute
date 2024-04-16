@@ -12,41 +12,20 @@ import PieChart from 'react-native-pie-chart';
 import { AntDesign } from '@expo/vector-icons';
 import { supabase } from '../lib/supabase';
 import PillButtonView from '../components/PillButtonView';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Phoneme, PracticeParamList } from './PracticeNavigator';
 
-interface PhonemeListProps {
-	phonemes: Phoneme[];
-	user: string;
-}
+/* WARNING: PARAMETERS CAST TO ANY -- might need to fix using props instead */
+/* Active Practice reroutes to Report Screen */
 
-interface Phoneme {
-	name: string;
-	correct: boolean;
-}
+type Props = NativeStackScreenProps<PracticeParamList, 'ReportScreen'>;
 
-interface ReportInfo {
-	child: string;
-	createdAt: string;
-	type: string;
-	subtype: string;
-	sound: string;
-	mode: string;
-	voweltype: string;
-	combinations: string[];
-	numSyllables: number;
-	correct: boolean[];
-}
-/*TODO: integrate progress bar/practice cards
-Save report -- supabase query
-query by username/id, get any necessary data from children?
-most data will be passed in from active practice/other sources, but the only 
-new info from report is phoneme list, correct/incorrect, and num syllables
-*/
-
-const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
+function ReportScreen({ route }: Props) {
+	const { phonemes, report } = route.params;
 	// frequency of correct/incorrect array
 	const cCount: number[] = [
-		phonemes.phonemes.filter((x) => x.correct == false).length,
-		phonemes.phonemes.filter((x) => x.correct == true).length,
+		phonemes.phonemes.filter((x: Phoneme) => x.correct == false).length,
+		phonemes.phonemes.filter((x: Phoneme) => x.correct == true).length,
 	];
 
 	const handleReportEntry = async () => {
@@ -58,9 +37,9 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 			sound: report.sound,
 			mode: report.mode,
 			voweltype: report.voweltype,
-			combinations: phonemes.phonemes.map((p) => p.name),
+			combinations: phonemes.phonemes.map((p: Phoneme) => p.name),
 			num_syllables: report.numSyllables,
-			correct_incorrect: phonemes.phonemes.map((p) => p.correct),
+			correct_incorrect: phonemes.phonemes.map((p: Phoneme) => p.correct),
 		});
 		if (error) {
 			alert(error);
@@ -96,7 +75,7 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 				</View>
 			</View>
 			<ScrollView>
-				{phonemes.phonemes.map((phoneme) => {
+				{phonemes.phonemes.map((phoneme: Phoneme) => {
 					const color = phoneme.correct ? 'green' : 'red';
 					const iName = phoneme.correct ? 'check' : 'close';
 					return (
@@ -128,7 +107,7 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 			</TouchableOpacity>
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	container: {

@@ -5,6 +5,7 @@ import { Text } from 'react-native';
 import PracticeNavigator from '../pages/PracticeNavigator';
 import { SoundInventory } from '../pages/SoundInventory/SoundInventory';
 import OnboardingNavigator from '../pages/Onboarding/OnboardingNavigator';
+import AccountPage from '../pages/AccountPage/AccountPage';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type TabParamList = {
@@ -53,7 +54,7 @@ export default function TabNavigator() {
 				<Tab.Screen name="Practice" component={PracticeNavigator} />
 				<Tab.Screen name="SoundInventory" component={SoundInventory} />
 				{/* TODO: replace below with account screen component */}
-				<Tab.Screen name="Account" component={SoundInventory} />
+				<Tab.Screen name="Account" component={AccountPage} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);
