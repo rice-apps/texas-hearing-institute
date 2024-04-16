@@ -166,6 +166,7 @@ export const SoundInventory = () => {
 
 					<ToggleGridButtons
 						disabled={!editModeEnabled}
+						speak={false}
 						items={consonants}
 						itemsSelected={getCorrespondingInventoryConsonants()}
 						setItemsSelected={(index: number, newValue: boolean) => {
@@ -185,6 +186,7 @@ export const SoundInventory = () => {
 
 					<ToggleGridButtons
 						disabled={!editModeEnabled}
+						speak={true}
 						items={vowels}
 						itemsSelected={getCorrespondingInventoryVowels()}
 						setItemsSelected={(index: number, newValue: boolean) => {
