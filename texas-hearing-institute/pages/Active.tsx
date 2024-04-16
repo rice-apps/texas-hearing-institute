@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
-import ProgressBar from 'react-native-progress/Bar';
+import { Bar as ProgressBar } from 'react-native-progress';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Phoneme, PhonemeListProps, ReportInfo } from './Home/types';
+import { Phoneme, PhonemeListProps, ReportInfo } from './types';
 import { useNavigation } from '@react-navigation/core';
 import { PracticeParamList } from './PracticeNavigator';
+import { SvgXml } from 'react-native-svg';
+import volume from '../icons/volume';
+import { playSound } from '../utils/audio';
 
 const { height, width } = Dimensions.get('window');
 const CARD_WIDTH = width - 40;
 
-const p1: Phoneme = { name: 'lol', correct: false };
-const p2: Phoneme = { name: 'lmao', correct: false };
+const p1: Phoneme = { name: 'ah', correct: false };
+const p2: Phoneme = { name: 'eye', correct: false };
 const p3: Phoneme = { name: 'rofl', correct: false };
 const p4: Phoneme = { name: 'wtf', correct: false };
 const p5: Phoneme = { name: 'omw', correct: false };
@@ -34,7 +37,6 @@ const sampleReport: ReportInfo = {
 type StackNav = StackNavigationProp<PracticeParamList>;
 
 export default function Active() {
-	//const cards = ['lol', 'lmao', 'rofl', 'wtf', 'omw', 'ngl','tbh'];
 	const navigation = useNavigation<StackNav>();
 	const sampleCards = [p1, p2, p3, p4, p5, p6, p7];
 	const sProps: PhonemeListProps = {
@@ -89,6 +91,27 @@ export default function Active() {
 							]}
 						>
 							<Text style={styles.text}>{card}</Text>
+							<Pressable
+								style={{
+									backgroundColor: '#EBEBEB',
+									padding: 10,
+									height: 38,
+									width: 38,
+									borderRadius: 25,
+									flexDirection: 'row',
+									flexWrap: 'wrap',
+									justifyContent: 'center',
+									gap: 10,
+								}}
+								onPress={() => playSound(card)}
+							>
+								<SvgXml
+									style={{ marginTop: 2 }}
+									xml={volume}
+									width={24}
+									height={24}
+								/>
+							</Pressable>
 						</View>
 					)}
 					onSwiped={(index) => handleOnSwiped(index)}
@@ -138,6 +161,8 @@ const styles = StyleSheet.create({
 	},
 	card: {
 		flex: 1,
+		flexDirection: 'row',
+		columnGap: 15,
 		backgroundColor: 'white',
 		borderRadius: 10,
 		borderWidth: 2,
