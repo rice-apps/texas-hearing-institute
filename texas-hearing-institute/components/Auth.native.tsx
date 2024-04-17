@@ -1,6 +1,13 @@
 import { View, Platform } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { supabase } from '../lib/supabase';
+import { useContext } from 'react';
+import { UserContext, UserContextType } from '../user/UserContext';
+import { User } from '../user/User';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AuthStackParamList } from '../pages/Onboarding/AuthNavigator';
+import { useNavigation } from '@react-navigation/native';
+import { AppStackParamList } from '../pages/AppNavigator';
 
 export default function Auth() {
 	// GoogleSignin.configure({
@@ -11,22 +18,12 @@ export default function Auth() {
 	// 		'238625413111-n13uhletv4i0q5b85kvat11jcp1e11la.apps.googleusercontent.com',
 	// });
 
-	// const isExistingUser = async(uuid: String) => {
-	// 	// const { data, error } = await supabase
-	// 	// .from('children')
-	// 	// .select()
-	// 	// .eq('parentuser', uuid);
+	const { setUser } = useContext(UserContext) as UserContextType;
 
-	// 	// if (error) {
-	// 	// 	alert(error);
-	// 	// }
-
-	// 	const { data: { user } } = await supabase.auth.getUser()
-	// 	// if(data != null && data.length > 0) {
-	// 	// 	return true;
-	// 	// }
-	// 	// return false;
-	// }
+	type AppNav = StackNavigationProp<AppStackParamList>;
+	const appNavigation = useNavigation<AppNav>();
+	type AuthNav = StackNavigationProp<AuthStackParamList>;
+	const authNavigation = useNavigation<AuthNav>();
 
 	if (Platform.OS === 'ios') {
 		return (
@@ -53,19 +50,46 @@ export default function Auth() {
 									provider: 'apple',
 									token: credential.identityToken,
 								});
-								console.log(JSON.stringify({ error, user }, null, 2));
-								if (!error) {
+								if (!error && user) {
+									// TODO: lots of error handling in this block
 									// User is signed in.
+									const currUser = new User();
+									currUser.setID(user.id);
+
+									// search for user.id in parentuser in children
+									const { data } = await supabase
+										.from('children')
+										.select('name, clinician')
+										.eq('parentuser', user.id)
+										.maybeSingle();
+									if (data) {
+										// existing user
+										currUser.setName(data.name);
+										// fetch group id from clinicians
+										const { data: clinicianData } = await supabase
+											.from('clinicians')
+											.select('groupId')
+											.eq('id', data.clinician)
+											.single();
+										currUser.setGroupId(clinicianData?.groupId);
+										setUser(currUser);
+										// navigate home
+										appNavigation.navigate('Home');
+									} else {
+										setUser(currUser);
+										// new user
+										authNavigation.navigate('InfoInput');
+									}
+								} else if (error) {
+									throw error;
+								} else {
+									throw new Error('Unknown sign-in error');
 								}
 							} else {
 								throw new Error('No identityToken.');
 							}
-						} catch (e) {
-							if (e.code === 'ERR_REQUEST_CANCELED') {
-								// handle that the user canceled the sign-in flow
-							} else {
-								// handle other errors
-							}
+						} catch (e: unknown) {
+							console.log(e);
 						}
 					}}
 				/>

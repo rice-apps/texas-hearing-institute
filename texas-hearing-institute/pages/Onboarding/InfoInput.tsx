@@ -5,51 +5,16 @@ import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 import { useState } from 'react';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'InfoInput'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'InfoInput'>;
 
 export default function InfoInput({ navigation }: Props) {
-	const [childname, setChildname] = useState<string>('');
-	const [groupid, setGroupid] = useState<string>('');
-	const handleChildname = (text: string) => {
-		setChildname(text);
-	};
-	const handleGroupid = (text: string) => {
-		setGroupid(text);
-	};
+	const [childName, setChildName] = useState<string>('');
+	const [groupID, setGroupID] = useState<string>('');
 
-	// const handleClinicianID = async (text: string) => {
-	// 	const { data, error } = await supabase.from('clinicians').select('clinician').eq('groupId', text)
-	// 	if (data != null && data.length > 0) {
-	// 		return data;
-	// 	}
-	// 	return null;
-	// }
-	// const clinID = handleClinicianID(groupid).then(res => {
-	// 	if (res != null) {
-	// 		return res;
-	// 	}
-	// 	return ""
-	// })
-
-	// const saveChildInfo = async(name: String, groupId: String) => {
-
-	// 	const { data: { user } } = await supabase.auth.getUser()
-	// 	const { error } = await supabase.from('children').insert(
-	// 		{
-	// 			name: name,
-	// 			parentID: user,
-	// 			clinician: null
-	// 		}
-	// 	)
-	// 	if (error) {
-	// 		alert("error saving child info " + error)
-	// 	}
-
-	// }
 	return (
 		<CustomSafeAreaView>
 			<View
@@ -97,13 +62,13 @@ export default function InfoInput({ navigation }: Props) {
 					<Text style={styles.inputLabel}>Your child’s name</Text>
 					<TextInput
 						style={styles.input}
-						value={childname}
-						onChangeText={handleChildname}
+						value={childName}
+						onChangeText={(name) => setChildName(name)}
 					></TextInput>
 					<Text style={styles.inputLabel}>Group ID</Text>
 					<TextInput
-						value={groupid}
-						onChangeText={handleGroupid}
+						value={groupID}
+						onChangeText={(id) => setGroupID(id)}
 						style={styles.input}
 					></TextInput>
 				</View>
@@ -111,8 +76,8 @@ export default function InfoInput({ navigation }: Props) {
 					label={'Continue'}
 					onPress={() =>
 						navigation.navigate(`Vowels`, {
-							name: childname,
-							groupID: groupid,
+							name: childName,
+							groupID: groupID,
 						})
 					}
 				/>

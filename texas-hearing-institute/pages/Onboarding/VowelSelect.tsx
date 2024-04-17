@@ -14,10 +14,10 @@ import {
 } from '../../utils/soundInventoryDataAndKeys';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'Vowels'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'Vowels'>;
 
 // Minimum number of sounds that must be selected for consonants and vowels
 const MIN_SELECTED = 4;
@@ -111,32 +111,9 @@ export default function VowelSelect({ navigation, route }: Props) {
 								{ text: 'OK' },
 							]);
 						} else {
-							// async function updateData() {
-							// 	try {
-							// 		const {data, error } = await supabase
-							// 		.from('children')
-							// 		.update({ name: 'Australia' })
-							// 		.eq('name', "George Washington")
-							// 		console.log(data)
-							// 	} catch (error) {
-							// 	  alert('Error updating data');
-
-							// 	  throw error;
-							// 	}
-							//   }
-							// updateData()
-							const selectedVowels = [];
-							for (let i = 0; i < vowels.length; i++) {
-								if (itemsSelected[i] == true) {
-									selectedVowels.push(vowels[i]);
-								}
-							}
-							console.log(selectedVowels);
-							console.log(vowels, itemsSelected);
 							navigation.navigate(`Consonants`, {
 								name: name,
 								groupID: groupID,
-								vowels: selectedVowels,
 							});
 						}
 					}}

@@ -14,16 +14,16 @@ import {
 } from '../../utils/soundInventoryDataAndKeys';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'Consonants'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'Consonants'>;
 
 // Minimum number of consonants that must be selected
 const MIN_SELECTED = 4;
 
 export default function ConsonantSelect({ navigation, route }: Props) {
-	const { name, groupID, vowels } = route.params;
+	const { name, groupID } = route.params;
 	const [itemsSelected, setItemsSelected] = useState(() => {
 		// Start load from storage and set state once load completes
 		retrieveItemSelections(consonantInventoryPersistenceKey, consonants).then(
@@ -111,17 +111,9 @@ export default function ConsonantSelect({ navigation, route }: Props) {
 								{ text: 'OK' },
 							]);
 						} else {
-							const selectedConsonants = [];
-							for (let i = 0; i < vowels.length; i++) {
-								if (itemsSelected[i] == true) {
-									selectedConsonants.push(vowels[i]);
-								}
-							}
 							navigation.navigate(`Done`, {
 								name: name,
 								groupID: groupID,
-								vowels: vowels,
-								consonants: selectedConsonants,
 							});
 						}
 					}}

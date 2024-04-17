@@ -1,4 +1,3 @@
-// test with the Stack Navigator for React-Native
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignIn from './SignIn';
@@ -8,21 +7,16 @@ import ConsonantSelect from './ConsonantSelect';
 import Done from './Done';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-export type OnboardingStackParamList = {
+export type AuthStackParamList = {
 	SignIn: undefined;
 	InfoInput: undefined;
 	Vowels: { name: string; groupID: string };
-	Consonants: { name: string; groupID: string; vowels: string[] };
-	Done: {
-		name: string;
-		groupID: string;
-		vowels: string[];
-		consonants: string[];
-	};
+	Consonants: { name: string; groupID: string };
+	Done: { name: string; groupID: string };
 };
 
-export default function OnboardingNavigator() {
-	const Stack = createNativeStackNavigator<OnboardingStackParamList>();
+export default function AuthNavigator() {
+	const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 	return (
 		<Stack.Navigator

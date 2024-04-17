@@ -1,62 +1,57 @@
-import React from 'react';
-import { View, Image, Pressable, Text } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Image, Pressable, Text, Alert } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
-import { OnboardingStackParamList } from './OnboardingNavigator';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { TabParamList } from '../../components/TabNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import FloatingButton from '../../components/FloatingButton';
 import { supabase } from '../../lib/supabase';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { parse, validate } from 'uuid';
+import { UserContext, UserContextType } from '../../user/UserContext';
+import { v4 as uuidv4 } from 'uuid';
+import { AppStackParamList } from '../AppNavigator';
 
-type TabNav = BottomTabNavigationProp<TabParamList>;
-type OnboardingNav = StackNavigationProp<OnboardingStackParamList>;
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'Done'>;
+type AppNav = StackNavigationProp<AppStackParamList>;
+type AuthNav = StackNavigationProp<AuthStackParamList>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'Done'>;
 
 export default function Done({ route }: Props) {
 	const { name, groupID } = route.params;
-	const tabNavigation = useNavigation<TabNav>();
-	const onboardingNavigation = useNavigation<OnboardingNav>();
+	const appNavigation = useNavigation<AppNav>();
+	const authNavigation = useNavigation<AuthNav>();
 
-	const handleClinicianID = async (text: string) => {
+	const { user } = useContext(UserContext) as UserContextType;
+
+	const fetchClinicianID = async (groupId: string) => {
 		const { data, error } = await supabase
 			.from('clinicians')
 			.select('id')
-			.eq('groupId', text);
+			.eq('groupId', groupId)
+			.maybeSingle();
 
-		if (error) {
-			return parse('');
-		}
-		if (data != null && data.length > 0) {
-			console.log('data[0] is ' + validate(data[0].id));
-			return data[0].id;
+		if (!error && data) {
+			return data.id;
+		} else {
+			throw new Error('Invalid Group ID');
 		}
 	};
 
 	const saveChildInfo = async () => {
-		// const { data: { user } } = await supabase.auth.getUser()
-		// if (user == null) {
-		// 	alert("user does not exist");
-		// }
-		const uuid = '4e319837-169a-4d94-869b-21eecf29d7c3';
-		const cID = handleClinicianID(groupID).then((res) => {
-			return res.getId;
-		});
-		console.log('clin ID ' + cID);
+		const cID = await fetchClinicianID(groupID);
 		const { error } = await supabase.from('children').insert({
+			id: uuidv4(),
 			name: name,
-			parentuser: uuid,
+			parentuser: user.getId(),
 			clinician: cID,
 		});
 		if (error) {
-			alert('error saving child info ' + error.message);
+			throw new Error('Failed to save data');
 		}
 	};
+
 	return (
 		<CustomSafeAreaView>
 			<View
@@ -70,7 +65,7 @@ export default function Done({ route }: Props) {
 					marginHorizontal: 27,
 				}}
 			>
-				<Pressable onPress={() => onboardingNavigation.goBack()}>
+				<Pressable onPress={() => authNavigation.goBack()}>
 					<SvgXml xml={leftArrow} width={24} height={24} />
 				</Pressable>
 				<View
@@ -119,9 +114,17 @@ export default function Done({ route }: Props) {
 			<FloatingButton
 				label={'Continue'}
 				onPress={() => {
-					saveChildInfo();
-					onboardingNavigation.popToTop();
-					tabNavigation.navigate(`Practice`);
+					saveChildInfo()
+						.then(() => {
+							authNavigation.popToTop();
+							appNavigation.navigate('Home');
+						})
+						.catch((e: unknown) => {
+							// TODO better error handling
+							Alert.alert('Error', 'error', [
+								{ text: 'OK', onPress: () => console.log(e) },
+							]);
+						});
 				}}
 			/>
 		</CustomSafeAreaView>
