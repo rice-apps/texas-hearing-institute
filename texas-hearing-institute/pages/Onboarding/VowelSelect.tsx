@@ -14,15 +14,16 @@ import {
 } from '../../utils/soundInventoryDataAndKeys';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'Vowels'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'Vowels'>;
 
 // Minimum number of sounds that must be selected for consonants and vowels
 const MIN_SELECTED = 4;
 
-export default function VowelSelect({ navigation }: Props) {
+export default function VowelSelect({ navigation, route }: Props) {
+	const { name, groupID } = route.params;
 	const [itemsSelected, setItemsSelected] = useState(() => {
 		// Start load from storage and set state once load completes
 		retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
@@ -110,7 +111,10 @@ export default function VowelSelect({ navigation }: Props) {
 								{ text: 'OK' },
 							]);
 						} else {
-							navigation.navigate(`Consonants`);
+							navigation.navigate(`Consonants`, {
+								name: name,
+								groupID: groupID,
+							});
 						}
 					}}
 				/>
