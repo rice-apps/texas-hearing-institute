@@ -396,6 +396,38 @@ async function generateAudio() {
     for (const consonant of AllSegments.getAllSegmentsHardcoded().filter(value => {
       return value instanceof ConsonantSegment
     })) {
+      const text = vowel.name + consonant.name;
+	  const ipa = vowel.ipa + consonant.ipa;
+	  const query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>'
+	  console.log(query)
+
+      // Construct the request
+      const request = {
+        input: {
+			'ssml': query
+		},
+        // Select the language and SSML voice gender (optional)
+        voice: {languageCode: 'en-US', ssmlGender: 'NEUTRAL'},
+        // select the type of audio encoding
+        audioConfig: {audioEncoding: 'MP3'},
+      };
+    
+      // Performs the text-to-speech request
+      const [response] = await client.synthesizeSpeech(request);
+      // Write the binary audio content to a local file
+      const writeFile = util.promisify(fs.writeFile);
+      const fileName = text + '.mp3'
+      await writeFile(fileName, response.audioContent, 'binary');
+      console.log('Audio content written to file: ' + fileName);
+    }
+  }
+
+  for (const vowel of AllSegments.getAllSegmentsHardcoded().filter(value => {
+    return value instanceof VowelSegment
+  })) {
+    for (const consonant of AllSegments.getAllSegmentsHardcoded().filter(value => {
+      return value instanceof ConsonantSegment
+    })) {
       const text = consonant.name + vowel.name;
 	  const ipa = consonant.ipa + vowel.ipa;
 	  const query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>'

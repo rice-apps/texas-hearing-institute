@@ -288,21 +288,21 @@ var util = require('util');
 var client = new textToSpeech.TextToSpeechClient();
 function generateAudio() {
     return __awaiter(this, void 0, void 0, function () {
-        var _i, _a, vowel, _b, _c, consonant, text, ipa, query, request, response, writeFile, fileName, _d, _e, vowel, _f, _g, consonant, text, ipa, query, request, response, writeFile, fileName, _h, _j, vowel, text, ipa, query, request, response, writeFile, fileName;
-        return __generator(this, function (_k) {
-            switch (_k.label) {
+        var _i, _a, vowel, _b, _c, consonant, text, ipa, query, request, response, writeFile, fileName, _d, _e, vowel, _f, _g, consonant, text, ipa, query, request, response, writeFile, fileName, _h, _j, vowel, _k, _l, consonant, text, ipa, query, request, response, writeFile, fileName, _m, _o, vowel, text, ipa, query, request, response, writeFile, fileName;
+        return __generator(this, function (_p) {
+            switch (_p.label) {
                 case 0:
                     _i = 0, _a = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
                         return value instanceof VowelSegment;
                     });
-                    _k.label = 1;
+                    _p.label = 1;
                 case 1:
                     if (!(_i < _a.length)) return [3 /*break*/, 7];
                     vowel = _a[_i];
                     _b = 0, _c = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
                         return value instanceof ConsonantSegment;
                     });
-                    _k.label = 2;
+                    _p.label = 2;
                 case 2:
                     if (!(_b < _c.length)) return [3 /*break*/, 6];
                     consonant = _c[_b];
@@ -321,14 +321,14 @@ function generateAudio() {
                     };
                     return [4 /*yield*/, client.synthesizeSpeech(request)];
                 case 3:
-                    response = (_k.sent())[0];
+                    response = (_p.sent())[0];
                     writeFile = util.promisify(fs.writeFile);
                     fileName = text + '.mp3';
                     return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
                 case 4:
-                    _k.sent();
+                    _p.sent();
                     console.log('Audio content written to file: ' + fileName);
-                    _k.label = 5;
+                    _p.label = 5;
                 case 5:
                     _b++;
                     return [3 /*break*/, 2];
@@ -339,17 +339,61 @@ function generateAudio() {
                     _d = 0, _e = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
                         return value instanceof VowelSegment;
                     });
-                    _k.label = 8;
+                    _p.label = 8;
                 case 8:
                     if (!(_d < _e.length)) return [3 /*break*/, 14];
                     vowel = _e[_d];
                     _f = 0, _g = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
                         return value instanceof ConsonantSegment;
                     });
-                    _k.label = 9;
+                    _p.label = 9;
                 case 9:
                     if (!(_f < _g.length)) return [3 /*break*/, 13];
                     consonant = _g[_f];
+                    text = vowel.name + consonant.name;
+                    ipa = vowel.ipa + consonant.ipa;
+                    query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>';
+                    console.log(query);
+                    request = {
+                        input: {
+                            'ssml': query
+                        },
+                        // Select the language and SSML voice gender (optional)
+                        voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+                        // select the type of audio encoding
+                        audioConfig: { audioEncoding: 'MP3' },
+                    };
+                    return [4 /*yield*/, client.synthesizeSpeech(request)];
+                case 10:
+                    response = (_p.sent())[0];
+                    writeFile = util.promisify(fs.writeFile);
+                    fileName = text + '.mp3';
+                    return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
+                case 11:
+                    _p.sent();
+                    console.log('Audio content written to file: ' + fileName);
+                    _p.label = 12;
+                case 12:
+                    _f++;
+                    return [3 /*break*/, 9];
+                case 13:
+                    _d++;
+                    return [3 /*break*/, 8];
+                case 14:
+                    _h = 0, _j = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
+                        return value instanceof VowelSegment;
+                    });
+                    _p.label = 15;
+                case 15:
+                    if (!(_h < _j.length)) return [3 /*break*/, 21];
+                    vowel = _j[_h];
+                    _k = 0, _l = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
+                        return value instanceof ConsonantSegment;
+                    });
+                    _p.label = 16;
+                case 16:
+                    if (!(_k < _l.length)) return [3 /*break*/, 20];
+                    consonant = _l[_k];
                     text = consonant.name + vowel.name;
                     ipa = consonant.ipa + vowel.ipa;
                     query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>';
@@ -364,29 +408,29 @@ function generateAudio() {
                         audioConfig: { audioEncoding: 'MP3' },
                     };
                     return [4 /*yield*/, client.synthesizeSpeech(request)];
-                case 10:
-                    response = (_k.sent())[0];
+                case 17:
+                    response = (_p.sent())[0];
                     writeFile = util.promisify(fs.writeFile);
                     fileName = text + '.mp3';
                     return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
-                case 11:
-                    _k.sent();
+                case 18:
+                    _p.sent();
                     console.log('Audio content written to file: ' + fileName);
-                    _k.label = 12;
-                case 12:
-                    _f++;
-                    return [3 /*break*/, 9];
-                case 13:
-                    _d++;
-                    return [3 /*break*/, 8];
-                case 14:
-                    _h = 0, _j = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
+                    _p.label = 19;
+                case 19:
+                    _k++;
+                    return [3 /*break*/, 16];
+                case 20:
+                    _h++;
+                    return [3 /*break*/, 15];
+                case 21:
+                    _m = 0, _o = AllSegments.getAllSegmentsHardcoded().filter(function (value) {
                         return value instanceof VowelSegment;
                     });
-                    _k.label = 15;
-                case 15:
-                    if (!(_h < _j.length)) return [3 /*break*/, 19];
-                    vowel = _j[_h];
+                    _p.label = 22;
+                case 22:
+                    if (!(_m < _o.length)) return [3 /*break*/, 26];
+                    vowel = _o[_m];
                     text = vowel.name;
                     ipa = vowel.ipa;
                     query = '<speak><phoneme alphabet="ipa" ph="' + ipa + '">manitoba</phoneme></speak>';
@@ -401,19 +445,19 @@ function generateAudio() {
                         audioConfig: { audioEncoding: 'MP3' },
                     };
                     return [4 /*yield*/, client.synthesizeSpeech(request)];
-                case 16:
-                    response = (_k.sent())[0];
+                case 23:
+                    response = (_p.sent())[0];
                     writeFile = util.promisify(fs.writeFile);
                     fileName = text + '.mp3';
                     return [4 /*yield*/, writeFile(fileName, response.audioContent, 'binary')];
-                case 17:
-                    _k.sent();
+                case 24:
+                    _p.sent();
                     console.log('Audio content written to file: ' + fileName);
-                    _k.label = 18;
-                case 18:
-                    _h++;
-                    return [3 /*break*/, 15];
-                case 19: return [2 /*return*/];
+                    _p.label = 25;
+                case 25:
+                    _m++;
+                    return [3 /*break*/, 22];
+                case 26: return [2 /*return*/];
             }
         });
     });
