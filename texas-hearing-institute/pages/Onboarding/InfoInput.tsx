@@ -11,7 +11,8 @@ import { useState } from 'react';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'InfoInput'>;
 
-export default function InfoInput({ navigation }: Props) {
+export default function InfoInput({ route, navigation }: Props) {
+	const { id } = route.params;
 	const [childName, setChildName] = useState<string>('');
 	const [groupID, setGroupID] = useState<string>('');
 
@@ -78,6 +79,7 @@ export default function InfoInput({ navigation }: Props) {
 						navigation.navigate(`Vowels`, {
 							name: childName,
 							groupID: groupID,
+							id: id,
 						})
 					}
 				/>
