@@ -19,7 +19,7 @@ type AuthNav = StackNavigationProp<AuthStackParamList>;
 type Props = NativeStackScreenProps<AuthStackParamList, 'Done'>;
 
 export default function Done({ route }: Props) {
-	const { name, groupID } = route.params;
+	const { id, name, groupID } = route.params;
 	const appNavigation = useNavigation<AppNav>();
 	const authNavigation = useNavigation<AuthNav>();
 
@@ -43,13 +43,15 @@ export default function Done({ route }: Props) {
 		const cID = await fetchClinicianID(groupID);
 		const uID = uuidv4();
 		user.setID(uID);
+		console.log(id);
 		const { error } = await supabase.from('children').insert({
 			id: uID,
 			name: name,
-			parentuser: user.getId(),
+			parentuser: id,
 			clinician: cID,
 		});
 		if (error) {
+			console.log(error);
 			throw new Error('Failed to save data');
 		}
 	};

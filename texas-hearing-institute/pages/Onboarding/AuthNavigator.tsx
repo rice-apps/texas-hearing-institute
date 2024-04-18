@@ -9,10 +9,10 @@ import Done from './Done';
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type AuthStackParamList = {
 	SignIn: undefined;
-	InfoInput: undefined;
-	Vowels: { name: string; groupID: string };
-	Consonants: { name: string; groupID: string };
-	Done: { name: string; groupID: string };
+	InfoInput: { id: string };
+	Vowels: { id: string; name: string; groupID: string };
+	Consonants: { id: string; name: string; groupID: string };
+	Done: { id: string; name: string; groupID: string };
 };
 
 export default function AuthNavigator() {

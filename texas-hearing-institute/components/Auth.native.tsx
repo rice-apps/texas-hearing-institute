@@ -78,7 +78,8 @@ export default function Auth() {
 									} else {
 										setUser(currUser);
 										// new user
-										authNavigation.navigate('InfoInput');
+										console.log(user.id);
+										authNavigation.navigate('InfoInput', { id: user.id });
 									}
 								} else if (error) {
 									throw error;
