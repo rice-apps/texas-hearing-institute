@@ -4,10 +4,18 @@ import SoundGrid from '../components/SoundGrid';
 import RadioButton from '../../../components/RadioButton';
 import FloatingButton from '../../../components/FloatingButton';
 import { retrieveVowels } from '../../../utils/persistSelection';
-import { syllableGeneration } from '../../../utils/syllableGeneration';
+import { generateCards } from '../../../utils/syllableGeneration';
 import { ConsonantFlower, VowelSegment } from '../../../utils/Segment';
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PracticeParamList } from '../../PracticeNavigator';
+import { modeToString } from '../../types';
+
+type PracticeNav = StackNavigationProp<PracticeParamList>;
 
 const Vowels = () => {
+	const practiceNavigation = useNavigation<PracticeNav>();
+
 	// Fetch vowels that child can say from async storage.
 	useEffect(() => {
 		// We immediately run this async function when page is loaded,
@@ -117,16 +125,25 @@ const Vowels = () => {
 				<FloatingButton
 					label={"Let's Practice"}
 					onPress={async () => {
-						// Call syllable generation. We can use ! on vars because we validated
-						// that they were all selected with settingsReady() before this button appeared.
-						const words = await syllableGeneration(
+						const cards = await generateCards(
+							10,
 							segment!,
 							modeFlower!,
 							isUniqueVowels!,
 							null,
 							2,
 						);
-						console.log(words);
+						practiceNavigation.navigate('ActivePractice', {
+							settings: {
+								type: 'speech',
+								subtype: 'vowels',
+								mode: modeToString(modeFlower!),
+								vowels: isUniqueVowels ? 'different' : 'same',
+								target: segment!.name,
+								syllables: 2,
+							},
+							phonemes: cards,
+						});
 					}}
 				/>
 			)}
