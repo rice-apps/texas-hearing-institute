@@ -39,11 +39,6 @@
 		"plugins": [
 			"@react-native-google-signin/google-signin",
 			"expo-apple-authentication"
-		],
-		"extra": {
-			"eas": {
-				"projectId": "eb8755d1-d686-4831-9e92-ac1818ac9d52"
-			}
-		}
+		]
 	}
 }
