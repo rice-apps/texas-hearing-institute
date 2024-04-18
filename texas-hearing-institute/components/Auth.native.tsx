@@ -46,17 +46,17 @@ export default function Auth() {
 									// TODO: lots of error handling in this block
 									// User is signed in.
 									const currUser = new User();
-									currUser.setID(user.id);
 
 									// search for user.id in parentuser in children
 									const { data } = await supabase
 										.from('children')
-										.select('name, clinician')
+										.select('id, name, clinician')
 										.eq('parentuser', user.id)
 										.maybeSingle();
 									if (data) {
 										// existing user
 										currUser.setName(data.name);
+										currUser.setID(data.id);
 										// fetch group id from clinicians
 										const { data: clinicianData } = await supabase
 											.from('clinicians')

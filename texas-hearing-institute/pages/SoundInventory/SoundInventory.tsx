@@ -202,15 +202,16 @@ export const SoundInventory = () => {
 				</View>
 			</ScrollView>
 
-			<View
+			<ScrollView
 				style={{
 					borderTopColor: 'black',
 					borderTopWidth: 1,
 					shadowColor: 'black',
 					display: editModeEnabled ? 'flex' : 'none',
-					justifyContent: 'center',
-					alignItems: 'center',
+					// justifyContent: 'center',
+					// alignItems: 'center',
 					flexDirection: 'column',
+					marginBottom: 100,
 				}}
 			>
 				<Pressable
@@ -255,7 +256,7 @@ export const SoundInventory = () => {
 						Save Changes
 					</Text>
 				</Pressable>
-			</View>
+			</ScrollView>
 		</CustomSafeAreaView>
 	);
 };

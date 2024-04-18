@@ -7,7 +7,7 @@ import {
 } from './Segment';
 import { retrieveConsonants, retrieveVowels } from './persistSelection';
 
-// syllableGeneration returns an array of `numberOfWords` words (i.e. ['pee', 'paw']).
+// generateSyllables returns an array of `numberOfWords` words (i.e. ['pee', 'paw']).
 // Inputs:
 // - segment: is the desired `Segment` to practice for speaking practice; null for listening practice.
 // - consonantFlower: one of Voice/Manner/Place, or All for listening practice's "Variegated Vowels" mode
@@ -16,7 +16,7 @@ import { retrieveConsonants, retrieveVowels } from './persistSelection';
 // - practiceTarget: is initial/final in speaking practice; null to represent vowel targeting
 // - numberOfWords: # of words to generate. Will deadlock if >10 and `isUniqueVowels` is true.
 
-export async function syllableGeneration(
+export async function generateSyllables(
 	segment: Segment | null,
 	consonantFlower: ConsonantFlower,
 	isUniqueVowels: boolean,
@@ -48,6 +48,7 @@ export async function syllableGeneration(
 			consonantFlower,
 			practiceTarget,
 		);
+
 		// If our input targeted `segment` is a vowel, it won't have siblings.
 		// Thus, we will assign petalConsonants = this random ConsonantSegment's siblings.
 		petalConsonants = randomConsonantSegment!.fetchConsonantSiblings(
@@ -197,12 +198,35 @@ function pickRandomConsonant(
 	);
 }
 
+export async function generateCards(
+	numCards: number,
+	segment: Segment | null,
+	consonantFlower: ConsonantFlower,
+	isUniqueVowels: boolean,
+	practiceTarget: ConsonantCategories | null,
+	numSyllables: number,
+) {
+	const cards = [];
+
+	for (let i = 0; i < numCards; i++) {
+		const words = await generateSyllables(
+			segment,
+			consonantFlower,
+			isUniqueVowels,
+			practiceTarget,
+			numSyllables,
+		);
+		cards.push(words);
+	}
+	return cards;
+}
+
 // Testing:
 // ================ SPEECH GENERATION =================
 
 // console.log(
 // 	'result:',
-// 	syllableGeneration(
+// 	generateSyllables(
 // 		new VowelSegment('eye'),
 // 		ConsonantFlower.Manner,
 // 		true,
@@ -213,7 +237,7 @@ function pickRandomConsonant(
 
 // console.log(
 // 	'result:',
-// 	syllableGeneration(
+// 	generateSyllables(
 // 		new VowelSegment('oo'),
 // 		ConsonantFlower.Manner,
 // 		true,
@@ -224,7 +248,7 @@ function pickRandomConsonant(
 
 // console.log(
 // 	'result:',
-// 	syllableGeneration(
+// 	generateSyllables(
 // 		new ConsonantSegment(
 // 			'z',
 // 			[ConsonantCategories.Initial, ConsonantCategories.Final],
@@ -244,7 +268,7 @@ function pickRandomConsonant(
 
 // console.log(
 // 	'result:',
-// 	syllableGeneration(
+// 	generateSyllables(
 // 		new ConsonSegment('t', [ConsonantCategories.Initial], {
 //             manner: [0],
 //             voice: [3],
@@ -261,7 +285,7 @@ function pickRandomConsonant(
 
 // console.log(
 // 	'result:',
-// 	syllableGeneration(
+// 	generateSyllables(
 // 		null,
 // 		ConsonantFlower.All,
 // 		true,
@@ -272,7 +296,7 @@ function pickRandomConsonant(
 
 // console.log(
 // 	'result:',
-// 	syllableGeneration(
+// 	generateSyllables(
 // 		null,
 // 		ConsonantFlower.Voice,
 // 		false,
@@ -283,7 +307,7 @@ function pickRandomConsonant(
 
 // console.log(
 // 	'result:',
-// 	syllableGeneration(
+// 	generateSyllables(
 // 		null,
 // 		ConsonantFlower.All,
 // 		true,

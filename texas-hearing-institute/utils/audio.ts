@@ -1,11 +1,33 @@
-import { Audio } from 'expo-av';
+import { Audio, InterruptionModeAndroid } from 'expo-av';
+import { Platform } from 'react-native';
 
-export async function playSound(phoneme: string) {
-	const soundObj = new Audio.Sound();
+async function sleep(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-	await soundObj.loadAsync(SOUND_FILES.get(phoneme));
+export async function playSound(phonemes: string[]) {
+	const enableAudio = async () => {
+		await Audio.setAudioModeAsync({
+			playsInSilentModeIOS: true,
+			staysActiveInBackground: false,
+			interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+			shouldDuckAndroid: false,
+		});
+	};
 
-	await soundObj.setStatusAsync({ shouldPlay: true });
+	if (Platform.OS === 'ios') {
+		await enableAudio();
+	}
+
+	for (const phoneme of phonemes) {
+		const soundObj = new Audio.Sound();
+
+		await soundObj.loadAsync(SOUND_FILES.get(phoneme));
+
+		await soundObj.setStatusAsync({ shouldPlay: true });
+
+		await sleep(500);
+	}
 }
 
 export const SOUND_FILES = new Map([

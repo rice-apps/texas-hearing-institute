@@ -41,8 +41,10 @@ export default function Done({ route }: Props) {
 
 	const saveChildInfo = async () => {
 		const cID = await fetchClinicianID(groupID);
+		const uID = uuidv4();
+		user.setID(uID);
 		const { error } = await supabase.from('children').insert({
-			id: uuidv4(),
+			id: uID,
 			name: name,
 			parentuser: user.getId(),
 			clinician: cID,

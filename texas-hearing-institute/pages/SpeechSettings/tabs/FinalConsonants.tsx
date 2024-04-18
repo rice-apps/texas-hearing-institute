@@ -9,9 +9,17 @@ import {
 	ConsonantFlower,
 	ConsonantSegment,
 } from '../../../utils/Segment';
-import { syllableGeneration } from '../../../utils/syllableGeneration';
+import { generateCards } from '../../../utils/syllableGeneration';
+import { useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PracticeParamList } from '../../PracticeNavigator';
+import { modeToString } from '../../types';
+
+type PracticeNav = StackNavigationProp<PracticeParamList>;
 
 export default function FinalConsonants() {
+	const practiceNavigation = useNavigation<PracticeNav>();
+
 	// Fetch consonants that child can say from async storage.
 	useEffect(() => {
 		// We immediately run this async function when page is loaded,
@@ -138,24 +146,25 @@ export default function FinalConsonants() {
 							);
 						}
 
-						// Generate 10 "pages" of practice word lists
-						// EG: [["peye, pow"], ["noo", "pam"], ... ] with 10 sublists
-						const pages = [];
-
-						for (let i = 0; i < 10; i++) {
-							// Call syllable generation. We can use ! on vars because we validated
-							// that they were all selected with settingsReady() before this button appeared.
-							const words = await syllableGeneration(
-								segment!,
-								modeFlower!,
-								isUniqueVowels!,
-								ConsonantCategories.Final,
-								2,
-							);
-							pages.push(words);
-						}
-						// TODO: Route to active practice
-						console.log(pages);
+						const cards = await generateCards(
+							10,
+							segment!,
+							modeFlower!,
+							isUniqueVowels!,
+							ConsonantCategories.Final,
+							2,
+						);
+						practiceNavigation.navigate('ActivePractice', {
+							settings: {
+								type: 'speech',
+								subtype: 'final consonants',
+								mode: modeToString(modeFlower!),
+								vowels: isUniqueVowels ? 'different' : 'same',
+								target: segment!.name,
+								syllables: 2,
+							},
+							phonemes: cards,
+						});
 					}}
 				/>
 			)}
