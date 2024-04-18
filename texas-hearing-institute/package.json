@@ -23,6 +23,7 @@
 		"@rneui/themed": "^4.0.0-rc.8",
 		"@supabase/supabase-js": "^2.38.2",
 		"@ui-kitten/components": "^5.3.1",
+		"crypto-es": "^2.1.0",
 		"expo": "~49.0.13",
 		"expo-apple-authentication": "^6.3.0",
 		"expo-av": "~13.4.1",
