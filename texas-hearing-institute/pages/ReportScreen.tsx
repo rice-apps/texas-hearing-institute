@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Heading from '../components/Heading';
 import {
 	TouchableOpacity,
@@ -10,49 +10,42 @@ import {
 import tw from 'tailwind-react-native-classnames';
 import PieChart from 'react-native-pie-chart';
 import { AntDesign } from '@expo/vector-icons';
-import { supabase } from '../lib/supabase';
 import PillButtonView from '../components/PillButtonView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Phoneme, PracticeParamList } from './PracticeNavigator';
+import { PracticeParamList } from './PracticeNavigator';
+import { PracticeResult } from './types';
+import { UserContext, UserContextType } from '../user/UserContext';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/core';
 
 /* WARNING: PARAMETERS CAST TO ANY -- might need to fix using props instead */
 /* Active Practice reroutes to Report Screen */
 
 type Props = NativeStackScreenProps<PracticeParamList, 'ReportScreen'>;
 
-function ReportScreen({ route }: Props) {
-	const { phonemes, report } = route.params;
-	// frequency of correct/incorrect array
-	const cCount: number[] = [
-		phonemes.phonemes.filter((x: Phoneme) => x.correct == false).length,
-		phonemes.phonemes.filter((x: Phoneme) => x.correct == true).length,
-	];
+type StackNav = StackNavigationProp<PracticeParamList>;
 
-	const handleReportEntry = async () => {
-		const { error } = await supabase.from('reports').insert({
-			child: report.child,
-			created_at: new Date().toISOString(),
-			type: report.type,
-			subtype: report.subtype,
-			sound: report.sound,
-			mode: report.mode,
-			voweltype: report.voweltype,
-			combinations: phonemes.phonemes.map((p: Phoneme) => p.name),
-			num_syllables: report.numSyllables,
-			correct_incorrect: phonemes.phonemes.map((p: Phoneme) => p.correct),
-		});
-		if (error) {
-			alert(error);
-		}
-	};
+function ReportScreen({ route }: Props) {
+	const navigation = useNavigation<StackNav>();
+	const { user } = useContext(UserContext) as UserContextType;
+
+	const { results } = route.params;
+
+	const numCorrect = results.filter(
+		(p: PracticeResult) => p.correct === true,
+	).length;
+
+	const numIncorrect = results.filter(
+		(p: PracticeResult) => p.correct === false,
+	).length;
 
 	return (
 		<View style={styles.container}>
-			<Heading title={'Woohoo! High Five, ' + phonemes.user}></Heading>
+			<Heading title={'Woohoo! High Five, ' + user.getName()}></Heading>
 			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 				<PieChart
 					widthAndHeight={100}
-					series={cCount}
+					series={[numCorrect, numIncorrect]}
 					sliceColor={['#ff6c00', '#ff9100']}
 					coverRadius={0.45}
 					coverFill={'#FFF'}
@@ -62,25 +55,25 @@ function ReportScreen({ route }: Props) {
 				>
 					<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
 						{' '}
-						Correct: {cCount[1]}
+						Correct: {numCorrect}
 					</Text>
 					<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-						Incorrect: {cCount[0]}
+						Incorrect: {numIncorrect}
 					</Text>
 					<Text style={tw`text-lg font-bold pt-2 pl-2 mx-5 mt-1`}>
 						{'Score: ' +
-							Math.ceil((cCount[1] / (cCount[0] + cCount[1])) * 100) +
+							Math.ceil((numCorrect / (numCorrect + numIncorrect)) * 100) +
 							'%'}
 					</Text>
 				</View>
 			</View>
 			<ScrollView>
-				{phonemes.phonemes.map((phoneme: Phoneme) => {
-					const color = phoneme.correct ? 'green' : 'red';
-					const iName = phoneme.correct ? 'check' : 'close';
+				{results.map((pr: PracticeResult) => {
+					const color = pr.correct ? 'green' : 'red';
+					const iName = pr.correct ? 'check' : 'close';
 					return (
 						<View
-							key={phoneme.name}
+							key={pr.phonemes.join(' ')}
 							style={{
 								flexDirection: 'row',
 								justifyContent: 'space-between',
@@ -88,7 +81,7 @@ function ReportScreen({ route }: Props) {
 							}}
 						>
 							<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-								{phoneme.name}
+								{pr.phonemes.join(' ')}
 							</Text>
 							<AntDesign name={iName} size={24} color={color} />
 						</View>
@@ -96,15 +89,12 @@ function ReportScreen({ route }: Props) {
 				})}
 			</ScrollView>
 
-			<TouchableOpacity>
-				<PillButtonView
-					title="Practice this set again"
-					type="primary"
-				></PillButtonView>
+			<TouchableOpacity onPress={() => navigation.navigate('Home')}>
+				<PillButtonView title="Practice again" type="primary"></PillButtonView>
 			</TouchableOpacity>
-			<TouchableOpacity onPress={handleReportEntry}>
+			{/* <TouchableOpacity onPress={handleReportEntry}>
 				<PillButtonView title="Save Report" type="secondary"></PillButtonView>
-			</TouchableOpacity>
+			</TouchableOpacity> */}
 		</View>
 	);
 }

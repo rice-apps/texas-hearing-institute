@@ -1,73 +1,77 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { Bar as ProgressBar } from 'react-native-progress';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Phoneme, PhonemeListProps, ReportInfo } from './types';
+import { PracticeResult } from './types';
 import { useNavigation } from '@react-navigation/core';
 import { PracticeParamList } from './PracticeNavigator';
 import { SvgXml } from 'react-native-svg';
 import volume from '../icons/volume';
 import { playSound } from '../utils/audio';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { supabase } from '../lib/supabase';
+import { UserContext, UserContextType } from '../user/UserContext';
 
 const { height, width } = Dimensions.get('window');
 const CARD_WIDTH = width - 40;
 
-const p1: Phoneme = { name: 'ah', correct: false };
-const p2: Phoneme = { name: 'eye', correct: false };
-const p3: Phoneme = { name: 'rofl', correct: false };
-const p4: Phoneme = { name: 'wtf', correct: false };
-const p5: Phoneme = { name: 'omw', correct: false };
-const p6: Phoneme = { name: 'ngl', correct: false };
-const p7: Phoneme = { name: 'tbh', correct: false };
-
-const sampleReport: ReportInfo = {
-	child: 'Bob',
-	createdAt: 'uhhh',
-	type: 'idk',
-	subtype: 'idk',
-	sound: 'string',
-	mode: 'string',
-	voweltype: 'string',
-	combinations: ['a', 'x', 'b'],
-	numSyllables: 5,
-	correct: [false, false, false],
-};
-
 type StackNav = StackNavigationProp<PracticeParamList>;
 
-export default function Active() {
+type Props = NativeStackScreenProps<PracticeParamList, 'ActivePractice'>;
+
+// let report: Array<PracticeResult> = [];
+
+export default function Active({ route }: Props) {
+	const { settings, phonemes } = route.params;
+
 	const navigation = useNavigation<StackNav>();
-	const sampleCards = [p1, p2, p3, p4, p5, p6, p7];
-	const sProps: PhonemeListProps = {
-		phonemes: sampleCards,
-		user: sampleReport.child,
-	};
+
+	const { user } = useContext(UserContext) as UserContextType;
 	const [progress, setProgress] = useState(0);
 	const [isSwipedRight, setIsSwipedRight] = useState(false);
 	const [isSwipedLeft, setIsSwipedLeft] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [report, setReport] = useState<PracticeResult[]>([]);
+	let lastRes: PracticeResult;
 
-	const handleOnSwiped = (index: number) => {
-		const newProgress = ((index + 1) / sampleCards.length) * 100;
+	const handleOnSwiped = (i: number) => {
+		const newProgress = ((i + 1) / phonemes.length) * 100;
 		setProgress(newProgress);
-		setCurrentIndex(index + 1);
-		setIsSwipedRight(false); // reset swipe state
+		setCurrentIndex(i + 1);
+	};
+
+	const handleOnSwipedRight = (i: number) => {
+		setReport([...report, { phonemes: phonemes[i], correct: true }]);
+		lastRes = { phonemes: phonemes[i], correct: true };
+		setIsSwipedRight(true);
 		setIsSwipedLeft(false);
 	};
 
-	const handleOnSwipedRight = (index: number) => {
-		sampleCards[index].correct = true;
-		console.log(sampleCards[index]);
-		setIsSwipedRight(true);
-		setIsSwipedLeft(false); // Reset isSwipedLeft
+	const handleOnSwipedLeft = (i: number) => {
+		setReport([...report, { phonemes: phonemes[i], correct: false }]);
+		lastRes = { phonemes: phonemes[i], correct: false };
+		setIsSwipedLeft(true);
+		setIsSwipedRight(false);
 	};
 
-	const handleOnSwipedLeft = (index: number) => {
-		// sampleCards[index].correct = false;
-		console.log(sampleCards[index]);
-		setIsSwipedLeft(true);
-		setIsSwipedRight(false); // Reset isSwipedRight
+	const handleReportEntry = async (results: PracticeResult[]) => {
+		const { error } = await supabase.from('reports').insert({
+			child: user.getId(),
+			created_at: new Date().toISOString(),
+			type: settings.type,
+			subtype: settings.subtype,
+			mode: settings.mode,
+			target: settings.target,
+			voweltype: settings.vowels,
+			num_syllables: settings.syllables,
+			syllables: results.map((p: PracticeResult) => p.phonemes.join(' ')),
+			results: results.map((p: PracticeResult) => p.correct),
+		});
+		if (error) {
+			console.log(error);
+			// alert(error);
+		}
 	};
 
 	return (
@@ -78,10 +82,10 @@ export default function Active() {
 				color="#2196F3"
 				style={{ marginRight: 10 }}
 			/>
-			<Text>{`${currentIndex} / ${sampleCards.length}`}</Text>
+			<Text>{`${currentIndex} / ${phonemes.length}`}</Text>
 			<View style={styles.swiperContainer}>
 				<Swiper
-					cards={sampleCards.map((phoneme) => phoneme.name)}
+					cards={phonemes}
 					renderCard={(card) => (
 						<View
 							style={[
@@ -90,7 +94,11 @@ export default function Active() {
 								isSwipedLeft && styles.yellowBorder,
 							]}
 						>
-							<Text style={styles.text}>{card}</Text>
+							<Text style={styles.text}>
+								{card.map((ph) => {
+									return ph + ' ';
+								})}
+							</Text>
 							<Pressable
 								style={{
 									backgroundColor: '#EBEBEB',
@@ -114,17 +122,16 @@ export default function Active() {
 							</Pressable>
 						</View>
 					)}
-					onSwiped={(index) => handleOnSwiped(index)}
-					onSwipedAll={() => {
-						//after all cards are seen, navigate to report screen
-						navigation.navigate('ReportScreen', {
-							phonemes: sProps,
-							report: sampleReport,
-						});
-						console.log('All cards have been swiped');
-					}}
+					onSwiped={handleOnSwiped}
 					onSwipedRight={handleOnSwipedRight}
 					onSwipedLeft={handleOnSwipedLeft}
+					onSwipedAll={() => {
+						//after all cards are seen, navigate to report screen
+						handleReportEntry(report);
+						navigation.navigate('ReportScreen', {
+							results: [...report, lastRes],
+						});
+					}}
 					backgroundColor="#F5F5F5" // background outside card
 					stackSize={3}
 				/>

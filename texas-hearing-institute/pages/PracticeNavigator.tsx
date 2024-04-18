@@ -10,7 +10,7 @@ import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
 import ReportScreen from './ReportScreen';
 import Active from './Active';
-import { PhonemeListProps, ReportInfo } from './types';
+import { PracticeResult, PracticeSettings } from './types';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type PracticeParamList = {
@@ -22,8 +22,8 @@ export type PracticeParamList = {
 	VariegatedVowels: undefined;
 	Manner: undefined;
 	Voicing: undefined;
-	ActivePractice: undefined;
-	ReportScreen: { phonemes: PhonemeListProps; report: ReportInfo };
+	ActivePractice: { settings: PracticeSettings; phonemes: string[][] };
+	ReportScreen: { results: PracticeResult[] };
 };
 
 const Stack = createNativeStackNavigator<PracticeParamList>();
@@ -32,7 +32,7 @@ export default function PracticeNavigator() {
 	// TODO: find a new home for this file
 	return (
 		<Stack.Navigator
-			initialRouteName="ActivePractice"
+			initialRouteName="Home"
 			screenOptions={{
 				headerShadowVisible: false,
 				contentStyle: {
@@ -56,9 +56,16 @@ export default function PracticeNavigator() {
 			<Stack.Screen name="VariegatedVowels" component={VarVowelsScreen} />
 			<Stack.Screen name="Manner" component={MannerScreen} />
 			<Stack.Screen name="Voicing" component={VoicingScreen} />
-			<Stack.Screen name="ActivePractice" component={Active} />
-			<Stack.Screen name="ReportScreen" component={ReportScreen} />
-			{/*stack screen for active practice and report*/}
+			<Stack.Screen
+				name="ActivePractice"
+				component={Active}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name="ReportScreen"
+				component={ReportScreen}
+				options={{ headerShown: false }}
+			/>
 		</Stack.Navigator>
 	);
 }
