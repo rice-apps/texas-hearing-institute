@@ -1,4 +1,4 @@
-import { Alert, View, AppState, Platform } from 'react-native';
+import { Alert, View, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { Button, Input } from 'react-native-elements';
 import CryptoJS from 'crypto-es';
@@ -11,14 +11,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList } from '../pages/Onboarding/AuthNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { AppStackParamList } from '../pages/AppNavigator';
-
-AppState.addEventListener('change', (state) => {
-	if (state === 'active') {
-		supabase.auth.startAutoRefresh();
-	} else {
-		supabase.auth.stopAutoRefresh();
-	}
-});
 
 export default function Auth() {
 	const { setUser } = useContext(UserContext) as UserContextType;
