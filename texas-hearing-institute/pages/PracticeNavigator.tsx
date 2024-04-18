@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PracticeTab from './ListeningSettings/tabs/PracticeTab';
+import PracticeTab from './Home';
 import VarVowelsScreen from './ListeningSettings/tabs/VarVowelsScreen';
 import MannerScreen from './ListeningSettings/tabs/MannerScreen';
 import VoicingScreen from './ListeningSettings/tabs/VoicingScreen';

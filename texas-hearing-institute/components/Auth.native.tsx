@@ -68,9 +68,9 @@ export default function Auth() {
 										// navigate home
 										appNavigation.navigate('Home');
 									} else {
+										currUser.setShowTutorial(true);
 										setUser(currUser);
 										// new user
-										console.log(user.id);
 										authNavigation.navigate('InfoInput', { id: user.id });
 									}
 								} else if (error) {
@@ -164,7 +164,7 @@ export default function Auth() {
 				setUser(currUser);
 				// new user
 				setLoading(false);
-				authNavigation.navigate('InfoInput');
+				authNavigation.navigate('InfoInput', { id: user.id });
 			}
 		} else if (error) {
 			setLoading(false);
@@ -221,7 +221,7 @@ export default function Auth() {
 				setUser(currUser);
 				// new user
 				setLoading(false);
-				authNavigation.navigate('InfoInput');
+				authNavigation.navigate('InfoInput', { id: user.id });
 			}
 		} else if (error) {
 			setLoading(false);

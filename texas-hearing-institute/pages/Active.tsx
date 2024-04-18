@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import { Bar as ProgressBar } from 'react-native-progress';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -7,20 +7,17 @@ import { PracticeResult } from './types';
 import { useNavigation } from '@react-navigation/core';
 import { PracticeParamList } from './PracticeNavigator';
 import { SvgXml } from 'react-native-svg';
+import x from '../icons/x';
 import volume from '../icons/volume';
 import { playSound } from '../utils/audio';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { supabase } from '../lib/supabase';
 import { UserContext, UserContextType } from '../user/UserContext';
-
-const { height, width } = Dimensions.get('window');
-const CARD_WIDTH = width - 40;
+import PracticeTutorial from './PracticeTutorial';
 
 type StackNav = StackNavigationProp<PracticeParamList>;
 
 type Props = NativeStackScreenProps<PracticeParamList, 'ActivePractice'>;
-
-// let report: Array<PracticeResult> = [];
 
 export default function Active({ route }: Props) {
 	const { settings, phonemes } = route.params;
@@ -32,6 +29,7 @@ export default function Active({ route }: Props) {
 	const [isSwipedRight, setIsSwipedRight] = useState(false);
 	const [isSwipedLeft, setIsSwipedLeft] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [showTutorial, setShowTutorial] = useState(user.getShowTutorial());
 	const [report, setReport] = useState<PracticeResult[]>([]);
 	let lastRes: PracticeResult;
 
@@ -70,22 +68,62 @@ export default function Active({ route }: Props) {
 		});
 		if (error) {
 			console.log(error);
-			// alert(error);
 		}
 	};
 
+	// if new user
+	if (showTutorial) {
+		return <PracticeTutorial handleClose={() => setShowTutorial(false)} />;
+	}
+
 	return (
 		<View style={styles.container}>
+			<View
+				style={{
+					width: 310,
+					flexDirection: 'row',
+					alignItems: 'center',
+					justifyContent: 'space-between',
+					marginBottom: 10,
+				}}
+			>
+				<Text
+					style={{ color: '#333' }}
+				>{`${currentIndex}/${phonemes.length}`}</Text>
+				<Pressable
+					style={{
+						borderRadius: 25,
+						width: 20,
+						height: 20,
+						backgroundColor: '#ECECEC',
+						alignItems: 'center',
+						justifyContent: 'center',
+					}}
+					onPress={() => navigation.popToTop()}
+				>
+					<SvgXml xml={x} width={8} height={8} />
+				</Pressable>
+			</View>
 			<ProgressBar
 				progress={progress / 100}
-				width={Dimensions.get('window').width - 40} //same width as card
-				color="#2196F3"
-				style={{ marginRight: 10 }}
+				borderRadius={25}
+				width={320}
+				color="#AFE4F9"
+				unfilledColor="#ECECEC"
+				height={8}
+				borderWidth={0}
 			/>
-			<Text>{`${currentIndex} / ${phonemes.length}`}</Text>
-			<View style={styles.swiperContainer}>
+			<View
+				style={{
+					width: 372,
+					height: 500,
+					alignItems: 'flex-start',
+					flex: 1,
+				}}
+			>
 				<Swiper
 					cards={phonemes}
+					backgroundColor="white"
 					renderCard={(card) => (
 						<View
 							style={[
@@ -106,10 +144,8 @@ export default function Active({ route }: Props) {
 									height: 38,
 									width: 38,
 									borderRadius: 25,
-									flexDirection: 'row',
-									flexWrap: 'wrap',
 									justifyContent: 'center',
-									gap: 10,
+									alignItems: 'center',
 								}}
 								onPress={() => playSound(card)}
 							>
@@ -125,6 +161,15 @@ export default function Active({ route }: Props) {
 					onSwiped={handleOnSwiped}
 					onSwipedRight={handleOnSwipedRight}
 					onSwipedLeft={handleOnSwipedLeft}
+					onSwiping={(x) => {
+						if (x > 0) {
+							setIsSwipedLeft(false);
+							setIsSwipedRight(true);
+						} else if (x < 0) {
+							setIsSwipedRight(false);
+							setIsSwipedLeft(true);
+						}
+					}}
 					onSwipedAll={() => {
 						//after all cards are seen, navigate to report screen
 						handleReportEntry(report);
@@ -132,21 +177,48 @@ export default function Active({ route }: Props) {
 							results: [...report, lastRes],
 						});
 					}}
-					backgroundColor="#F5F5F5" // background outside card
 					stackSize={3}
+					overlayLabels={{
+						left: {
+							title: '',
+							style: {
+								label: {
+									borderColor: '#EAC564',
+									borderWidth: 4,
+									width: 320,
+									height: 400,
+									marginTop: -186,
+									marginLeft: -16,
+									borderRadius: 16,
+								},
+								wrapper: {
+									flexDirection: 'column',
+									alignItems: 'center',
+									justifyContent: 'center',
+								},
+							},
+						},
+						right: {
+							title: '',
+							style: {
+								label: {
+									borderColor: '#73AC17',
+									borderWidth: 4,
+									width: 320,
+									height: 400,
+									marginTop: -186,
+									marginLeft: -16,
+									borderRadius: 16,
+								},
+								wrapper: {
+									flexDirection: 'column',
+									alignItems: 'center',
+									justifyContent: 'center',
+								},
+							},
+						},
+					}}
 				/>
-			</View>
-			<View style={styles.swipeTextContainer}>
-				<Text style={styles.swipeText}>
-					Swipe right to mark{' '}
-					<Text style={{ fontWeight: 'bold', color: '#34A853' }}>CORRECT</Text>
-				</Text>
-				<Text style={styles.swipeText}>
-					Swipe left to mark{' '}
-					<Text style={{ fontWeight: 'bold', color: '#FBBC05' }}>
-						STILL LEARNING
-					</Text>
-				</Text>
 			</View>
 		</View>
 	);
@@ -154,30 +226,28 @@ export default function Active({ route }: Props) {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center',
 		backgroundColor: 'white',
-		paddingTop: 50,
-	},
-	swiperContainer: {
-		flex: 1,
-		width: CARD_WIDTH,
-		height: height * 0.6,
-		backgroundColor: 'black',
+		marginTop: 40,
 	},
 	card: {
-		flex: 1,
 		flexDirection: 'row',
-		columnGap: 15,
+		height: 400,
+		width: 320,
+		marginTop: -20,
 		backgroundColor: 'white',
-		borderRadius: 10,
-		borderWidth: 2,
+		borderColor: '#ECECEC',
+		borderRadius: 16,
+		borderWidth: 4,
 		justifyContent: 'center',
 		alignItems: 'center',
+		shadowColor: '#000',
+		shadowOpacity: 0.08,
+		shadowOffset: { width: 0, height: 0 },
 	},
 	text: {
 		fontSize: 30,
+		color: '#333',
 	},
 	swipeTextContainer: {
 		alignItems: 'center',
@@ -186,9 +256,9 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	greenBorder: {
-		borderColor: '#34A853', // Change border color to green when swipe right
+		// borderColor: '#34A853', // Change border color to green when swipe right
 	},
 	yellowBorder: {
-		borderColor: '#FBBC05', // Change border color to yellow when swipe left
+		// borderColor: '#FBBC05', // Change border color to yellow when swipe left
 	},
 });

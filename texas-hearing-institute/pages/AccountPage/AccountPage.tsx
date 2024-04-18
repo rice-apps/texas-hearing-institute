@@ -1,20 +1,17 @@
 import { SvgXml } from 'react-native-svg';
-import leftArrow from '../../icons/leftarrow';
-import { Pressable, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React, { useContext, useState } from 'react';
 import ProfileIconView from '../../components/ProfileIconView';
 import pencil from '../../icons/pencil';
 import FormView from '../../components/FormView/FormView';
-import PillButtonView from '../../components/PillButtonView';
-import { UserContext } from '../../user/UserContext';
+import { UserContext, UserContextType } from '../../user/UserContext';
+import { supabase } from '../../lib/supabase';
+import FloatingButton from '../../components/FloatingButton';
 
 export default function AccountPage() {
-	const user = useContext(UserContext);
+	const { user } = useContext(UserContext) as UserContextType;
 
 	const [editMode, setEditMode] = useState(false);
-	const [userEmail] = useState(() => {
-		return user.getEmail();
-	});
 
 	const [userName, setUserName] = useState(() => {
 		return user.getName();
@@ -24,8 +21,46 @@ export default function AccountPage() {
 		return user.getGroupId();
 	});
 
-	const commitChangesToUser = () => {
+	const commitChangesToUser = async () => {
+		const { error: nameError } = await supabase
+			.from('children')
+			.update({ name: userName })
+			.eq('id', user.getId());
+		if (nameError) {
+			console.log('DB error on attempt to update child name: ', nameError);
+			alert('Failed to update; try again later!');
+			setUserName(user.getName());
+			return;
+		}
 		user.setName(userName);
+
+		const { data, error: cIdError } = await supabase
+			.from('clinicians')
+			.select('id')
+			.eq('groupId', userGroupID)
+			.maybeSingle();
+		if (!data) {
+			// invalid groupID
+			console.log('Invalid Group ID entered');
+			alert('Incorrect Group ID entered');
+			setUserGroupID(user.getGroupId());
+			return;
+		} else if (cIdError) {
+			console.log('DB error on attempt to retrieve clinician id: ', cIdError);
+			alert('Failed to update; try again later!');
+			setUserGroupID(user.getGroupId());
+			return;
+		}
+		const { error: gIdError } = await supabase
+			.from('children')
+			.update({ clinician: data!.id })
+			.eq('id', user.getId());
+
+		if (gIdError) {
+			console.log('DB error on attempt to update group ID: ', gIdError);
+			alert('Failed to update; try again later!');
+			return;
+		}
 		user.setGroupId(userGroupID);
 	};
 
@@ -34,26 +69,11 @@ export default function AccountPage() {
 			style={{
 				flexDirection: 'column',
 				alignItems: 'flex-start',
-				marginTop: 20,
+				marginTop: 72,
 				marginHorizontal: 24,
 				height: '100%',
 			}}
 		>
-			<View /* Top back arrow */
-				style={{
-					flexDirection: 'column',
-					marginLeft: 3,
-					marginBottom: 24,
-				}}
-			>
-				<Pressable
-					onPress={() => {
-						// TODO: actually reroute back to wherever one needs to go
-					}}
-				>
-					<SvgXml xml={leftArrow} width={24} height={24} />
-				</Pressable>
-			</View>
 			<View /* Profile view and edit button */
 				style={{
 					flexDirection: 'row',
@@ -80,7 +100,7 @@ export default function AccountPage() {
 							color: '#333',
 						}}
 					>
-						{editMode ? 'Edit Avatar' : userName + "'s Profile"}
+						{userName + "'s Profile"}
 					</Text>
 				</View>
 
@@ -129,16 +149,8 @@ export default function AccountPage() {
 			>
 				<FormView
 					heading="Account information"
-					labels={['Email', 'Name', 'Group ID']}
+					labels={['Name', 'Group ID']}
 					data={[
-						{
-							text: userEmail,
-							properties: {
-								placeholder: 'name@example.com',
-								email: true,
-								readonly: true,
-							},
-						},
 						{
 							text: userName,
 							properties: {
@@ -146,7 +158,7 @@ export default function AccountPage() {
 							},
 						},
 						{
-							text: userGroupID,
+							text: userGroupID.toString(),
 							properties: {
 								placeholder: 'Obtain from your clinician',
 								numbers: true,
@@ -155,9 +167,6 @@ export default function AccountPage() {
 					]}
 					readonly={!editMode}
 					setData={[
-						() => {
-							// email is immutable
-						},
 						(newValue: string) => {
 							setUserName(newValue);
 						},
@@ -174,14 +183,15 @@ export default function AccountPage() {
 					opacity: editMode ? 1 : 0,
 				}}
 			>
-				<TouchableOpacity /* Edit button */
-					onPress={() => {
-						setEditMode(false);
-						commitChangesToUser();
-					}}
-				>
-					<PillButtonView title={'Save Changes'} type={'primary'} />
-				</TouchableOpacity>
+				<View style={{ marginTop: 132 }}>
+					<FloatingButton
+						label={'Save Changes'}
+						onPress={() => {
+							setEditMode(false);
+							commitChangesToUser();
+						}}
+					/>
+				</View>
 			</View>
 		</View>
 	);

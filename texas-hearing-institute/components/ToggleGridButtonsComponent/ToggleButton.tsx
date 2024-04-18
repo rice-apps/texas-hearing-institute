@@ -26,7 +26,7 @@ const ToggleButton: React.FC<Props> = ({
 			]}
 			onPress={() => {
 				onToggle(!isToggled);
-				speak && playSound(title);
+				speak && playSound([title]);
 			}}
 			disabled={!enabled}
 		>

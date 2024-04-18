@@ -1,10 +1,10 @@
 import React from 'react';
 import { SafeAreaView, View } from 'react-native';
-import ScreenView from '../components/ScreenView';
-import TitleText from '../components/TitleText';
-import SubTitleText from '../components/SubTitleText';
-import ListeningBabble from './ListeningBabble';
-import SpeechBabble from '../../SpeechSettings/SpeechBabble';
+import ScreenView from './ListeningSettings/components/ScreenView';
+import TitleText from './ListeningSettings/components/TitleText';
+import SubTitleText from './ListeningSettings/components/SubTitleText';
+import ListeningBabble from './ListeningSettings/tabs/ListeningBabble';
+import SpeechBabble from './SpeechSettings/SpeechBabble';
 
 export default function PracticeTab() {
 	return (
