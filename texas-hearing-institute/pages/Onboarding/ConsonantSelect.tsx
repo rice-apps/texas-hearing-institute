@@ -14,15 +14,16 @@ import {
 } from '../../utils/soundInventoryDataAndKeys';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'Consonants'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'Consonants'>;
 
 // Minimum number of consonants that must be selected
 const MIN_SELECTED = 4;
 
-export default function ConsonantSelect({ navigation }: Props) {
+export default function ConsonantSelect({ navigation, route }: Props) {
+	const { name, groupID } = route.params;
 	const [itemsSelected, setItemsSelected] = useState(() => {
 		// Start load from storage and set state once load completes
 		retrieveItemSelections(consonantInventoryPersistenceKey, consonants).then(
@@ -92,6 +93,7 @@ export default function ConsonantSelect({ navigation }: Props) {
 					</View>
 					<ToggleGridButtons
 						items={consonants}
+						speak={false}
 						itemsSelected={itemsSelected}
 						setItemsSelected={(index: number, newValue: boolean) => {
 							const newItemsSelected = [...itemsSelected];
@@ -109,7 +111,10 @@ export default function ConsonantSelect({ navigation }: Props) {
 								{ text: 'OK' },
 							]);
 						} else {
-							navigation.navigate(`Done`);
+							navigation.navigate(`Done`, {
+								name: name,
+								groupID: groupID,
+							});
 						}
 					}}
 				/>

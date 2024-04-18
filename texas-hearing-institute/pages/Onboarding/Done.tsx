@@ -1,22 +1,56 @@
-import React from 'react';
-import { View, Image, Pressable, Text } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Image, Pressable, Text, Alert } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
-import { OnboardingStackParamList } from './OnboardingNavigator';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { TabParamList } from '../../components/TabNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import FloatingButton from '../../components/FloatingButton';
+import { supabase } from '../../lib/supabase';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { UserContext, UserContextType } from '../../user/UserContext';
+import { v4 as uuidv4 } from 'uuid';
+import { AppStackParamList } from '../AppNavigator';
 
-type TabNav = BottomTabNavigationProp<TabParamList>;
-type OnboardingNav = StackNavigationProp<OnboardingStackParamList>;
+type AppNav = StackNavigationProp<AppStackParamList>;
+type AuthNav = StackNavigationProp<AuthStackParamList>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'Done'>;
 
-export default function Done() {
-	const tabNavigation = useNavigation<TabNav>();
-	const onboardingNavigation = useNavigation<OnboardingNav>();
+export default function Done({ route }: Props) {
+	const { name, groupID } = route.params;
+	const appNavigation = useNavigation<AppNav>();
+	const authNavigation = useNavigation<AuthNav>();
+
+	const { user } = useContext(UserContext) as UserContextType;
+
+	const fetchClinicianID = async (groupId: string) => {
+		const { data, error } = await supabase
+			.from('clinicians')
+			.select('id')
+			.eq('groupId', groupId)
+			.maybeSingle();
+
+		if (!error && data) {
+			return data.id;
+		} else {
+			throw new Error('Invalid Group ID');
+		}
+	};
+
+	const saveChildInfo = async () => {
+		const cID = await fetchClinicianID(groupID);
+		const { error } = await supabase.from('children').insert({
+			id: uuidv4(),
+			name: name,
+			parentuser: user.getId(),
+			clinician: cID,
+		});
+		if (error) {
+			throw new Error('Failed to save data');
+		}
+	};
 
 	return (
 		<CustomSafeAreaView>
@@ -31,7 +65,7 @@ export default function Done() {
 					marginHorizontal: 27,
 				}}
 			>
-				<Pressable onPress={() => onboardingNavigation.goBack()}>
+				<Pressable onPress={() => authNavigation.goBack()}>
 					<SvgXml xml={leftArrow} width={24} height={24} />
 				</Pressable>
 				<View
@@ -80,8 +114,17 @@ export default function Done() {
 			<FloatingButton
 				label={'Continue'}
 				onPress={() => {
-					onboardingNavigation.popToTop();
-					tabNavigation.navigate(`Practice`);
+					saveChildInfo()
+						.then(() => {
+							authNavigation.popToTop();
+							appNavigation.navigate('Home');
+						})
+						.catch((e: unknown) => {
+							// TODO better error handling
+							Alert.alert('Error', 'error', [
+								{ text: 'OK', onPress: () => console.log(e) },
+							]);
+						});
 				}}
 			/>
 		</CustomSafeAreaView>

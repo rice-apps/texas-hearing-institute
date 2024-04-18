@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { format } from 'path'
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
@@ -58,8 +59,19 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user && request.nextUrl.pathname === '/auth/login') {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  if (user) {
+    // Get some user property
+    const name = user.user_metadata.name;
+
+    const formattedName = name.toLowerCase().replace(/\s+/g, '-');
+
+    if (request.nextUrl.pathname === '/auth/login') {
+      return NextResponse.redirect(new URL(`/dashboard/${formattedName}`, request.url));
+    }
+
+    if (request.nextUrl.pathname === '/dashboard') {
+      return NextResponse.redirect(new URL(`/dashboard/${formattedName}`, request.url));
+    }
   }
 
   if (!user) {

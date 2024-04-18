@@ -10,6 +10,7 @@ import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
 import ReportScreen from './ReportScreen';
 import Active from './Active';
+import { PhonemeListProps, ReportInfo } from './types';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type PracticeParamList = {
@@ -24,26 +25,6 @@ export type PracticeParamList = {
 	ActivePractice: undefined;
 	ReportScreen: { phonemes: PhonemeListProps; report: ReportInfo };
 };
-export interface Phoneme {
-	name: string;
-	correct: boolean;
-}
-export interface PhonemeListProps {
-	phonemes: Phoneme[];
-	user: string;
-}
-export interface ReportInfo {
-	child: string;
-	createdAt: string;
-	type: string;
-	subtype: string;
-	sound: string;
-	mode: string;
-	voweltype: string;
-	combinations: string[];
-	numSyllables: number;
-	correct: boolean[];
-}
 
 const Stack = createNativeStackNavigator<PracticeParamList>();
 
