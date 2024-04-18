@@ -31,10 +31,7 @@ export default function Auth() {
 					onPress={async () => {
 						try {
 							const credential = await AppleAuthentication.signInAsync({
-								requestedScopes: [
-									AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-									AppleAuthentication.AppleAuthenticationScope.EMAIL,
-								],
+								requestedScopes: [],
 							});
 							// Sign in via Supabase Auth.
 							if (credential.identityToken) {
