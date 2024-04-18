@@ -18,16 +18,16 @@ AppState.addEventListener('change', (state) => {
 	} else {
 		supabase.auth.stopAutoRefresh();
 	}
-});  	
+});
 
 export default function Auth() {
-  const { setUser } = useContext(UserContext) as UserContextType;
+	const { setUser } = useContext(UserContext) as UserContextType;
 
 	type AppNav = StackNavigationProp<AppStackParamList>;
 	const appNavigation = useNavigation<AppNav>();
 	type AuthNav = StackNavigationProp<AuthStackParamList>;
 	const authNavigation = useNavigation<AuthNav>();
-  
+
 	if (Platform.OS === 'ios') {
 		return (
 			<View>
@@ -136,12 +136,49 @@ export default function Auth() {
 			setLoading(false);
 			return;
 		}
-		const { error } = await supabase.auth.signInWithPassword({
+		const {
+			data: { user },
+			error,
+		} = await supabase.auth.signInWithPassword({
 			email: encryptedEmail,
 			password: password,
 		});
 
-		if (error) Alert.alert(error.message);
+		if (!error && user) {
+			// TODO: lots of error handling in this block
+			// User is signed in.
+			const currUser = new User();
+			currUser.setID(user.id);
+
+			// search for user.id in parentuser in children
+			const { data } = await supabase
+				.from('children')
+				.select('name, clinician')
+				.eq('parentuser', user.id)
+				.maybeSingle();
+			if (data) {
+				// existing user
+				currUser.setName(data.name);
+				// fetch group id from clinicians
+				const { data: clinicianData } = await supabase
+					.from('clinicians')
+					.select('groupId')
+					.eq('id', data.clinician)
+					.single();
+				currUser.setGroupId(clinicianData?.groupId);
+				setUser(currUser);
+				// navigate home
+				appNavigation.navigate('Home');
+			} else {
+				setUser(currUser);
+				// new user
+				authNavigation.navigate('InfoInput');
+			}
+		} else if (error) {
+			throw error;
+		} else {
+			throw new Error('Unknown sign-in error');
+		}
 		setLoading(false);
 	}
 	async function signUpWithEmail() {
@@ -152,12 +189,50 @@ export default function Auth() {
 			setLoading(false);
 			return;
 		}
-		const { error: error } = await supabase.auth.signUp({
+		const {
+			data: { user },
+			error,
+		} = await supabase.auth.signUp({
 			email: encryptedEmail,
 			password: password,
 		});
 
-		if (error) Alert.alert(error.message);
+		if (!error && user) {
+			// TODO: lots of error handling in this block
+			// User is signed in.
+			const currUser = new User();
+			currUser.setID(user.id);
+
+			// search for user.id in parentuser in children
+			const { data } = await supabase
+				.from('children')
+				.select('name, clinician')
+				.eq('parentuser', user.id)
+				.maybeSingle();
+			if (data) {
+				// existing user
+				currUser.setName(data.name);
+				// fetch group id from clinicians
+				const { data: clinicianData } = await supabase
+					.from('clinicians')
+					.select('groupId')
+					.eq('id', data.clinician)
+					.single();
+				currUser.setGroupId(clinicianData?.groupId);
+				setUser(currUser);
+				// navigate home
+				appNavigation.navigate('Home');
+			} else {
+				setUser(currUser);
+				// new user
+				authNavigation.navigate('InfoInput');
+			}
+		} else if (error) {
+			throw error;
+		} else {
+			throw new Error('Unknown sign-up error');
+		}
+
 		setLoading(false);
 	}
 	const styles = StyleSheet.create({
