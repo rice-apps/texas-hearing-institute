@@ -3,12 +3,6 @@ import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-console.log(supabaseUrl);
-console.log(supabaseAnonKey);
-console.log(supabaseUrl);
-console.log(supabaseAnonKey);
 // there is a ts-ignore here because for some reason code doesn't work with `supabaseUrl!` but does work with `supabaseUrl`
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
