@@ -1,18 +1,19 @@
 import React from 'react';
 import { View, Button, Image } from 'react-native';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import { useNavigation } from '@react-navigation/native';
-import { TabParamList } from '../../components/TabNavigator';
+import { TabParamList } from '../TabNavigator';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { StackNavigationProp } from '@react-navigation/stack';
+import Auth from '../../components/Auth.native';
 
 type TabNav = BottomTabNavigationProp<TabParamList>;
-type OnboardingNav = StackNavigationProp<OnboardingStackParamList>;
+type AuthNav = StackNavigationProp<AuthStackParamList>;
 
 export default function SignIn() {
 	const tabNavigation = useNavigation<TabNav>();
-	const onboardingNavigation = useNavigation<OnboardingNav>();
+	const authNavigation = useNavigation<AuthNav>();
 
 	return (
 		<CustomSafeAreaView>
@@ -31,11 +32,11 @@ export default function SignIn() {
 					/>
 				</View>
 				<View style={{ marginBottom: 80 }}>
-					{/* TODO: add sign in buttons here, route to onboarding or home as appropriate */}
+					<Auth />
 					<Button
 						title="Test Onboarding"
 						onPress={() => {
-							onboardingNavigation.navigate('InfoInput');
+							authNavigation.navigate('InfoInput');
 						}}
 					/>
 					<View style={{ marginBottom: 20 }} />

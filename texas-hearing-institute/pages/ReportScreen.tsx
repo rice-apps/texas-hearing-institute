@@ -21,7 +21,6 @@ import { Phoneme } from './types';
 
 type Props = NativeStackScreenProps<PracticeParamList, 'ReportScreen'>;
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 function ReportScreen({ route }: Props) {
 	const { phonemes, report } = route.params;
 	// frequency of correct/incorrect array

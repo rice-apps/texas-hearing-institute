@@ -10,7 +10,6 @@ import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
 import ReportScreen from './ReportScreen';
 import Active from './Active';
-import SettingsPage from './ListeningSettings/components/SettingsPage';
 import { PhonemeListProps, ReportInfo } from './types';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

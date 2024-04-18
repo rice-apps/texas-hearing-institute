@@ -5,12 +5,16 @@ import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OnboardingStackParamList } from './OnboardingNavigator';
+import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
+import { useState } from 'react';
 
-type Props = NativeStackScreenProps<OnboardingStackParamList, 'InfoInput'>;
+type Props = NativeStackScreenProps<AuthStackParamList, 'InfoInput'>;
 
 export default function InfoInput({ navigation }: Props) {
+	const [childName, setChildName] = useState<string>('');
+	const [groupID, setGroupID] = useState<string>('');
+
 	return (
 		<CustomSafeAreaView>
 			<View
@@ -56,13 +60,26 @@ export default function InfoInput({ navigation }: Props) {
 				</View>
 				<View>
 					<Text style={styles.inputLabel}>Your child’s name</Text>
-					<TextInput style={styles.input}></TextInput>
+					<TextInput
+						style={styles.input}
+						value={childName}
+						onChangeText={(name) => setChildName(name)}
+					></TextInput>
 					<Text style={styles.inputLabel}>Group ID</Text>
-					<TextInput style={styles.input}></TextInput>
+					<TextInput
+						value={groupID}
+						onChangeText={(id) => setGroupID(id)}
+						style={styles.input}
+					></TextInput>
 				</View>
 				<FloatingButton
 					label={'Continue'}
-					onPress={() => navigation.navigate(`Vowels`)}
+					onPress={() =>
+						navigation.navigate(`Vowels`, {
+							name: childName,
+							groupID: groupID,
+						})
+					}
 				/>
 			</View>
 		</CustomSafeAreaView>
