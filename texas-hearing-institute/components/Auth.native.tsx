@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View, AppState, Platform } from 'react-native';
+import { Alert, View, AppState, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { Button, Input } from 'react-native-elements';
 import CryptoJS from 'crypto-es';
@@ -168,15 +168,19 @@ export default function Auth() {
 				currUser.setGroupId(clinicianData?.groupId);
 				setUser(currUser);
 				// navigate home
+				setLoading(false);
 				appNavigation.navigate('Home');
 			} else {
 				setUser(currUser);
 				// new user
+				setLoading(false);
 				authNavigation.navigate('InfoInput');
 			}
 		} else if (error) {
+			setLoading(false);
 			throw error;
 		} else {
+			setLoading(false);
 			throw new Error('Unknown sign-in error');
 		}
 		setLoading(false);
@@ -221,37 +225,27 @@ export default function Auth() {
 				currUser.setGroupId(clinicianData?.groupId);
 				setUser(currUser);
 				// navigate home
+				setLoading(false);
 				appNavigation.navigate('Home');
 			} else {
 				setUser(currUser);
 				// new user
+				setLoading(false);
 				authNavigation.navigate('InfoInput');
 			}
 		} else if (error) {
+			setLoading(false);
 			throw error;
 		} else {
+			setLoading(false);
 			throw new Error('Unknown sign-up error');
 		}
 
 		setLoading(false);
 	}
-	const styles = StyleSheet.create({
-		container: {
-			marginTop: 40,
-			padding: 12,
-		},
-		verticallySpaced: {
-			paddingTop: 4,
-			paddingBottom: 4,
-			alignSelf: 'stretch',
-		},
-		mt20: {
-			marginTop: 20,
-		},
-	});
 	return (
-		<View style={styles.container}>
-			<View style={[styles.verticallySpaced, styles.mt20]}>
+		<View>
+			<View>
 				<Input
 					label="Email"
 					leftIcon={{ type: 'font-awesome', name: 'envelope' }}
@@ -261,7 +255,7 @@ export default function Auth() {
 					autoCapitalize={'none'}
 				/>
 			</View>
-			<View style={styles.verticallySpaced}>
+			<View>
 				<Input
 					label="Password"
 					leftIcon={{ type: 'font-awesome', name: 'lock' }}
@@ -272,14 +266,14 @@ export default function Auth() {
 					autoCapitalize={'none'}
 				/>
 			</View>
-			<View style={[styles.verticallySpaced, styles.mt20]}>
+			<View>
 				<Button
 					title="Sign in"
 					disabled={loading}
 					onPress={() => signInWithEmail()}
 				/>
 			</View>
-			<View style={styles.verticallySpaced}>
+			<View>
 				<Button
 					title="Sign up"
 					disabled={loading}
