@@ -4,6 +4,7 @@ import React from 'react';
 
 interface Props {
 	items: string[];
+	speak: boolean;
 	itemsSelected: boolean[];
 	setItemsSelected: (index: number, newValue: boolean) => void;
 	disabled: boolean;
@@ -11,6 +12,7 @@ interface Props {
 
 const ToggleGridButtons: React.FC<Props> = ({
 	items,
+	speak,
 	itemsSelected,
 	setItemsSelected,
 	disabled,
@@ -27,9 +29,10 @@ const ToggleGridButtons: React.FC<Props> = ({
 				>
 					<ToggleButton
 						title={item}
+						speak={speak}
 						isToggled={itemsSelected[index]}
 						onToggle={(newValue: boolean) => {
-							disabled ? () => {} : setItemsSelected(index, newValue);
+							disabled ? () => undefined : setItemsSelected(index, newValue);
 						}}
 						enabled={!disabled}
 					/>

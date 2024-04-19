@@ -5,6 +5,7 @@ import ButtonGroup from '../components/ButtonGroup';
 const headerText = 'Listening Babble';
 
 const buttons = ['Variegated Vowels', 'Manner', 'Place Cue', 'Voicing'];
+const routes = ['VariegatedVowels', 'Manner', 'PlaceCue', 'Voicing'];
 
 export default function ListeningBabble() {
 	return (
@@ -12,7 +13,7 @@ export default function ListeningBabble() {
 			<ButtonGroup
 				headerText={headerText}
 				buttonLabels={buttons}
-				buttonRoutes={buttons}
+				buttonRoutes={routes}
 			/>
 		</View>
 	);

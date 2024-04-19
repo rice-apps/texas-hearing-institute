@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
+import {
+	View,
+	Text,
+	Pressable,
+	ScrollView,
+	StyleSheet,
+	Alert,
+} from 'react-native';
 import ToggleGridButtons from '../../components/ToggleGridButtonsComponent/ToggleGridButtons';
 import styles from '../Onboarding/OnboardingStyle';
 import { SvgXml } from 'react-native-svg';
@@ -15,7 +22,9 @@ import {
 	retrieveItemSelections,
 	storeItemSelection,
 } from '../../utils/persistSelection';
-import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
+
+// Minimum number of sounds that must be selected for consonants and vowels
+const MIN_SELECTED = 4;
 
 export const SoundInventory = () => {
 	// hashmap/dictionary to keep track of all consonants and their toggled state, update via useState to rerender componetns
@@ -118,7 +127,7 @@ export const SoundInventory = () => {
 	};
 
 	return (
-		<CustomSafeAreaView>
+		<View>
 			<View style={styles.onboardingHeaderView}>
 				<Text
 					style={{
@@ -130,7 +139,7 @@ export const SoundInventory = () => {
 				</Text>
 				<Pressable
 					style={{
-						backgroundColor: '#D3D3D3',
+						backgroundColor: '#EDEDED',
 						padding: 10,
 						borderRadius: 10,
 						flexDirection: 'row',
@@ -152,10 +161,26 @@ export const SoundInventory = () => {
 			</View>
 			<ScrollView>
 				<View style={styles.onboardingViewMargins}>
-					<Text style={pagestyles.subheading}>Consonants</Text>
-
+					<Text style={pagestyles.subheading}>Vowels</Text>
 					<ToggleGridButtons
 						disabled={!editModeEnabled}
+						speak={true}
+						items={vowels}
+						itemsSelected={getCorrespondingInventoryVowels()}
+						setItemsSelected={(index: number, newValue: boolean) => {
+							const newItemsSelected = [...getCorrespondingInventoryVowels()];
+							newItemsSelected[index] = newValue;
+							setAndStoreSelections(
+								inventoryConsonants,
+								newItemsSelected,
+								editModeEnabled,
+							);
+						}}
+					/>
+					<Text style={pagestyles.subheading}>Consonants</Text>
+					<ToggleGridButtons
+						disabled={!editModeEnabled}
+						speak={false}
 						items={consonants}
 						itemsSelected={getCorrespondingInventoryConsonants()}
 						setItemsSelected={(index: number, newValue: boolean) => {
@@ -170,35 +195,19 @@ export const SoundInventory = () => {
 							);
 						}}
 					/>
-
-					<Text style={pagestyles.subheading}>Vowels</Text>
-
-					<ToggleGridButtons
-						disabled={!editModeEnabled}
-						items={vowels}
-						itemsSelected={getCorrespondingInventoryVowels()}
-						setItemsSelected={(index: number, newValue: boolean) => {
-							const newItemsSelected = [...getCorrespondingInventoryVowels()];
-							newItemsSelected[index] = newValue;
-							setAndStoreSelections(
-								inventoryConsonants,
-								newItemsSelected,
-								editModeEnabled,
-							);
-						}}
-					/>
 				</View>
 			</ScrollView>
 
-			<View
+			<ScrollView
 				style={{
 					borderTopColor: 'black',
 					borderTopWidth: 1,
 					shadowColor: 'black',
 					display: editModeEnabled ? 'flex' : 'none',
-					justifyContent: 'center',
-					alignItems: 'center',
+					// justifyContent: 'center',
+					// alignItems: 'center',
 					flexDirection: 'column',
+					marginBottom: 100,
 				}}
 			>
 				<Pressable
@@ -225,7 +234,17 @@ export const SoundInventory = () => {
 						width: 300,
 						borderRadius: 15,
 					}}
-					onPress={() => setEditModeEnabled(!editModeEnabled, true)}
+					onPress={() => {
+						if (
+							draftInventoryConsonants.filter((x) => x).length < MIN_SELECTED
+						) {
+							Alert.alert('', 'Select at least 4 of each sound', [
+								{ text: 'OK' },
+							]);
+						} else {
+							setEditModeEnabled(!editModeEnabled, true);
+						}
+					}}
 				>
 					<Text
 						style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}
@@ -233,8 +252,8 @@ export const SoundInventory = () => {
 						Save Changes
 					</Text>
 				</Pressable>
-			</View>
-		</CustomSafeAreaView>
+			</ScrollView>
+		</View>
 	);
 };
 

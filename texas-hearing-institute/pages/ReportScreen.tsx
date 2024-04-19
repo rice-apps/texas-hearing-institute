@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Heading from '../components/Heading';
 import {
 	TouchableOpacity,
@@ -10,70 +10,42 @@ import {
 import tw from 'tailwind-react-native-classnames';
 import PieChart from 'react-native-pie-chart';
 import { AntDesign } from '@expo/vector-icons';
-import { supabase } from '../lib/supabase';
 import PillButtonView from '../components/PillButtonView';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { PracticeParamList } from './PracticeNavigator';
+import { PracticeResult } from './types';
+import { UserContext, UserContextType } from '../user/UserContext';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/core';
 
-interface PhonemeListProps {
-	phonemes: Phoneme[];
-	user: string;
-}
+/* WARNING: PARAMETERS CAST TO ANY -- might need to fix using props instead */
+/* Active Practice reroutes to Report Screen */
 
-interface Phoneme {
-	name: string;
-	correct: boolean;
-}
+type Props = NativeStackScreenProps<PracticeParamList, 'ReportScreen'>;
 
-interface ReportInfo {
-	child: string;
-	createdAt: string;
-	type: string;
-	subtype: string;
-	sound: string;
-	mode: string;
-	voweltype: string;
-	combinations: string[];
-	numSyllables: number;
-	correct: boolean[];
-}
-/*TODO: integrate progress bar/practice cards
-Save report -- supabase query
-query by username/id, get any necessary data from children?
-most data will be passed in from active practice/other sources, but the only 
-new info from report is phoneme list, correct/incorrect, and num syllables
-*/
+type StackNav = StackNavigationProp<PracticeParamList>;
 
-const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
-	// frequency of correct/incorrect array
-	const cCount: number[] = [
-		phonemes.phonemes.filter((x) => x.correct == false).length,
-		phonemes.phonemes.filter((x) => x.correct == true).length,
-	];
+function ReportScreen({ route }: Props) {
+	const navigation = useNavigation<StackNav>();
+	const { user } = useContext(UserContext) as UserContextType;
 
-	const handleReportEntry = async () => {
-		const { error } = await supabase.from('reports').insert({
-			child: report.child,
-			created_at: new Date().toISOString(),
-			type: report.type,
-			subtype: report.subtype,
-			sound: report.sound,
-			mode: report.mode,
-			voweltype: report.voweltype,
-			combinations: phonemes.phonemes.map((p) => p.name),
-			num_syllables: report.numSyllables,
-			correct_incorrect: phonemes.phonemes.map((p) => p.correct),
-		});
-		if (error) {
-			alert(error);
-		}
-	};
+	const { results } = route.params;
+
+	const numCorrect = results.filter(
+		(p: PracticeResult) => p.correct === true,
+	).length;
+
+	const numIncorrect = results.filter(
+		(p: PracticeResult) => p.correct === false,
+	).length;
 
 	return (
 		<View style={styles.container}>
-			<Heading title={'Woohoo! High Five, ' + phonemes.user}></Heading>
+			<Heading title={'Woohoo! High Five, ' + user.getName()}></Heading>
 			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 				<PieChart
 					widthAndHeight={100}
-					series={cCount}
+					series={[numCorrect, numIncorrect]}
 					sliceColor={['#ff6c00', '#ff9100']}
 					coverRadius={0.45}
 					coverFill={'#FFF'}
@@ -83,25 +55,25 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 				>
 					<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
 						{' '}
-						Correct: {cCount[1]}
+						Correct: {numCorrect}
 					</Text>
 					<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-						Incorrect: {cCount[0]}
+						Incorrect: {numIncorrect}
 					</Text>
 					<Text style={tw`text-lg font-bold pt-2 pl-2 mx-5 mt-1`}>
 						{'Score: ' +
-							Math.ceil((cCount[1] / (cCount[0] + cCount[1])) * 100) +
+							Math.ceil((numCorrect / (numCorrect + numIncorrect)) * 100) +
 							'%'}
 					</Text>
 				</View>
 			</View>
 			<ScrollView>
-				{phonemes.phonemes.map((phoneme) => {
-					const color = phoneme.correct ? 'green' : 'red';
-					const iName = phoneme.correct ? 'check' : 'close';
+				{results.map((pr: PracticeResult) => {
+					const color = pr.correct ? 'green' : 'red';
+					const iName = pr.correct ? 'check' : 'close';
 					return (
 						<View
-							key={phoneme.name}
+							key={pr.phonemes.join(' ')}
 							style={{
 								flexDirection: 'row',
 								justifyContent: 'space-between',
@@ -109,26 +81,24 @@ const ReportScreen = (phonemes: PhonemeListProps, report: ReportInfo) => {
 							}}
 						>
 							<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-								{phoneme.name}
+								{pr.phonemes.join(' ')}
 							</Text>
 							<AntDesign name={iName} size={24} color={color} />
 						</View>
 					);
 				})}
 			</ScrollView>
-
-			<TouchableOpacity>
-				<PillButtonView
-					title="Practice this set again"
-					type="primary"
-				></PillButtonView>
-			</TouchableOpacity>
-			<TouchableOpacity onPress={handleReportEntry}>
-				<PillButtonView title="Save Report" type="secondary"></PillButtonView>
-			</TouchableOpacity>
+			<View style={{ alignItems: 'center' }}>
+				<TouchableOpacity onPress={() => navigation.navigate('Home')}>
+					<PillButtonView
+						title="Practice again"
+						type="primary"
+					></PillButtonView>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	container: {

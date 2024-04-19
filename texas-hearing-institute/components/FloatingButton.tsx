@@ -11,7 +11,7 @@ export default function FloatingButton({
 	onPress,
 }: FloatingButtonProps) {
 	return (
-		<View>
+		<View style={styles.float}>
 			<TouchableOpacity style={styles.button} onPress={() => onPress(label)}>
 				<Text style={styles.label}>{label}</Text>
 			</TouchableOpacity>
@@ -33,5 +33,12 @@ const styles = StyleSheet.create({
 	label: {
 		fontSize: 18,
 		fontWeight: '700',
+	},
+	float: {
+		width: '100%',
+		alignItems: 'center',
+		zIndex: 1,
+		position: 'absolute',
+		bottom: 80,
 	},
 });

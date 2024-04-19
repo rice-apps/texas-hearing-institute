@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import styles from './ToggleButtonStyle';
-import * as Speech from 'expo-speech';
+import { playSound } from '../../utils/audio';
 
 interface Props {
 	title: string;
+	speak: boolean;
 	isToggled: boolean;
 	onToggle: (newValue: boolean) => void;
 	enabled: boolean;
@@ -12,14 +13,11 @@ interface Props {
 
 const ToggleButton: React.FC<Props> = ({
 	title,
+	speak,
 	isToggled,
 	onToggle,
 	enabled,
 }) => {
-	const speak = (text: string): void => {
-		Speech.speak(text, { rate: 1, pitch: 1, volume: 1 });
-	};
-
 	return (
 		<TouchableOpacity
 			style={[
@@ -28,18 +26,11 @@ const ToggleButton: React.FC<Props> = ({
 			]}
 			onPress={() => {
 				onToggle(!isToggled);
-				speak(title);
+				speak && playSound([title]);
 			}}
 			disabled={!enabled}
 		>
-			<Text
-				style={[
-					styles.buttonText,
-					isToggled ? styles.buttonTextActive : styles.buttonTextInactive,
-				]}
-			>
-				{title}
-			</Text>
+			<Text style={[styles.buttonText]}>{title}</Text>
 		</TouchableOpacity>
 	);
 };

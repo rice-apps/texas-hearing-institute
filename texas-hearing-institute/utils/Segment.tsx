@@ -1,5 +1,3 @@
-import { AllSegments } from './AllSegmentsHardcoded';
-
 export class Segment {
 	name = '';
 
@@ -27,12 +25,12 @@ export class ConsonantSegment extends Segment {
 	}
 
 	// Fetch other ConsonantSegments from canSayInventory that share any of the petalIds in this.getPetalIds
-	fetchConsonantSiblings(flower: ConsonantFlower): ConsonantSegment[] {
+	fetchConsonantSiblings(
+		flower: ConsonantFlower,
+		canSayInventory: ConsonantSegment[],
+		practiceTarget?: ConsonantCategories | null,
+	): ConsonantSegment[] {
 		const petalIds = this.getPetalIds(flower);
-
-		// TODO: Assuming canSayInventory is an array of Segments
-		//  We would want to read this from async storage
-		const canSayInventory: Segment[] = AllSegments.getAllSegmentsHardcoded();
 
 		// Use filter to ensure x is of type ConsonantSegment
 		const consonantSegments: ConsonantSegment[] = canSayInventory.filter(
@@ -41,11 +39,28 @@ export class ConsonantSegment extends Segment {
 
 		// Use filter and intersection logic to check if there are common petalIds
 		const consonantSiblings = consonantSegments.filter(
-			(x: ConsonantSegment) =>
-				x.name != this.name && // Don't include our own ConsonantSegment as a sibling
-				x
-					.getPetalIds(flower)
-					.some((petalId: number) => petalIds.includes(petalId)),
+			(x: ConsonantSegment) => {
+				// Don't include our own ConsonantSegment as a sibling
+				if (x.name == this.name) {
+					return false;
+				}
+				// If it doesn't match the requested .initial or .final, return false
+				if (practiceTarget != null) {
+					if (!x.categories.includes(practiceTarget)) {
+						return false;
+					}
+				}
+				// If it's not a sibling, return false
+				if (
+					!x
+						.getPetalIds(flower)
+						.some((petalId: number) => petalIds.includes(petalId))
+				) {
+					return false;
+				}
+
+				return true;
+			},
 		);
 		return consonantSiblings;
 	}

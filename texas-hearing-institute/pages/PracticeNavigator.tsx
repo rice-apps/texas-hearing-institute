@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PracticeTab from './ListeningSettings/tabs/PracticeTab';
+import PracticeTab from './Home';
 import VarVowelsScreen from './ListeningSettings/tabs/VarVowelsScreen';
 import MannerScreen from './ListeningSettings/tabs/MannerScreen';
 import VoicingScreen from './ListeningSettings/tabs/VoicingScreen';
@@ -8,8 +8,29 @@ import PlaceCueScreen from './ListeningSettings/tabs/PlaceCueScreen';
 import InitialConsonants from './SpeechSettings/tabs/InitialConsonants';
 import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
+import ReportScreen from './ReportScreen';
+import Active from './Active';
+import { PracticeResult, PracticeSettings } from './types';
 
-const Stack = createNativeStackNavigator();
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type PracticeParamList = {
+	Home: undefined;
+	Vowels: undefined;
+	InitialConsonants: undefined;
+	FinalConsonants: undefined;
+	PlaceCue: undefined;
+	VariegatedVowels: undefined;
+	Manner: undefined;
+	Voicing: undefined;
+	ActivePractice: {
+		settings: PracticeSettings;
+		phonemes: string[][];
+		speed: number;
+	};
+	ReportScreen: { results: PracticeResult[] };
+};
+
+const Stack = createNativeStackNavigator<PracticeParamList>();
 
 export default function PracticeNavigator() {
 	// TODO: find a new home for this file
@@ -33,12 +54,22 @@ export default function PracticeNavigator() {
 				options={{ headerShown: false }}
 			/>
 			<Stack.Screen name="Vowels" component={Vowels} />
-			<Stack.Screen name="Initial Consonants" component={InitialConsonants} />
-			<Stack.Screen name="Final Consonants" component={FinalConsonants} />
-			<Stack.Screen name="Place Cue" component={PlaceCueScreen} />
-			<Stack.Screen name="Variegated Vowels" component={VarVowelsScreen} />
+			<Stack.Screen name="InitialConsonants" component={InitialConsonants} />
+			<Stack.Screen name="FinalConsonants" component={FinalConsonants} />
+			<Stack.Screen name="PlaceCue" component={PlaceCueScreen} />
+			<Stack.Screen name="VariegatedVowels" component={VarVowelsScreen} />
 			<Stack.Screen name="Manner" component={MannerScreen} />
 			<Stack.Screen name="Voicing" component={VoicingScreen} />
+			<Stack.Screen
+				name="ActivePractice"
+				component={Active}
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen
+				name="ReportScreen"
+				component={ReportScreen}
+				options={{ headerShown: false }}
+			/>
 		</Stack.Navigator>
 	);
 }
