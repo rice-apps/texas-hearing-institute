@@ -41,7 +41,11 @@ export default function PracticeNavigator() {
 				contentStyle: {
 					backgroundColor: '#FDFDFD',
 				},
-				headerShown: false,
+				headerTitleStyle: {
+					color: 'transparent',
+				},
+				headerTitle: '',
+				headerShadowVisible: false,
 			}}
 		>
 			<Stack.Screen
