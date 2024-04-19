@@ -40,9 +40,9 @@ const PatientReport:React.FC<TableProps> = ({reports}) => {
                         <th className="py-4">Subtype</th>
                         <th className="py-4">Mode</th>                        
                         <th className="py-4">Sound</th>
-                        <th className="py-4">Combinations</th>
-                        <th className="py-4">Vowel</th>
                         <th className="py-4">Syllables</th>
+                        <th className="py-4">Vowel</th>
+                        <th className="py-4">Syllable Amount</th>
                         <th className="py-4">Correct</th>
                     </tr>
                 </thead>
@@ -52,13 +52,13 @@ const PatientReport:React.FC<TableProps> = ({reports}) => {
                                                 <td className="py-4">{r.type}</td>
                                                 <td className="py-4">{r.subtype}</td>
                                                 <td className="py-4">{r.mode}</td>
-                                                <td className="py-4">{r.sound}</td>
-                                                <td className="py-4">{"["+r.combinations.map(c => c)+"]"}</td>
+                                                <td className="py-4">{r.target}</td>
+                                                <td className="py-4">{"["+r.syllables.map(c => c)+"]"}</td>
                                                 <td className="py-4">{r.voweltype}</td>
                                                 <td className="py-4">{r['num_syllables']}</td>
                                                 <td className="py-4 text-black">
-                                                    <div className={`inline p-1 rounded-xl ${getPercentageColor(r['correct_incorrect'])}`}>
-                                                    {((r['correct_incorrect'].reduce((count, currentValue) => count + (currentValue ? 1 : 0), 0) / r['correct_incorrect'].length) * 100).toFixed(1) +"%"}
+                                                    <div className={`inline p-1 rounded-xl ${getPercentageColor(r.results)}`}>
+                                                    {((r.results.reduce((count, currentValue) => count + (currentValue ? 1 : 0), 0) / r.results.length) * 100).toFixed(1) +"%"}
                                                     </div>
                                                 </td>
                                         </tr>)}
