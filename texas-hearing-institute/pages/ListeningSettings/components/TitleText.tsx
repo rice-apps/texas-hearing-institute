@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
 interface TitleTextProps {
-	children: string;
+	children: string[];
 }
 
 /**
@@ -17,5 +17,6 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		fontWeight: '600',
 		marginBottom: 6,
+		color: '#333',
 	},
 });
