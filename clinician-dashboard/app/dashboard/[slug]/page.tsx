@@ -1,60 +1,101 @@
 'use client'
-import {createClient} from "@supabase/supabase-js";
 import {useEffect, useState} from 'react';
-import Header from "../../../components/Header"
-import PatientDropdown from "@/components/PatientDropdown";
-import PatientReport from "@/components/PatientReport";
+import Header from "@/app/dashboard/components/Header"
+import PatientDropdown from "@/app/dashboard/components/PatientDropdown";
+import PatientReport from "@/app/dashboard/components/PatientReport";
+import { createClient } from "@/utils/supabase/client";
 
 const Dashboard = () => {
 
-    const tempClinician = "586c12b3-246c-421a-94c2-e907fd50ef34";
+    const supabase = createClient();
 
-    const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL||"", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY||"");
+    const [clinician, setClinician] = useState<any>();
     const [children, setChildren] = useState<any[]>([]);
-    const [selectedChildID, setSelectedChildID] = useState<any>("");
+    const [selectedChildID, setSelectedChildID] = useState<any>();
     const [childReports, setChildReports] = useState<any[]>([]);
   
     const updateSelectedChild = (childId:any) => {
       setSelectedChildID(childId);
     }
 
-    useEffect(() => {
-      getChildren();
-    },[]);
 
     useEffect(() => {
-      getReport();
+
+      const fetchUserData = async () => {
+        try {
+          const { data, error} = await supabase.auth.getUser();
+          if (error) {
+            throw error;
+          }
+          const userId = data['user']['id'];
+          // currently using dummy clinician UID because the give user can be any auth user
+          // replace the uuid passed into 2nd param of eq with userID to check logged in Users
+          // const userId = '0b04fa32-c264-4102-86d3-511fb18f8ecb';
+          const{data:clinicianUID, error:error2} = await supabase.from('clinicians').select('id').eq('user',userId);
+          if(error2){
+            throw error2;
+          }
+          if(clinicianUID.length==0){
+            throw new Error("user not found as clinician")
+          }
+          const currClinician = clinicianUID[0]['id']
+          setClinician(currClinician);
+
+          // retrieve associated children right after getting currently logged in clinician
+          const{data:associatedChildren, error:error3} = await supabase.from('children').select().eq('clinician',currClinician);
+          if (error3){
+            throw error3
+          }
+          setChildren(associatedChildren||[])
+          
+        } catch (error:any) {
+            console.error('Error fetching user data:', error.message);
+        }
+      };
+  
+      fetchUserData();
+    }, []); 
+  
+
+    useEffect(() => {
+      const getReport = async () => {
+        try{
+          const{data:reportData, error} = await supabase.from('reports').select().eq('child',selectedChildID);
+          if(error) {
+            throw error
+          }
+          setChildReports(reportData||[]);
+        }
+        catch(error){
+          console.error('Error fetching user data:', error);
+        }
+      };
+      if (selectedChildID)
+        getReport();
     },[selectedChildID])
-  
-  
-    async function getChildren() {
-      const{data:associatedChildren, error} = await supabase.from('children').select().eq('clinician',tempClinician);
-      setChildren(associatedChildren||[]);
-    }
-
-    async function getReport() {
-      const{data:reportData, error} = await supabase.from('reports').select().eq('child',selectedChildID);
-      console.log(reportData)
-      setChildReports(reportData||[]);
-    }
-
-    const test = [{name:"child1",id:1},{name:"child2",id:2},{name:"child3",id:3},]
+ 
   
 
     return (
-        <>
+        <div>
             <Header/>
-            <div className="bg-gray-200 dark:bg-gray-700 rounded-md">
-              <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-10 py-2.5">
-                <h2>View Patient Reports:</h2>
-                <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>
+            <br />
+            <div className="flex justify-center content-center items-center ">
+              
+              <div className="bg-white dark:bg-gray-800 rounded-md w-11/12 border-gray-300 dark:border-black border">
+                
+                <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-5 py-2.5">
+                  <h2 className="text-black dark:text-white">Search Patients:</h2>
+                  <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>
+                </div>
+                <div className="">
+                  <PatientReport reports={childReports}/>
+                </div>
               </div>
-              <PatientReport reports={childReports}/>
             </div>
 
-            <h1>{selectedChildID}</h1>
-        </>
+        </div>
     )
 }
 
-export default Dashboard
+export default Dashboard;

@@ -7,12 +7,12 @@ export default function LoginBox() {
             <div>
                 <img className='' src={thi_logo_2.src}></img>
             </div>
-            <hr className='m-5 bg-gray'/>
+            <hr className='m-5 bg-black dark:bg-white'/>
             <OAuthButton provider="Microsoft" />
             <OAuthButton provider="google"/>
-            <hr className='m-5 bg-gray'/>
+            <hr className='m-5 bg-black dark:bg-white'/>
             <div className='text-center'>
-                <p className="text-gray-700">Any questions? <a className="underline text-blue-500 cursor-pointer">Contact us.</a></p>
+                <p className="text-black dark:text-white">Any questions? <a className="underline text-blue-500 cursor-pointer">Contact us.</a></p>
             </div>
         </div>
     )

@@ -1,4 +1,6 @@
-import thi_logo from '../app/thi_logo.png'
+import thi_logo from '../../../app/thi_logo.png'
+import Link from 'next/link';
+
 
 export default function Header() {
 
@@ -10,8 +12,15 @@ export default function Header() {
         <div className="bg-red-500 mx-10">
           <img src={thi_logo.src} className="w-20" alt="THI logo"/>
         </div>
-        <div>
-          <h1 className="text-lg">Clinician Dashboard</h1>
+        <div className="flex flex-row gap-x-5">
+          <Link href="/dashboard">
+            <h1 className="text-lg text-black dark:text-white hover:text-blue-500 transition-colors duration-300">Clinician Dashboard
+            </h1>
+          </Link>
+          <Link href="/add_clinician">
+          <h1 className="text-lg text-black dark:text-white hover:text-blue-500 transition-colors duration-300 ">Add Clinician</h1>
+          </Link>
+
         </div>
         <div className="mx-10">
           <form action="/auth/logout" method="post">

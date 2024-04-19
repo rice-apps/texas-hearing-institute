@@ -43,7 +43,8 @@ export default function Done({ route }: Props) {
 		const cID = await fetchClinicianID(groupID);
 		const uID = uuidv4();
 		user.setID(uID);
-		console.log(id);
+		user.setName(name);
+		user.setGroupId(groupID);
 		const { error } = await supabase.from('children').insert({
 			id: uID,
 			name: name,
@@ -121,7 +122,10 @@ export default function Done({ route }: Props) {
 					saveChildInfo()
 						.then(() => {
 							authNavigation.popToTop();
-							appNavigation.navigate('Home');
+							appNavigation.reset({
+								index: 0,
+								routes: [{ name: 'Home' }],
+							});
 						})
 						.catch((e: unknown) => {
 							// TODO better error handling

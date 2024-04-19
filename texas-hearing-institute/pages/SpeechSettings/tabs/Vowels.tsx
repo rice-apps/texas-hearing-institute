@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { PracticeParamList } from '../../PracticeNavigator';
 import { modeToString } from '../../types';
+import { playSound } from '../../../utils/audio';
 
 type PracticeNav = StackNavigationProp<PracticeParamList>;
 
@@ -39,14 +40,12 @@ const Vowels = () => {
 	const [segment, setSegment] = useState<VowelSegment>();
 	const [modeFlower, setModeFlower] = useState<ConsonantFlower>();
 	const [isUniqueVowels, setIsUniqueVowels] = useState<boolean>();
-	const [speed, setSpeed] = useState(1);
+	// const [speed, setSpeed] = useState(1);
 
 	const settingsReady = () => {
 		return (
-			segment != null &&
-			modeFlower != null &&
-			isUniqueVowels != null &&
-			speed != 1
+			segment != null && modeFlower != null && isUniqueVowels != null
+			// && speed != 1
 		);
 	};
 
@@ -61,6 +60,7 @@ const Vowels = () => {
 					setSegment={(sound) => {
 						// SoundGrid returns a Segment, convert to VowelSegment
 						setSegment(sound as VowelSegment);
+						playSound([sound.name]);
 					}}
 				/>
 				{segment != null && (
@@ -101,7 +101,7 @@ const Vowels = () => {
 								selectedRadio={isUniqueVowels}
 							/>
 						</View>
-						<Text style={styles.subtitle}>SELECT SPEED</Text>
+						{/* <Text style={styles.subtitle}>SELECT SPEED</Text>
 						<View>
 							<RadioButton<number>
 								label={'Slow: 4 Syllables'}
@@ -115,7 +115,7 @@ const Vowels = () => {
 								onPress={setSpeed}
 								selectedRadio={speed}
 							/>
-						</View>
+						</View> */}
 					</View>
 				)}
 				<View style={{ height: 140 }} />
@@ -143,6 +143,7 @@ const Vowels = () => {
 								syllables: 2,
 							},
 							phonemes: cards,
+							speed: 1,
 						});
 					}}
 				/>
