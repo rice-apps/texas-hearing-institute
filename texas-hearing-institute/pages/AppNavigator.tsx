@@ -1,8 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AuthNavigator from './Onboarding/AuthNavigator';
-import TabNavigator from './TabNavigator';
 import { NavigationContainer } from '@react-navigation/native';
+import DrawerNavigator from './DrawerNavigator';
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type AppStackParamList = {
@@ -25,7 +25,7 @@ export default function AppNavigator() {
 				}}
 			>
 				<Stack.Screen name="Auth" component={AuthNavigator} />
-				<Stack.Screen name="Home" component={TabNavigator} />
+				<Stack.Screen name="Home" component={DrawerNavigator} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

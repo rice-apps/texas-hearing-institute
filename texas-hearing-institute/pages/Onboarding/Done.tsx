@@ -122,7 +122,10 @@ export default function Done({ route }: Props) {
 					saveChildInfo()
 						.then(() => {
 							authNavigation.popToTop();
-							appNavigation.navigate('Home');
+							appNavigation.reset({
+								index: 0,
+								routes: [{ name: 'Home' }],
+							});
 						})
 						.catch((e: unknown) => {
 							// TODO better error handling

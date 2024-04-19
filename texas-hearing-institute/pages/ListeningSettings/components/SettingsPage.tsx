@@ -107,6 +107,7 @@ export default function SettingsPage({
 									syllables: numSyllables,
 								},
 								phonemes: cards,
+								speed: 1,
 							});
 						}}
 					/>

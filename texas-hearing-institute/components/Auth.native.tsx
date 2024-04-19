@@ -24,10 +24,12 @@ export default function Auth() {
 		return (
 			<View>
 				<AppleAuthentication.AppleAuthenticationButton
-					buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+					buttonType={
+						AppleAuthentication.AppleAuthenticationButtonType.CONTINUE
+					}
 					buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-					cornerRadius={5}
-					style={{ width: 200, height: 64 }}
+					cornerRadius={25}
+					style={{ width: 300, height: 52 }}
 					onPress={async () => {
 						try {
 							const credential = await AppleAuthentication.signInAsync({
@@ -66,7 +68,10 @@ export default function Auth() {
 										currUser.setGroupId(clinicianData?.groupId);
 										setUser(currUser);
 										// navigate home
-										appNavigation.navigate('Home');
+										appNavigation.reset({
+											index: 0,
+											routes: [{ name: 'Home' }],
+										});
 									} else {
 										currUser.setShowTutorial(true);
 										setUser(currUser);
@@ -159,7 +164,10 @@ export default function Auth() {
 				setUser(currUser);
 				// navigate home
 				setLoading(false);
-				appNavigation.navigate('Home');
+				appNavigation.reset({
+					index: 0,
+					routes: [{ name: 'Home' }],
+				});
 			} else {
 				setUser(currUser);
 				// new user
@@ -216,7 +224,10 @@ export default function Auth() {
 				setUser(currUser);
 				// navigate home
 				setLoading(false);
-				appNavigation.navigate('Home');
+				appNavigation.reset({
+					index: 0,
+					routes: [{ name: 'Home' }],
+				});
 			} else {
 				setUser(currUser);
 				// new user
@@ -234,40 +245,74 @@ export default function Auth() {
 		setLoading(false);
 	}
 	return (
-		<View>
+		<View style={{ width: 326, marginBottom: 20 }}>
 			<View>
 				<Input
 					label="Email"
-					leftIcon={{ type: 'font-awesome', name: 'envelope' }}
 					onChangeText={(text) => emailSetter(text)}
 					value={email}
 					placeholder="email@address.com"
 					autoCapitalize={'none'}
+					labelStyle={{ color: '#333', marginBottom: 12, fontWeight: '300' }}
+					inputContainerStyle={{
+						borderWidth: 2,
+						borderBottomWidth: 2,
+						borderColor: '#DBDBDB',
+						borderRadius: 10,
+						padding: 10,
+						height: 48,
+					}}
+					inputStyle={{ fontSize: 14 }}
+					containerStyle={{ height: 100 }}
 				/>
 			</View>
-			<View>
+			<View style={{ marginBottom: 12 }}>
 				<Input
 					label="Password"
-					leftIcon={{ type: 'font-awesome', name: 'lock' }}
 					onChangeText={(text) => setPassword(text)}
 					value={password}
 					secureTextEntry={true}
 					placeholder="Password"
 					autoCapitalize={'none'}
+					labelStyle={{ color: '#333', marginBottom: 12, fontWeight: '300' }}
+					inputContainerStyle={{
+						borderWidth: 2,
+						borderBottomWidth: 2,
+						borderColor: '#DBDBDB',
+						borderRadius: 10,
+						padding: 10,
+						height: 48,
+					}}
+					inputStyle={{ fontSize: 14 }}
+					containerStyle={{ height: 100 }}
 				/>
 			</View>
-			<View>
+			<View style={{ marginBottom: 16, alignItems: 'center' }}>
 				<Button
-					title="Sign in"
+					title="Log In"
 					disabled={loading}
 					onPress={() => signInWithEmail()}
+					buttonStyle={{
+						borderRadius: 32,
+						backgroundColor: '#AFE4F9',
+						height: 48,
+						width: 200,
+					}}
+					titleStyle={{ color: '#333', fontWeight: 'bold', fontSize: 18 }}
 				/>
 			</View>
-			<View>
+			<View style={{ alignItems: 'center' }}>
 				<Button
-					title="Sign up"
+					title="Create Account"
 					disabled={loading}
 					onPress={() => signUpWithEmail()}
+					buttonStyle={{
+						borderRadius: 32,
+						backgroundColor: '#AFE4F9',
+						height: 48,
+						width: 200,
+					}}
+					titleStyle={{ color: '#333', fontWeight: 'bold', fontSize: 18 }}
 				/>
 			</View>
 		</View>

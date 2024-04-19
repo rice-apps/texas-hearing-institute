@@ -69,9 +69,10 @@ export default function AccountPage() {
 			style={{
 				flexDirection: 'column',
 				alignItems: 'flex-start',
-				marginTop: 72,
+				marginTop: 24,
 				marginHorizontal: 24,
 				height: '100%',
+				backgroundColor: 'white',
 			}}
 		>
 			<View /* Profile view and edit button */
@@ -89,9 +90,7 @@ export default function AccountPage() {
 						alignItems: 'center',
 					}}
 				>
-					<ProfileIconView
-						iconPath={require('../../assets/testdata/profileicon.png')}
-					/>
+					<ProfileIconView iconPath={require('../../assets/turtle.png')} />
 					<Text
 						style={{
 							marginLeft: 12,

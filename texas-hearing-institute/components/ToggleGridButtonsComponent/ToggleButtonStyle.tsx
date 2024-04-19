@@ -2,9 +2,8 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 	button: {
-		paddingHorizontal: 16,
-		paddingTop: 8,
-		paddingBottom: 8,
+		paddingHorizontal: 12,
+		paddingVertical: 8,
 		borderRadius: 10,
 		justifyContent: 'center',
 		alignItems: 'center',
