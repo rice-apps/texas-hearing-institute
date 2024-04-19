@@ -6,6 +6,7 @@ interface ButtonGroupProps {
 	headerText: string;
 	buttonLabels: string[];
 	buttonRoutes: string[];
+	imageSources: string[];
 	buttonStyle?: ViewStyle;
 }
 
@@ -14,10 +15,10 @@ export default function ButtonGroup({
 	buttonLabels,
 	buttonRoutes,
 	buttonStyle,
+	imageSources,
 }: ButtonGroupProps) {
 	return (
 		<ScrollView contentContainerStyle={styles.container}>
-			{/* <View style={styles.container}> */}
 			<View style={styles.headerContainer}>
 				<Text style={styles.headerText}>{headerText}</Text>
 			</View>
@@ -26,11 +27,11 @@ export default function ButtonGroup({
 					key={label}
 					label={label}
 					route={buttonRoutes[indx]}
+					imageSource={imageSources[indx]}
 					style={buttonStyle}
 					textStyle={styles.buttonText}
 				/>
 			))}
-			{/* </View> */}
 		</ScrollView>
 	);
 }
