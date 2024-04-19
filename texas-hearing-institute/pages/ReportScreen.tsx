@@ -88,13 +88,14 @@ function ReportScreen({ route }: Props) {
 					);
 				})}
 			</ScrollView>
-
-			<TouchableOpacity onPress={() => navigation.navigate('Home')}>
-				<PillButtonView title="Practice again" type="primary"></PillButtonView>
-			</TouchableOpacity>
-			{/* <TouchableOpacity onPress={handleReportEntry}>
-				<PillButtonView title="Save Report" type="secondary"></PillButtonView>
-			</TouchableOpacity> */}
+			<View style={{ alignItems: 'center' }}>
+				<TouchableOpacity onPress={() => navigation.navigate('Home')}>
+					<PillButtonView
+						title="Practice again"
+						type="primary"
+					></PillButtonView>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 }

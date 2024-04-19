@@ -18,6 +18,7 @@ export class User {
 	#id = '%0';
 	#name = '%0'; // user-updatable
 	#groupId = '%0'; // user-updatable
+	#showTutorial = false;
 	// TODO: offline practice/reports screen
 	// #reports: string[] = [];
 
@@ -27,6 +28,7 @@ export class User {
 		copy.#id = this.#id;
 		copy.#name = this.#name;
 		copy.#groupId = this.#groupId;
+		copy.#showTutorial = this.#showTutorial;
 
 		return copy;
 	}
@@ -97,6 +99,9 @@ export class User {
 		this.#groupId = newGroupId;
 	}
 
+	setShowTutorial(newShowTutorial: boolean) {
+		this.#showTutorial = newShowTutorial;
+	}
 	// TODO
 	// addReport(newItem: string) {
 	// 	this.#reports.push(newItem);
@@ -114,6 +119,10 @@ export class User {
 
 	getGroupId() {
 		return this.#groupId;
+	}
+
+	getShowTutorial() {
+		return this.#showTutorial;
 	}
 
 	// TODO

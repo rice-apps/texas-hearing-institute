@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import PracticeTab from './ListeningSettings/tabs/PracticeTab';
+import PracticeTab from './Home';
 import VarVowelsScreen from './ListeningSettings/tabs/VarVowelsScreen';
 import MannerScreen from './ListeningSettings/tabs/MannerScreen';
 import VoicingScreen from './ListeningSettings/tabs/VoicingScreen';
@@ -22,7 +22,11 @@ export type PracticeParamList = {
 	VariegatedVowels: undefined;
 	Manner: undefined;
 	Voicing: undefined;
-	ActivePractice: { settings: PracticeSettings; phonemes: string[][] };
+	ActivePractice: {
+		settings: PracticeSettings;
+		phonemes: string[][];
+		speed: number;
+	};
 	ReportScreen: { results: PracticeResult[] };
 };
 

@@ -1,10 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
-import {
-	getKeyboardType,
-	getTextContentType,
-	TextProperties,
-} from '../../utils/TextProperties';
+import { getKeyboardType, TextProperties } from '../../utils/TextProperties';
 import Subheading from '../Subheading';
 
 interface RichText {
@@ -76,14 +72,19 @@ const FormView = ({
 				style={{
 					flexDirection: 'column',
 					borderRadius: 12,
-					borderStyle: 'solid',
 					borderColor: 'rgba(217, 217, 217, 0.50)',
 					borderWidth: 2,
 					width: '100%',
 				}}
 			>
 				{labels.map((item, index) => (
-					<View /* Each row in the form */ key={index}>
+					<View
+						/* Each row in the form */ key={index}
+						style={{
+							borderColor: 'rgba(217, 217, 217, 0.50)',
+							borderTopWidth: index === 0 ? 0 : 2,
+						}}
+					>
 						<View /* the row itself */
 							style={{
 								height: 48,
@@ -113,7 +114,6 @@ const FormView = ({
 									!readonly && !(data[index].properties?.readonly === true)
 								}
 								keyboardType={getKeyboardType(data[index].properties)}
-								textContentType={getTextContentType(data[index].properties)}
 								style={{
 									width: 170,
 									textAlign: 'right',
