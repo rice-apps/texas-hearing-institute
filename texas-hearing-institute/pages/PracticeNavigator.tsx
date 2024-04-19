@@ -34,14 +34,10 @@ export default function PracticeNavigator() {
 		<Stack.Navigator
 			initialRouteName="Home"
 			screenOptions={{
-				headerShadowVisible: false,
 				contentStyle: {
-					backgroundColor: 'white',
+					backgroundColor: '#FDFDFD',
 				},
-				headerTitleStyle: {
-					color: 'transparent',
-				},
-				headerTitle: '',
+				headerShown: false,
 			}}
 		>
 			<Stack.Screen

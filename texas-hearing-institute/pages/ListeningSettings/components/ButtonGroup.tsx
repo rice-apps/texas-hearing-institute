@@ -44,8 +44,9 @@ const styles = StyleSheet.create({
 		marginBottom: 17,
 	},
 	headerText: {
-		fontSize: 20,
+		fontSize: 18,
 		fontWeight: '500',
+		color: '#333',
 	},
 	button: {
 		backgroundColor: 'white',
@@ -57,6 +58,6 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		fontSize: 16,
-		color: 'black',
+		color: '#333',
 	},
 });

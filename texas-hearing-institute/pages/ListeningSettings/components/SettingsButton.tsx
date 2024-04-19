@@ -31,7 +31,7 @@ export default function SettingsButton({
 	const navigation = useNavigation<Nav>();
 
 	return (
-		<View>
+		<View style={{ paddingHorizontal: 4 }}>
 			<TouchableOpacity
 				style={[styles.button, style]}
 				onPress={() => navigation.navigate(route)}
@@ -46,12 +46,11 @@ const styles = StyleSheet.create({
 	button: {
 		backgroundColor: 'white',
 		borderRadius: 12,
-		height: 55,
+		height: 50,
 		marginTop: 6,
 		marginBottom: 6,
-		color: 'black',
-		borderColor: 'black',
-		borderWidth: 1,
+		shadowOpacity: 0.12,
+		shadowOffset: { width: 0, height: 0 },
 	},
 	selectedButton: {
 		backgroundColor: '#C0C0C0',
@@ -59,5 +58,6 @@ const styles = StyleSheet.create({
 	buttonLabel: {
 		fontSize: 16,
 		margin: 16,
+		color: '#333',
 	},
 });
