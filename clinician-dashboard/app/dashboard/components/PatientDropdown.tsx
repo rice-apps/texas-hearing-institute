@@ -31,14 +31,14 @@ const PatientDropdown: React.FC<DropdownButtonProps> = ({patients, updateSelecte
 
             {isOpen && (
                 <div
-                    className="origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white dark:bg-zinc-600 ring-1 ring-black ring-opacity-5"
+                    className="origin-top-right absolute left-0 mt-2 rounded-md shadow-lg bg-white dark:bg-zinc-600 ring-1 ring-black ring-opacity-5"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="dropdown-menu-button"
                 >
                 {/* Dropdown content goes here */}
                 <div className="py-1" role="none">
-                    {patients.map(e => <p className="block px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-500 dark:hover:text-white" onClick={() => {setSelected(e.name); setIsOpen(!isOpen); updateSelectedChild(e.id)}} role="menuitem" 
+                    {patients.map(e => <p className=" block px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-500 dark:hover:text-white" onClick={() => {setSelected(e.name); setIsOpen(!isOpen); updateSelectedChild(e.id)}} role="menuitem" 
                     key={e.id}>
                         {e.name}
                     </p>)}
