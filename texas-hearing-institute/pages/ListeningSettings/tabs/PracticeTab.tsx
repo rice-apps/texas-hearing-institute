@@ -15,7 +15,9 @@ export default function PracticeTab() {
 				<ScreenView>
 					<TitleText>Good morning, User</TitleText>
 					<SubTitleText>Let's get practicing.</SubTitleText>
+					<SubTitleText> </SubTitleText>
 					<SpeechBabble />
+					<SubTitleText> </SubTitleText>
 					<ListeningBabble />
 				</ScreenView>
 			</View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View, ViewStyle, ScrollView } from 'react-native';
 import SettingsButton from './SettingsButton';
 
 interface ButtonGroupProps {
@@ -16,7 +16,8 @@ export default function ButtonGroup({
 	buttonStyle,
 }: ButtonGroupProps) {
 	return (
-		<View style={styles.container}>
+		<ScrollView contentContainerStyle={styles.container}>
+			{/* <View style={styles.container}> */}
 			<View style={styles.headerContainer}>
 				<Text style={styles.headerText}>{headerText}</Text>
 			</View>
@@ -25,33 +26,37 @@ export default function ButtonGroup({
 					key={label}
 					label={label}
 					route={buttonRoutes[indx]}
-					style={buttonStyle || styles.button}
-					textStyle={{ color: 'black' }}
+					style={buttonStyle}
+					textStyle={styles.buttonText}
 				/>
 			))}
-		</View>
+			{/* </View> */}
+		</ScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: 40,
+		flexGrow: 1,
 	},
 	headerContainer: {
 		flexDirection: 'row',
+		marginBottom: 17,
 	},
 	headerText: {
 		fontSize: 20,
 		fontWeight: '500',
-		marginBottom: 17,
 	},
 	button: {
 		backgroundColor: 'white',
-		color: 'black',
 		padding: 10,
 		marginVertical: 5,
 		borderRadius: 8,
 		borderWidth: 1,
 		borderColor: 'black',
+	},
+	buttonText: {
+		fontSize: 16,
+		color: 'black',
 	},
 });

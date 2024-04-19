@@ -44,12 +44,14 @@ export default function SettingsButton({
 
 const styles = StyleSheet.create({
 	button: {
-		backgroundColor: '#D9D9D9',
+		backgroundColor: 'white',
 		borderRadius: 12,
 		height: 55,
 		marginTop: 6,
 		marginBottom: 6,
 		color: 'black',
+		borderColor: 'black',
+		borderWidth: 1,
 	},
 	selectedButton: {
 		backgroundColor: '#C0C0C0',
