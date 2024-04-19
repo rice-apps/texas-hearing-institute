@@ -22,7 +22,11 @@ export type PracticeParamList = {
 	VariegatedVowels: undefined;
 	Manner: undefined;
 	Voicing: undefined;
-	ActivePractice: { settings: PracticeSettings; phonemes: string[][] };
+	ActivePractice: {
+		settings: PracticeSettings;
+		phonemes: string[][];
+		speed: number;
+	};
 	ReportScreen: { results: PracticeResult[] };
 };
 

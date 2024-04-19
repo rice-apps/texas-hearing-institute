@@ -22,7 +22,6 @@ import {
 	retrieveItemSelections,
 	storeItemSelection,
 } from '../../utils/persistSelection';
-import CustomSafeAreaView from '../../components/CustomSafeAreaView/CustomSafeAreaView';
 
 // Minimum number of sounds that must be selected for consonants and vowels
 const MIN_SELECTED = 4;
@@ -128,7 +127,7 @@ export const SoundInventory = () => {
 	};
 
 	return (
-		<CustomSafeAreaView>
+		<View>
 			<View style={styles.onboardingHeaderView}>
 				<Text
 					style={{
@@ -140,7 +139,7 @@ export const SoundInventory = () => {
 				</Text>
 				<Pressable
 					style={{
-						backgroundColor: '#D3D3D3',
+						backgroundColor: '#EDEDED',
 						padding: 10,
 						borderRadius: 10,
 						flexDirection: 'row',
@@ -162,8 +161,23 @@ export const SoundInventory = () => {
 			</View>
 			<ScrollView>
 				<View style={styles.onboardingViewMargins}>
+					<Text style={pagestyles.subheading}>Vowels</Text>
+					<ToggleGridButtons
+						disabled={!editModeEnabled}
+						speak={true}
+						items={vowels}
+						itemsSelected={getCorrespondingInventoryVowels()}
+						setItemsSelected={(index: number, newValue: boolean) => {
+							const newItemsSelected = [...getCorrespondingInventoryVowels()];
+							newItemsSelected[index] = newValue;
+							setAndStoreSelections(
+								inventoryConsonants,
+								newItemsSelected,
+								editModeEnabled,
+							);
+						}}
+					/>
 					<Text style={pagestyles.subheading}>Consonants</Text>
-
 					<ToggleGridButtons
 						disabled={!editModeEnabled}
 						speak={false}
@@ -177,24 +191,6 @@ export const SoundInventory = () => {
 							setAndStoreSelections(
 								newItemsSelected,
 								inventoryVowels,
-								editModeEnabled,
-							);
-						}}
-					/>
-
-					<Text style={pagestyles.subheading}>Vowels</Text>
-
-					<ToggleGridButtons
-						disabled={!editModeEnabled}
-						speak={true}
-						items={vowels}
-						itemsSelected={getCorrespondingInventoryVowels()}
-						setItemsSelected={(index: number, newValue: boolean) => {
-							const newItemsSelected = [...getCorrespondingInventoryVowels()];
-							newItemsSelected[index] = newValue;
-							setAndStoreSelections(
-								inventoryConsonants,
-								newItemsSelected,
 								editModeEnabled,
 							);
 						}}
@@ -257,7 +253,7 @@ export const SoundInventory = () => {
 					</Text>
 				</Pressable>
 			</ScrollView>
-		</CustomSafeAreaView>
+		</View>
 	);
 };
 

@@ -47,14 +47,12 @@ export default function InitialConsonants() {
 	const [segment, setSegment] = useState<ConsonantSegment>();
 	const [modeFlower, setModeFlower] = useState<ConsonantFlower>();
 	const [isUniqueVowels, setIsUniqueVowels] = useState<boolean>();
-	const [speed, setSpeed] = useState(1);
+	// const [speed, setSpeed] = useState(1);
 
 	const settingsReady = () => {
 		return (
-			segment != null &&
-			modeFlower != null &&
-			isUniqueVowels != null &&
-			speed != 1
+			segment != null && modeFlower != null && isUniqueVowels != null
+			// && speed != 1
 		);
 	};
 
@@ -109,7 +107,7 @@ export default function InitialConsonants() {
 								selectedRadio={isUniqueVowels}
 							/>
 						</View>
-						<Text style={styles.subtitle}>SELECT SPEED</Text>
+						{/* <Text style={styles.subtitle}>SELECT SPEED</Text>
 						<View>
 							<RadioButton<number>
 								label={'Slow: 4 Syllables'}
@@ -123,7 +121,7 @@ export default function InitialConsonants() {
 								onPress={setSpeed}
 								selectedRadio={speed}
 							/>
-						</View>
+						</View> */}
 					</View>
 				)}
 				<View style={{ height: 140 }} />
@@ -163,6 +161,7 @@ export default function InitialConsonants() {
 								syllables: 2,
 							},
 							phonemes: cards,
+							speed: 1,
 						});
 					}}
 				/>
