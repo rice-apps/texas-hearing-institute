@@ -40,3 +40,13 @@
     transform: translateY(0);
   }
 }
+
+main{
+  background-color: rgb(245, 245, 245);
+}
+
+@media (prefers-color-scheme: dark) {
+  main{
+    background-color: rgb(45, 48, 53);
+  }
+}
