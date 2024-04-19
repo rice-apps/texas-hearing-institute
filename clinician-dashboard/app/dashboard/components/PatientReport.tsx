@@ -29,7 +29,7 @@ const getPercentageColor = (correctIncorrectArray: boolean[]) => {
 };
 
 const PatientReport:React.FC<TableProps> = ({reports}) => {
-    console.log(reports)
+    //console.log(reports)
     return(
         <div className="overflow-scroll w-full">
             <table className="w-full text-left rtl:text-right text-gray-500 dark:text-gray-400">

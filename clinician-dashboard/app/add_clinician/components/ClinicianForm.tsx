@@ -70,7 +70,7 @@ const ClinicianForm: React.FC = () => {
         return false;
       }
 
-      console.log('Clinician inserted successfully:', insertedClinician);
+      //console.log('Clinician inserted successfully:', insertedClinician);
       return true;
     } else {
       // console.log('Clinician with UUID already exists:', existingClinicians[0]);
@@ -86,7 +86,7 @@ const ClinicianForm: React.FC = () => {
     // get UUID from the authenticated data in our Supabase db
     const userUUID = await getUUIDFromEmail(formData['email'])
     // then using UUID, create the instance into our clinciian table
-    console.log(userUUID)
+    //console.log(userUUID)
     if (userUUID === null){
       console.log("Error finding user!")
       return 

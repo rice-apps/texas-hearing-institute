@@ -8,7 +8,6 @@ import {
 	ConsonantFlower,
 	ConsonantSegment,
 } from '../utils/Segment';
-import { retrieveVowels } from '../utils/persistSelection';
 
 export default function Testing() {
 	const [generatedSyllables, setGeneratedSyllables] = useState<string[]>([]);
@@ -32,7 +31,7 @@ export default function Testing() {
 		setGeneratedSyllables(result);
 	};
 
-	console.log(retrieveVowels());
+	//console.log(retrieveVowels());
 
 	return (
 		<View style={styles.container}>
