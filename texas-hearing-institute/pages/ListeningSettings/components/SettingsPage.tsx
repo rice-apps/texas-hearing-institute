@@ -85,33 +85,31 @@ export default function SettingsPage({
 				</View>
 			</ScrollView>
 			{settingsReady() && (
-				<View style={styles.float}>
-					<FloatingButton
-						label={"Let's Practice"}
-						onPress={async () => {
-							const cards = await generateCards(
-								10,
-								null,
-								modeFlower,
-								isUniqueVowels!,
-								ConsonantCategories.Initial,
-								numSyllables,
-							);
-							practiceNavigation.navigate('ActivePractice', {
-								settings: {
-									type: 'listening',
-									subtype: 'initial consonants',
-									mode: modeToString(modeFlower!),
-									vowels: isUniqueVowels ? 'different' : 'same',
-									target: '',
-									syllables: numSyllables,
-								},
-								phonemes: cards,
-								speed: 1,
-							});
-						}}
-					/>
-				</View>
+				<FloatingButton
+					label={"Let's Practice"}
+					onPress={async () => {
+						const cards = await generateCards(
+							10,
+							null,
+							modeFlower,
+							isUniqueVowels!,
+							ConsonantCategories.Initial,
+							numSyllables,
+						);
+						practiceNavigation.navigate('ActivePractice', {
+							settings: {
+								type: 'listening',
+								subtype: 'initial consonants',
+								mode: modeToString(modeFlower!),
+								vowels: isUniqueVowels ? 'different' : 'same',
+								target: '',
+								syllables: numSyllables,
+							},
+							phonemes: cards,
+							speed: 1,
+						});
+					}}
+				/>
 			)}
 		</>
 	);
@@ -125,6 +123,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 24,
 		fontWeight: 'bold',
+		color: '#333',
 	},
 	subtitle: {
 		fontSize: 12,

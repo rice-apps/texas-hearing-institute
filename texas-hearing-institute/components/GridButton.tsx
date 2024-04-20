@@ -16,7 +16,7 @@ export default function GridButton({
 	return (
 		<View>
 			<TouchableOpacity style={style} onPress={() => onPress(label)}>
-				<Text>{label}</Text>
+				<Text style={{ color: '#333' }}>{label}</Text>
 			</TouchableOpacity>
 		</View>
 	);

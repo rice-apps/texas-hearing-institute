@@ -131,8 +131,9 @@ export const SoundInventory = () => {
 			<View style={styles.onboardingHeaderView}>
 				<Text
 					style={{
-						fontSize: 28,
+						fontSize: 24,
 						fontWeight: 'bold',
+						color: '#333',
 					}}
 				>
 					Sound Inventory
@@ -146,7 +147,7 @@ export const SoundInventory = () => {
 						flexWrap: 'wrap',
 						justifyContent: 'center',
 						gap: 10,
-						display: editModeEnabled ? 'none' : 'flex',
+						opacity: editModeEnabled ? 0 : 1,
 					}}
 					onPress={() => setEditModeEnabled(!editModeEnabled, true)}
 				>
@@ -156,7 +157,7 @@ export const SoundInventory = () => {
 						width={14}
 						height={14}
 					/>
-					<Text style={{ fontSize: 16 }}>Edit</Text>
+					<Text style={{ fontSize: 16, color: '#333' }}>Edit</Text>
 				</Pressable>
 			</View>
 			<ScrollView>
@@ -198,41 +199,24 @@ export const SoundInventory = () => {
 				</View>
 			</ScrollView>
 
-			<ScrollView
+			<View
 				style={{
-					borderTopColor: 'black',
-					borderTopWidth: 1,
-					shadowColor: 'black',
-					display: editModeEnabled ? 'flex' : 'none',
-					// justifyContent: 'center',
-					// alignItems: 'center',
-					flexDirection: 'column',
-					marginBottom: 100,
+					alignItems: 'center',
+					opacity: editModeEnabled ? 1 : 0,
 				}}
 			>
 				<Pressable
 					style={{
-						marginTop: 25,
-						backgroundColor: '#d3d3d3',
-						padding: 18,
-						width: 300,
-						borderRadius: 15,
-					}}
-					onPress={() => setEditModeEnabled(!editModeEnabled, false)}
-				>
-					<Text
-						style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}
-					>
-						Discard Changes
-					</Text>
-				</Pressable>
-				<Pressable
-					style={{
-						marginTop: 25,
-						backgroundColor: '#d3d3d3',
-						padding: 18,
-						width: 300,
-						borderRadius: 15,
+						width: 326,
+						height: 54,
+						backgroundColor: '#AFE4F9',
+						borderRadius: 32,
+						paddingHorizontal: 12,
+						paddingVertical: 8,
+						alignItems: 'center',
+						justifyContent: 'center',
+						shadowOpacity: 0.12,
+						shadowOffset: { height: 4, width: 0 },
 					}}
 					onPress={() => {
 						if (
@@ -246,13 +230,11 @@ export const SoundInventory = () => {
 						}
 					}}
 				>
-					<Text
-						style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold' }}
-					>
+					<Text style={{ fontSize: 18, fontWeight: 'bold', color: '#333' }}>
 						Save Changes
 					</Text>
 				</Pressable>
-			</ScrollView>
+			</View>
 		</View>
 	);
 };
@@ -264,8 +246,10 @@ const pagestyles = StyleSheet.create({
 		marginBottom: 20,
 	},
 	subheading: {
-		fontSize: 16,
+		fontSize: 12,
 		marginTop: 15,
 		marginBottom: 15,
+		color: '#747474',
+		textTransform: 'uppercase',
 	},
 });

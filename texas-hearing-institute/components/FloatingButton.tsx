@@ -29,16 +29,19 @@ const styles = StyleSheet.create({
 		paddingVertical: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
+		shadowOpacity: 0.14,
+		shadowOffset: { height: 0, width: 0 },
 	},
 	label: {
 		fontSize: 18,
 		fontWeight: '700',
+		color: '#333',
 	},
 	float: {
 		width: '100%',
 		alignItems: 'center',
 		zIndex: 1,
 		position: 'absolute',
-		bottom: 80,
+		bottom: 60,
 	},
 });
