@@ -4,6 +4,7 @@ import Header from "@/app/dashboard/components/Header"
 import PatientDropdown from "@/app/dashboard/components/PatientDropdown";
 import PatientReport from "@/app/dashboard/components/PatientReport";
 import { createClient } from "@/utils/supabase/client";
+import { redirect } from 'next/navigation';
 
 const Dashboard = () => {
 
@@ -13,6 +14,7 @@ const Dashboard = () => {
     const [children, setChildren] = useState<any[]>([]);
     const [selectedChildID, setSelectedChildID] = useState<any>();
     const [childReports, setChildReports] = useState<any[]>([]);
+    const [redirectBool, setRedirect] = useState(false);
   
     const updateSelectedChild = (childId:any) => {
       setSelectedChildID(childId);
@@ -36,6 +38,7 @@ const Dashboard = () => {
             throw error2;
           }
           if(clinicianUID.length==0){
+            setRedirect(true)
             throw new Error("user not found as clinician")
           }
           const currClinician = clinicianUID[0]['id']
@@ -74,7 +77,10 @@ const Dashboard = () => {
         getReport();
     },[selectedChildID])
  
-  
+    if (redirectBool) {
+      supabase.auth.signOut()
+      redirect("/")
+    }
 
     return (
         <div>
