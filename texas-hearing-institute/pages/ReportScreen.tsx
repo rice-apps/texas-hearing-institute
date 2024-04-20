@@ -7,7 +7,6 @@ import {
 	View,
 	ScrollView,
 } from 'react-native';
-import tw from 'tailwind-react-native-classnames';
 import PieChart from 'react-native-pie-chart';
 import { AntDesign } from '@expo/vector-icons';
 import PillButtonView from '../components/PillButtonView';
@@ -17,6 +16,7 @@ import { PracticeResult } from './types';
 import { UserContext, UserContextType } from '../user/UserContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/core';
+import { Badge } from 'react-native-elements';
 
 /* WARNING: PARAMETERS CAST TO ANY -- might need to fix using props instead */
 /* Active Practice reroutes to Report Screen */
@@ -41,35 +41,95 @@ function ReportScreen({ route }: Props) {
 
 	return (
 		<View style={styles.container}>
-			<Heading title={'Woohoo! High Five, ' + user.getName()}></Heading>
-			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-				<PieChart
-					widthAndHeight={100}
-					series={[numCorrect, numIncorrect]}
-					sliceColor={['#ff6c00', '#ff9100']}
-					coverRadius={0.45}
-					coverFill={'#FFF'}
-				/>
+			<Heading title={'Woohoo! High five, ' + user.getName()} />
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					height: 69,
+					paddingHorizontal: 8,
+				}}
+			>
 				<View
-					style={{ flexDirection: 'column', justifyContent: 'space-between' }}
+					style={{
+						position: 'relative',
+						height: 69,
+						width: 69,
+					}}
 				>
-					<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-						{' '}
-						Correct: {numCorrect}
-					</Text>
-					<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
-						Incorrect: {numIncorrect}
-					</Text>
-					<Text style={tw`text-lg font-bold pt-2 pl-2 mx-5 mt-1`}>
-						{'Score: ' +
-							Math.ceil((numCorrect / (numCorrect + numIncorrect)) * 100) +
-							'%'}
+					<PieChart
+						widthAndHeight={69}
+						series={[numCorrect, numIncorrect]}
+						sliceColor={['#AFE4F9', '#EBEBEB']}
+						coverRadius={0.74}
+						coverFill={'#FFF'}
+						style={{ position: 'absolute' }}
+					/>
+					<Text
+						style={{
+							position: 'absolute',
+							top: 26,
+							left: 17,
+							fontSize: 14,
+							color: '#333',
+						}}
+					>
+						{Math.ceil((numCorrect / (numCorrect + numIncorrect)) * 100) + '%'}
 					</Text>
 				</View>
+				<View
+					style={{
+						flexDirection: 'column',
+						height: 69,
+						width: 180,
+						justifyContent: 'space-evenly',
+					}}
+				>
+					<Text style={{ fontSize: 18, fontWeight: '400', color: '#333' }}>
+						Correct
+					</Text>
+					<Text style={{ fontSize: 18, fontWeight: '400', color: '#333' }}>
+						Still Learning
+					</Text>
+				</View>
+				<View
+					style={{
+						height: 69,
+						width: 33,
+						alignItems: 'flex-end',
+						justifyContent: 'space-evenly',
+					}}
+				>
+					<Badge
+						value={numCorrect}
+						badgeStyle={{
+							backgroundColor: '#DAF9D2',
+							borderWidth: 1,
+							borderColor: '#73AC17',
+							width: 33,
+							height: 25,
+							borderRadius: 16,
+						}}
+						textStyle={{ color: '#333' }}
+					/>
+					<Badge
+						value={numIncorrect}
+						badgeStyle={{
+							backgroundColor: '#FCECC3',
+							borderWidth: 1,
+							borderColor: '#DDB346',
+							width: 33,
+							height: 25,
+							borderRadius: 16,
+						}}
+						textStyle={{ color: '#333' }}
+					/>
+				</View>
 			</View>
-			<ScrollView>
+			<ScrollView style={{ paddingHorizontal: 32, paddingVertical: 32 }}>
 				{results.map((pr: PracticeResult) => {
-					const color = pr.correct ? 'green' : 'red';
+					const color = pr.correct ? '#73AC17' : '#EAC564';
 					const iName = pr.correct ? 'check' : 'close';
 					return (
 						<View
@@ -77,10 +137,10 @@ function ReportScreen({ route }: Props) {
 							style={{
 								flexDirection: 'row',
 								justifyContent: 'space-between',
-								padding: 17,
+								marginBottom: 12,
 							}}
 						>
-							<Text style={tw`text-lg pt-2 pl-2 mx-5 mt-1`}>
+							<Text style={{ color: '#333', fontSize: 18, fontWeight: '300' }}>
 								{pr.phonemes.join(' ')}
 							</Text>
 							<AntDesign name={iName} size={24} color={color} />
