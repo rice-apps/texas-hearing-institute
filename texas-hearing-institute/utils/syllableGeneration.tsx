@@ -15,6 +15,8 @@ import { retrieveConsonants, retrieveVowels } from './persistSelection';
 //   - Always set this to true if you're doing "Variegated Vowels" listening babble practice
 // - practiceTarget: is initial/final in speaking practice; null to represent vowel targeting
 // - numberOfWords: # of words to generate. Will deadlock if >10 and `isUniqueVowels` is true.
+// - shuffleWords: Optional parameter. If true, then the generated words will be shuffled in a random order
+// 		before being returned. Default false.
 
 export async function generateSyllables(
 	segment: Segment | null,
@@ -22,6 +24,7 @@ export async function generateSyllables(
 	isUniqueVowels: boolean,
 	practiceTarget: ConsonantCategories | null,
 	numberOfWords: number,
+	shuffleWords = false,
 ): Promise<string[]> {
 	let petalConsonants: ConsonantSegment[] = [];
 	// Each array in syllable represents a word. Each item in the subarray represents a segment (as a string).
@@ -120,6 +123,11 @@ export async function generateSyllables(
 		words = syllables.map((wordArray) => wordArray[1] + wordArray[0]);
 	}
 
+	// Shuffle the words if requested
+	if (shuffleWords) {
+		shuffle(words);
+	}
+
 	return words;
 }
 
@@ -131,6 +139,24 @@ function getRandomElement<T>(array: T[]): T | undefined {
 	if (array.length === 0) return undefined;
 	const randomIndex = Math.floor(Math.random() * array.length);
 	return array[randomIndex];
+}
+
+// Shuffles an array of strings
+function shuffle(array: string[]) {
+	let currentIndex = array.length;
+
+	// While there remain elements to shuffle...
+	while (currentIndex != 0) {
+		// Pick a remaining element...
+		const randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
+
+		// And swap it with the current element.
+		[array[currentIndex], array[randomIndex]] = [
+			array[randomIndex],
+			array[currentIndex],
+		];
+	}
 }
 
 // A word is an array of two segments.
