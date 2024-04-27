@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderColor: '#E7E7E7',
 		height: 55,
-		// marginTop: 6,
 		marginBottom: 12,
 		padding: 16,
 		justifyContent: 'space-between',
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
 	},
 	buttonLabel: {
 		fontSize: 16,
+		color: '#333',
 	},
 	radio: {
 		borderRadius: 20,

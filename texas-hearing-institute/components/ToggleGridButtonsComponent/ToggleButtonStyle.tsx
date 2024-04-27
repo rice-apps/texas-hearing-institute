@@ -20,5 +20,6 @@ export default StyleSheet.create({
 	},
 	buttonText: {
 		fontSize: 16,
+		color: '#333',
 	},
 });
