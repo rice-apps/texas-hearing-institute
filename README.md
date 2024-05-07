@@ -1,6 +1,7 @@
 # Texas Hearing Institute
 **Mobile App**
 - Ensure Git and Node.js are downloaded/setup on your local machine
+- Ensure Expo Go is installed on your mobile device
 - Clone this repo
 - Change directories to the texas-hearing-institute folder in this repo (with command "cd texas-hearing-institute") from where the repo is cloned in your local machine
 - Run "npm install" in that directory
