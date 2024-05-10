@@ -16,6 +16,14 @@ export default function InfoInput({ route, navigation }: Props) {
 	const [childName, setChildName] = useState<string>('');
 	const [groupID, setGroupID] = useState<string>('');
 
+	function firstNameOnly(name: string) {
+		name = name.trim();
+		if (name.includes(' ')) {
+			name = name.substring(0, name.indexOf(' '));
+		}
+		setChildName(name);
+	}
+
 	return (
 		<CustomSafeAreaView>
 			<View
@@ -60,11 +68,13 @@ export default function InfoInput({ route, navigation }: Props) {
 					</Text>
 				</View>
 				<View>
-					<Text style={styles.inputLabel}>Your child’s name</Text>
+					<Text style={styles.inputLabel}>
+						Your child’s name (first name ONLY)
+					</Text>
 					<TextInput
 						style={styles.input}
 						value={childName}
-						onChangeText={(name) => setChildName(name)}
+						onChangeText={(name) => firstNameOnly(name)}
 					></TextInput>
 					<Text style={styles.inputLabel}>Group ID</Text>
 					<TextInput

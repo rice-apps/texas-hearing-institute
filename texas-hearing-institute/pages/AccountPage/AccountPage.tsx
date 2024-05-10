@@ -21,6 +21,18 @@ export default function AccountPage() {
 		return user.getGroupId();
 	});
 
+	const [userChildID] = useState(() => {
+		return user.getChildId();
+	});
+
+	function firstNameOnly(name: string) {
+		name = name.trim();
+		if (name.includes(' ')) {
+			name = name.substring(0, name.indexOf(' '));
+		}
+		setUserName(name);
+	}
+
 	const commitChangesToUser = async () => {
 		const { error: nameError } = await supabase
 			.from('children')
@@ -167,12 +179,25 @@ export default function AccountPage() {
 					readonly={!editMode}
 					setData={[
 						(newValue: string) => {
-							setUserName(newValue);
+							firstNameOnly(newValue);
 						},
 						(newValue: string) => {
 							setUserGroupID(newValue);
 						},
 					]}
+				/>
+				<FormView
+					labels={['Child ID']}
+					data={[
+						{
+							text: userChildID.toString(),
+							properties: {
+								placeholder: '-1',
+							},
+						},
+					]}
+					readonly={true}
+					setData={[]}
 				/>
 			</View>
 

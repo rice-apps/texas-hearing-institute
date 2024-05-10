@@ -16,6 +16,7 @@ export class User {
 
 	// Actual fields
 	#id = '%0';
+	#child_id = '%0';
 	#name = '%0'; // user-updatable
 	#groupId = '%0'; // user-updatable
 	#showTutorial = false;
@@ -29,6 +30,7 @@ export class User {
 		copy.#name = this.#name;
 		copy.#groupId = this.#groupId;
 		copy.#showTutorial = this.#showTutorial;
+		copy.#child_id = this.#child_id;
 
 		return copy;
 	}
@@ -95,6 +97,10 @@ export class User {
 		this.#id = newValue;
 	}
 
+	setChildID(newValue: string) {
+		this.#child_id = newValue;
+	}
+
 	setGroupId(newGroupId: string) {
 		this.#groupId = newGroupId;
 	}
@@ -111,6 +117,10 @@ export class User {
 
 	getId(): string {
 		return this.#id;
+	}
+
+	getChildId(): string {
+		return this.#child_id;
 	}
 
 	getName(): string {

@@ -32,7 +32,6 @@ const Dashboard = () => {
           const userId = data['user']['id'];
           // currently using dummy clinician UID because the give user can be any auth user
           // replace the uuid passed into 2nd param of eq with userID to check logged in Users
-          // const userId = '0b04fa32-c264-4102-86d3-511fb18f8ecb';
           const{data:clinicianUID, error:error2} = await supabase.from('clinicians').select('id').eq('user',userId);
           if(error2){
             throw error2;
