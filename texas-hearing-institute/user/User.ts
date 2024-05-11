@@ -35,6 +35,14 @@ export class User {
 		return copy;
 	}
 
+	clearUser() {
+		this.#id = '%0';
+		this.#child_id = '%0';
+		this.#name = '%0';
+		this.#groupId = '%0';
+		this.#showTutorial = false;
+	}
+
 	// TODO: Local Persistence
 	// async initializeFromDisk() {
 	// 	// This should run on app start and load the user's ID and whatever authentication tokens from disk.

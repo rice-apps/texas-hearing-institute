@@ -7,9 +7,15 @@ import FormView from '../../components/FormView/FormView';
 import { UserContext, UserContextType } from '../../user/UserContext';
 import { supabase } from '../../lib/supabase';
 import FloatingButton from '../../components/FloatingButton';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from '../AppNavigator';
 
 export default function AccountPage() {
 	const { user } = useContext(UserContext) as UserContextType;
+
+	type AppNav = StackNavigationProp<AppStackParamList>;
+	const appNavigation = useNavigation<AppNav>();
 
 	const [editMode, setEditMode] = useState(false);
 
@@ -34,7 +40,6 @@ export default function AccountPage() {
 	}
 
 	const commitChangesToUser = async () => {
-		console.log(firstNameOnly(userName));
 		const { error: nameError } = await supabase
 			.from('children')
 			.update({ name: firstNameOnly(userName) })
@@ -75,6 +80,18 @@ export default function AccountPage() {
 			return;
 		}
 		user.setGroupId(userGroupID);
+	};
+
+	const signOut = async () => {
+		const { error } = await supabase.auth.signOut();
+		if (error) {
+			throw new Error('Error signing out');
+		}
+		user.clearUser();
+		appNavigation.reset({
+			index: 0,
+			routes: [{ name: 'Auth' }],
+		});
 	};
 
 	return (
@@ -216,6 +233,20 @@ export default function AccountPage() {
 						onPress={() => {
 							setEditMode(false);
 							commitChangesToUser();
+						}}
+					/>
+				</View>
+			</View>
+			<View
+				style={{
+					width: '100%',
+				}}
+			>
+				<View style={{ marginTop: 132 }}>
+					<FloatingButton
+						label={'Log Out'}
+						onPress={() => {
+							signOut();
 						}}
 					/>
 				</View>
