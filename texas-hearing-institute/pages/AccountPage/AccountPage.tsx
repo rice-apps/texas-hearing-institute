@@ -30,13 +30,14 @@ export default function AccountPage() {
 		if (name.includes(' ')) {
 			name = name.substring(0, name.indexOf(' '));
 		}
-		setUserName(name);
+		return name;
 	}
 
 	const commitChangesToUser = async () => {
+		console.log(firstNameOnly(userName));
 		const { error: nameError } = await supabase
 			.from('children')
-			.update({ name: userName })
+			.update({ name: firstNameOnly(userName) })
 			.eq('id', user.getId());
 		if (nameError) {
 			console.log('DB error on attempt to update child name: ', nameError);
@@ -44,7 +45,7 @@ export default function AccountPage() {
 			setUserName(user.getName());
 			return;
 		}
-		user.setName(userName);
+		user.setName(firstNameOnly(userName));
 
 		const { data, error: cIdError } = await supabase
 			.from('clinicians')
@@ -179,14 +180,16 @@ export default function AccountPage() {
 					readonly={!editMode}
 					setData={[
 						(newValue: string) => {
-							firstNameOnly(newValue);
+							setUserName(newValue);
 						},
 						(newValue: string) => {
 							setUserGroupID(newValue);
 						},
 					]}
 				/>
+				<Text> </Text>
 				<FormView
+					heading="Unique Child ID (cannot edit)"
 					labels={['Child ID']}
 					data={[
 						{

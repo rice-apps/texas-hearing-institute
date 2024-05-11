@@ -21,7 +21,7 @@ export default function InfoInput({ route, navigation }: Props) {
 		if (name.includes(' ')) {
 			name = name.substring(0, name.indexOf(' '));
 		}
-		setChildName(name);
+		return name;
 	}
 
 	return (
@@ -74,7 +74,7 @@ export default function InfoInput({ route, navigation }: Props) {
 					<TextInput
 						style={styles.input}
 						value={childName}
-						onChangeText={(name) => firstNameOnly(name)}
+						onChangeText={(name) => setChildName(name)}
 					></TextInput>
 					<Text style={styles.inputLabel}>Group ID</Text>
 					<TextInput
@@ -87,7 +87,7 @@ export default function InfoInput({ route, navigation }: Props) {
 					label={'Continue'}
 					onPress={() =>
 						navigation.navigate(`Vowels`, {
-							name: childName,
+							name: firstNameOnly(childName),
 							groupID: groupID,
 							id: id,
 						})

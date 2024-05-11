@@ -61,7 +61,10 @@ export async function middleware(request: NextRequest) {
 
   if (user) {
     // Get some user property
-    const name = user.user_metadata.name;
+    let name = user.user_metadata.name;
+    if (!name) {
+      name = user.user_metadata.full_name
+    }
 
     const formattedName = name.toLowerCase().replace(/\s+/g, '-');
 
