@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [selectedChildID, setSelectedChildID] = useState<any>();
     const [childReports, setChildReports] = useState<any[]>([]);
     const [redirectBool, setRedirect] = useState(false);
+    const [checkedAcct, setChekcedAcct] = useState(false);
   
     const updateSelectedChild = (childId:any) => {
       setSelectedChildID(childId);
@@ -38,6 +39,7 @@ const Dashboard = () => {
           }
           if(clinicianUID.length==0){
             setRedirect(true)
+            setChekcedAcct(true)
             throw new Error("user not found as clinician")
           }
           const currClinician = clinicianUID[0]['id']
@@ -49,7 +51,7 @@ const Dashboard = () => {
             throw error3
           }
           setChildren(associatedChildren||[])
-          
+          setChekcedAcct(true)
         } catch (error:any) {
             console.error('Error fetching user data:', error.message);
         }
@@ -82,6 +84,7 @@ const Dashboard = () => {
     }
 
     return (
+      checkedAcct &&
         <div>
             <Header/>
             <br />

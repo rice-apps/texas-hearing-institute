@@ -10,6 +10,7 @@ const Add_Clinician = () => {
     const supabase = createClient();
 
     const [redirectBool, setRedirect] = useState(false);
+    const [checkedAcct, setChekcedAcct] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -27,8 +28,10 @@ const Add_Clinician = () => {
             }
             if(clinicianUID.length==0){
                 setRedirect(true)
+                setChekcedAcct(true)
                 throw new Error("user not found as clinician")
             }
+            setChekcedAcct(true)
           } catch (error:any) {
             console.error('Error fetching user data:', error.message);
           }
@@ -42,6 +45,7 @@ const Add_Clinician = () => {
     }
 
     return (
+      checkedAcct &&
         <>
             <Header/>
             <ClinicianForm/>
