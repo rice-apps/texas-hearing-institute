@@ -271,7 +271,7 @@ export default function Auth() {
 			</View>
 			<View style={{ marginBottom: 12 }}>
 				<Input
-					label="Password"
+					label="Password (cannot be reset)"
 					onChangeText={(text) => setPassword(text)}
 					value={password}
 					secureTextEntry={true}
