@@ -11,6 +11,7 @@ const Dashboard = () => {
     const supabase = createClient();
 
     const [clinician, setClinician] = useState<any>();
+    const [groupId, setGroupId] = useState<any>();
     const [children, setChildren] = useState<any[]>([]);
     const [selectedChildID, setSelectedChildID] = useState<any>();
     const [childReports, setChildReports] = useState<any[]>([]);
@@ -33,7 +34,7 @@ const Dashboard = () => {
           const userId = data['user']['id'];
           // currently using dummy clinician UID because the give user can be any auth user
           // replace the uuid passed into 2nd param of eq with userID to check logged in Users
-          const{data:clinicianUID, error:error2} = await supabase.from('clinicians').select('id').eq('user',userId);
+          const{data:clinicianUID, error:error2} = await supabase.from('clinicians').select('id, groupId').eq('user',userId);
           if(error2){
             throw error2;
           }
@@ -44,6 +45,8 @@ const Dashboard = () => {
           }
           const currClinician = clinicianUID[0]['id']
           setClinician(currClinician);
+          const currGroupId = clinicianUID[0]['groupId']
+          setGroupId(currGroupId)
 
           // retrieve associated children right after getting currently logged in clinician
           const{data:associatedChildren, error:error3} = await supabase.from('children').select().eq('clinician',currClinician);
@@ -95,6 +98,7 @@ const Dashboard = () => {
                 <div className="flex flex-row flex-wrap items-center justify-left gap-5 w-screen px-5 py-2.5">
                   <h2 className="text-black dark:text-white">Search Patients:</h2>
                   <PatientDropdown updateSelectedChild={updateSelectedChild} patients={children}/>
+                  <h2 className="text-black dark:text-white">(Your group ID: {groupId})</h2>
                 </div>
                 <div className="">
                   <PatientReport reports={childReports}/>
