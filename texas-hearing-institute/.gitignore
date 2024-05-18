@@ -8,6 +8,7 @@ node_modules/
 dist/
 web-build/
 android/
+android_dontuse/
 
 # Native
 *.orig.*
