@@ -12,7 +12,7 @@ export default function LoginBox() {
             <OAuthButton provider="google"/>
             <hr className='m-5 bg-black dark:bg-white'/>
             <div className='text-center'>
-                <p className="text-black dark:text-white">Any questions? <a className="underline text-blue-500 cursor-pointer" href="mailto:shivampathak108@gmail.com">Contact us.</a></p>
+                <p className="text-black dark:text-white">Any questions? <a className="underline text-blue-500 cursor-pointer" href="mailto:team.riceapps@gmail.com">Contact us.</a></p>
             </div>
         </div>
     )
