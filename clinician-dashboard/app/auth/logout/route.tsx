@@ -11,7 +11,15 @@ export async function POST(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (user) {
+  const { 
+    data: data1, error 
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    throw error;
+  }
+
+  if (user || data1) {
     await supabase.auth.signOut();
   }
 
