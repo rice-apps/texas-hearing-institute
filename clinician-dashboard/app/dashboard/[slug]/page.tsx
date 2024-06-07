@@ -87,7 +87,7 @@ const Dashboard = () => {
     }
 
     return (
-      checkedAcct &&
+      (checkedAcct && !redirectBool) &&
         <div>
             <Header/>
             <br />
