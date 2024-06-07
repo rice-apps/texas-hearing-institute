@@ -45,7 +45,7 @@ const Add_Clinician = () => {
     }
 
     return (
-      checkedAcct &&
+      (checkedAcct && !redirectBool) &&
         <>
             <Header/>
             <ClinicianForm/>
