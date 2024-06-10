@@ -2,10 +2,10 @@ import React from 'react';
 import SettingsPage from '../components/SettingsPage';
 import { ConsonantFlower } from '../../../utils/Segment';
 
-export default function PlaceCueScreen() {
+export default function PlaceScreen() {
 	return (
 		<SettingsPage
-			title="Place Cue"
+			title="Place"
 			showVowelType
 			modeFlower={ConsonantFlower.Place}
 		/>
