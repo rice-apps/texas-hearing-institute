@@ -14,16 +14,7 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.texashearinginstitute.app",
-			"infoPlist": {
-				"CFBundleURLTypes": [
-					{
-						"CFBundleURLSchemes": [
-							"com.googleusercontent.apps.238625413111-n13uhletv4i0q5b85kvat11jcp1e11la"
-						]
-					}
-				]
-			},
+			"bundleIdentifier": "com.texashearinginstitute.speechbabble",
 			"usesAppleSignIn": true
 		},
 		"android": {
@@ -38,7 +29,25 @@
 		},
 		"plugins": [
 			"@react-native-google-signin/google-signin",
-			"expo-apple-authentication"
-		]
+			"expo-apple-authentication",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 33,
+            "targetSdkVersion": 33,
+            "buildToolsVersion": "33.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "14.0"
+          }
+        }
+		  ]
+    ],
+		"extra": {
+			"eas": {
+				"projectId": "6dc1b6d6-511e-47e6-97ca-95b994685da0"
+			}
+		}
 	}
 }

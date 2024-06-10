@@ -55,6 +55,16 @@ export default function Done({ route }: Props) {
 			console.log(error);
 			throw new Error('Failed to save data');
 		}
+		const { data, error: error2 } = await supabase
+			.from('children')
+			.select('child_id')
+			.eq('id', uID)
+			.single();
+		if (error2) {
+			console.log(error2);
+			throw new Error('Failed to save data');
+		}
+		user.setChildID(data?.child_id);
 	};
 
 	return (

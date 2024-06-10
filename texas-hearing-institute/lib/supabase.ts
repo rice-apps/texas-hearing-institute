@@ -7,8 +7,8 @@ import { createClient } from '@supabase/supabase-js';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const supabase = createClient(
-	process.env.NEXT_PUBLIC_SUPABASE_URL!,
-	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+	process.env.EXPO_PUBLIC_SUPABASE_URL!,
+	process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!,
 	{
 		auth: {
 			storage: AsyncStorage,

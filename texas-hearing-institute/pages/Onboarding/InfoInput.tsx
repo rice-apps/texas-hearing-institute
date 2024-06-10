@@ -16,6 +16,14 @@ export default function InfoInput({ route, navigation }: Props) {
 	const [childName, setChildName] = useState<string>('');
 	const [groupID, setGroupID] = useState<string>('');
 
+	function firstNameOnly(name: string) {
+		name = name.trim();
+		if (name.includes(' ')) {
+			name = name.substring(0, name.indexOf(' '));
+		}
+		return name;
+	}
+
 	return (
 		<CustomSafeAreaView>
 			<View
@@ -60,7 +68,9 @@ export default function InfoInput({ route, navigation }: Props) {
 					</Text>
 				</View>
 				<View>
-					<Text style={styles.inputLabel}>Your child’s name</Text>
+					<Text style={styles.inputLabel}>
+						Your child’s name (first name ONLY)
+					</Text>
 					<TextInput
 						style={styles.input}
 						value={childName}
@@ -77,7 +87,7 @@ export default function InfoInput({ route, navigation }: Props) {
 					label={'Continue'}
 					onPress={() =>
 						navigation.navigate(`Vowels`, {
-							name: childName,
+							name: firstNameOnly(childName),
 							groupID: groupID,
 							id: id,
 						})
