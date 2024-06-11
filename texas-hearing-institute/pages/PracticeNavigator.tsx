@@ -4,7 +4,7 @@ import PracticeTab from './Home';
 import VarVowelsScreen from './ListeningSettings/tabs/VarVowelsScreen';
 import MannerScreen from './ListeningSettings/tabs/MannerScreen';
 import VoicingScreen from './ListeningSettings/tabs/VoicingScreen';
-import PlaceCueScreen from './ListeningSettings/tabs/PlaceCueScreen';
+import PlaceScreen from './ListeningSettings/tabs/PlaceScreen';
 import InitialConsonants from './SpeechSettings/tabs/InitialConsonants';
 import FinalConsonants from './SpeechSettings/tabs/FinalConsonants';
 import Vowels from './SpeechSettings/tabs/Vowels';
@@ -18,7 +18,7 @@ export type PracticeParamList = {
 	Vowels: undefined;
 	InitialConsonants: undefined;
 	FinalConsonants: undefined;
-	PlaceCue: undefined;
+	Place: undefined;
 	VariegatedVowels: undefined;
 	Manner: undefined;
 	Voicing: undefined;
@@ -56,10 +56,10 @@ export default function PracticeNavigator() {
 			<Stack.Screen name="Vowels" component={Vowels} />
 			<Stack.Screen name="InitialConsonants" component={InitialConsonants} />
 			<Stack.Screen name="FinalConsonants" component={FinalConsonants} />
-			<Stack.Screen name="PlaceCue" component={PlaceCueScreen} />
 			<Stack.Screen name="VariegatedVowels" component={VarVowelsScreen} />
 			<Stack.Screen name="Manner" component={MannerScreen} />
 			<Stack.Screen name="Voicing" component={VoicingScreen} />
+			<Stack.Screen name="Place" component={PlaceScreen} />
 			<Stack.Screen
 				name="ActivePractice"
 				component={Active}

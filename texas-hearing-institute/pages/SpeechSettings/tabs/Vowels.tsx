@@ -68,19 +68,19 @@ const Vowels = () => {
 						<Text style={styles.subtitle}>SELECT MODE</Text>
 						<View>
 							<RadioButton<ConsonantFlower>
-								label={'Voicing'}
-								value={ConsonantFlower.Voice}
-								onPress={setModeFlower}
-								selectedRadio={modeFlower}
-							/>
-							<RadioButton<ConsonantFlower>
 								label={'Manner'}
 								value={ConsonantFlower.Manner}
 								onPress={setModeFlower}
 								selectedRadio={modeFlower}
 							/>
 							<RadioButton<ConsonantFlower>
-								label={'Place Cue'}
+								label={'Voicing'}
+								value={ConsonantFlower.Voice}
+								onPress={setModeFlower}
+								selectedRadio={modeFlower}
+							/>
+							<RadioButton<ConsonantFlower>
+								label={'Place'}
 								value={ConsonantFlower.Place}
 								onPress={setModeFlower}
 								selectedRadio={modeFlower}
