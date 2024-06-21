@@ -12,6 +12,7 @@ export default function DeleteAccount() {
                     <p className="text-lg text-white">3100 Shenandoah St.</p>
                     <p className="text-lg text-white">Houston, TX 77021-1042</p>
                     <p className="text-lg text-white">If you decide to call us or mail to us, please specify that your concern is regarding the Speech Babble app.</p>
+                    <p className="text-lg text-white">More contact info can be found at https://www.texashearing.org/contact-us/</p>
                 </div>
             </div>
         </div>
