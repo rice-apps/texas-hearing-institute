@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, Text, TextInput } from 'react-native';
+import { View, Pressable, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
@@ -8,6 +8,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from './AuthNavigator';
 import FloatingButton from '../../components/FloatingButton';
 import { useState } from 'react';
+import { supabase } from '../../lib/supabase';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'InfoInput'>;
 
@@ -22,6 +23,26 @@ export default function InfoInput({ route, navigation }: Props) {
 			name = name.substring(0, name.indexOf(' '));
 		}
 		return name;
+	}
+
+	async function validGroupNavigate() {
+		const { data, error } = await supabase
+			.from('clinicians')
+			.select('id')
+			.eq('groupId', groupID)
+			.maybeSingle();
+		
+		if (!error && data) {
+			navigation.navigate(`Vowels`, {
+				name: firstNameOnly(childName),
+				groupID: groupID,
+				id: id,
+			})
+		} else {
+			Alert.alert('Error', 'Invalid group ID entered', [
+				{ text: 'OK' },
+			]);
+		}
 	}
 
 	return (
@@ -86,11 +107,7 @@ export default function InfoInput({ route, navigation }: Props) {
 				<FloatingButton
 					label={'Continue'}
 					onPress={() =>
-						navigation.navigate(`Vowels`, {
-							name: firstNameOnly(childName),
-							groupID: groupID,
-							id: id,
-						})
+						validGroupNavigate()
 					}
 				/>
 			</View>
