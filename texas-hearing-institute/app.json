@@ -18,14 +18,15 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.texashearinginstitute.speechbabble",
       "usesAppleSignIn": true,
-      "buildNumber": "2"
+      "buildNumber": "4"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/thi_logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.texashearinginstitute.app"
+      "package": "com.texashearinginstitute.app",
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/favicon.png"
