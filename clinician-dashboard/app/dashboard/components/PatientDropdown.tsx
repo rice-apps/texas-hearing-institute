@@ -40,7 +40,7 @@ const PatientDropdown: React.FC<DropdownButtonProps> = ({patients, updateSelecte
                 <div className="py-1" role="none">
                     {patients.map(e => <p className=" block px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-500 dark:hover:text-white" onClick={() => {setSelected(e.name); setIsOpen(!isOpen); updateSelectedChild(e.id)}} role="menuitem" 
                     key={e.id}>
-                        {e.name}
+                        {e.name} ({e.child_id})
                     </p>)}
                 </div>
                 </div>

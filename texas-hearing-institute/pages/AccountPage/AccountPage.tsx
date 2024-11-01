@@ -7,9 +7,15 @@ import FormView from '../../components/FormView/FormView';
 import { UserContext, UserContextType } from '../../user/UserContext';
 import { supabase } from '../../lib/supabase';
 import FloatingButton from '../../components/FloatingButton';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from '../AppNavigator';
 
 export default function AccountPage() {
 	const { user } = useContext(UserContext) as UserContextType;
+
+	type AppNav = StackNavigationProp<AppStackParamList>;
+	const appNavigation = useNavigation<AppNav>();
 
 	const [editMode, setEditMode] = useState(false);
 
@@ -21,10 +27,22 @@ export default function AccountPage() {
 		return user.getGroupId();
 	});
 
+	const [userChildID] = useState(() => {
+		return user.getChildId();
+	});
+
+	function firstNameOnly(name: string) {
+		name = name.trim();
+		if (name.includes(' ')) {
+			name = name.substring(0, name.indexOf(' '));
+		}
+		return name;
+	}
+
 	const commitChangesToUser = async () => {
 		const { error: nameError } = await supabase
 			.from('children')
-			.update({ name: userName })
+			.update({ name: firstNameOnly(userName) })
 			.eq('id', user.getId());
 		if (nameError) {
 			console.log('DB error on attempt to update child name: ', nameError);
@@ -32,7 +50,7 @@ export default function AccountPage() {
 			setUserName(user.getName());
 			return;
 		}
-		user.setName(userName);
+		user.setName(firstNameOnly(userName));
 
 		const { data, error: cIdError } = await supabase
 			.from('clinicians')
@@ -62,6 +80,18 @@ export default function AccountPage() {
 			return;
 		}
 		user.setGroupId(userGroupID);
+	};
+
+	const signOut = async () => {
+		const { error } = await supabase.auth.signOut();
+		if (error) {
+			throw new Error('Error signing out');
+		}
+		user.clearUser();
+		appNavigation.reset({
+			index: 0,
+			routes: [{ name: 'Auth' }],
+		});
 	};
 
 	return (
@@ -174,6 +204,21 @@ export default function AccountPage() {
 						},
 					]}
 				/>
+				<Text> </Text>
+				<FormView
+					heading="Unique Child ID (cannot edit)"
+					labels={['Child ID']}
+					data={[
+						{
+							text: userChildID.toString(),
+							properties: {
+								placeholder: '-1',
+							},
+						},
+					]}
+					readonly={true}
+					setData={[]}
+				/>
 			</View>
 
 			<View
@@ -188,6 +233,20 @@ export default function AccountPage() {
 						onPress={() => {
 							setEditMode(false);
 							commitChangesToUser();
+						}}
+					/>
+				</View>
+			</View>
+			<View
+				style={{
+					width: '100%',
+				}}
+			>
+				<View style={{ marginTop: 132 }}>
+					<FloatingButton
+						label={'Log Out'}
+						onPress={() => {
+							signOut();
 						}}
 					/>
 				</View>

@@ -7,6 +7,8 @@ node_modules/
 .expo/
 dist/
 web-build/
+android/
+android_dontuse/
 
 # Native
 *.orig.*
@@ -30,6 +32,7 @@ yarn-error.*
 
 # local env files
 .env*.local
+eas*
 
 # typescript
 *.tsbuildinfo

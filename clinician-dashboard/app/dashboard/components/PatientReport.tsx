@@ -53,12 +53,12 @@ const PatientReport:React.FC<TableProps> = ({reports}) => {
                                                 <td className="py-4">{r.subtype}</td>
                                                 <td className="py-4">{r.mode}</td>
                                                 <td className="py-4">{r.target}</td>
-                                                <td className="py-4">{"["+r.syllables.map(c => c)+"]"}</td>
+                                                <td className="py-4">{"["+r.syllables.map((c: any) => c)+"]"}</td>
                                                 <td className="py-4">{r.voweltype}</td>
                                                 <td className="py-4">{r['num_syllables']}</td>
                                                 <td className="py-4 text-black">
                                                     <div className={`inline p-1 rounded-xl ${getPercentageColor(r.results)}`}>
-                                                    {((r.results.reduce((count, currentValue) => count + (currentValue ? 1 : 0), 0) / r.results.length) * 100).toFixed(1) +"%"}
+                                                    {((r.results.reduce((count: any, currentValue: any) => count + (currentValue ? 1 : 0), 0) / r.results.length) * 100).toFixed(1) +"%"}
                                                     </div>
                                                 </td>
                                         </tr>)}
