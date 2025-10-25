@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Heading from '../components/Heading';
 import {
 	TouchableOpacity,
@@ -13,7 +13,6 @@ import PillButtonView from '../components/PillButtonView';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { PracticeParamList } from './PracticeNavigator';
 import { PracticeResult } from './types';
-import { UserContext, UserContextType } from '../user/UserContext';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/core';
 import { Badge } from 'react-native-elements';
@@ -27,7 +26,6 @@ type StackNav = StackNavigationProp<PracticeParamList>;
 
 function ReportScreen({ route }: Props) {
 	const navigation = useNavigation<StackNav>();
-	const { user } = useContext(UserContext) as UserContextType;
 
 	const { results } = route.params;
 
@@ -41,7 +39,7 @@ function ReportScreen({ route }: Props) {
 
 	return (
 		<View style={styles.container}>
-			<Heading title={'Woohoo! High five, ' + user.getName()} />
+			<Heading title={'Woohoo! High five!'} />
 			<View
 				style={{
 					flexDirection: 'row',

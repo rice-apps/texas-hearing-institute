@@ -19,10 +19,6 @@ export default function AccountPage() {
 
 	const [editMode, setEditMode] = useState(false);
 
-	const [userName, setUserName] = useState(() => {
-		return user.getName();
-	});
-
 	const [userGroupID, setUserGroupID] = useState(() => {
 		return user.getGroupId();
 	});
@@ -31,27 +27,7 @@ export default function AccountPage() {
 		return user.getChildId();
 	});
 
-	function firstNameOnly(name: string) {
-		name = name.trim();
-		if (name.includes(' ')) {
-			name = name.substring(0, name.indexOf(' '));
-		}
-		return name;
-	}
-
 	const commitChangesToUser = async () => {
-		const { error: nameError } = await supabase
-			.from('children')
-			.update({ name: firstNameOnly(userName) })
-			.eq('id', user.getId());
-		if (nameError) {
-			console.log('DB error on attempt to update child name: ', nameError);
-			alert('Failed to update; try again later!');
-			setUserName(user.getName());
-			return;
-		}
-		user.setName(firstNameOnly(userName));
-
 		const { data, error: cIdError } = await supabase
 			.from('clinicians')
 			.select('id')
@@ -129,7 +105,7 @@ export default function AccountPage() {
 							color: '#333',
 						}}
 					>
-						{userName + "'s Profile"}
+						{'Your Profile'}
 					</Text>
 				</View>
 
@@ -178,14 +154,8 @@ export default function AccountPage() {
 			>
 				<FormView
 					heading="Account information"
-					labels={['Name', 'Group ID']}
+					labels={['Group ID']}
 					data={[
-						{
-							text: userName,
-							properties: {
-								placeholder: 'Johnny Appleseed',
-							},
-						},
 						{
 							text: userGroupID.toString(),
 							properties: {
@@ -196,9 +166,6 @@ export default function AccountPage() {
 					]}
 					readonly={!editMode}
 					setData={[
-						(newValue: string) => {
-							setUserName(newValue);
-						},
 						(newValue: string) => {
 							setUserGroupID(newValue);
 						},

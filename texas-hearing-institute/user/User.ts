@@ -17,7 +17,6 @@ export class User {
 	// Actual fields
 	#id = '%0';
 	#child_id = '%0';
-	#name = '%0'; // user-updatable
 	#groupId = '%0'; // user-updatable
 	#showTutorial = false;
 	// TODO: offline practice/reports screen
@@ -27,7 +26,6 @@ export class User {
 		const copy = new User();
 
 		copy.#id = this.#id;
-		copy.#name = this.#name;
 		copy.#groupId = this.#groupId;
 		copy.#showTutorial = this.#showTutorial;
 		copy.#child_id = this.#child_id;
@@ -38,7 +36,6 @@ export class User {
 	clearUser() {
 		this.#id = '%0';
 		this.#child_id = '%0';
-		this.#name = '%0';
 		this.#groupId = '%0';
 		this.#showTutorial = false;
 	}
@@ -97,10 +94,6 @@ export class User {
 	// }
 
 	// Setters
-	setName(newValue: string) {
-		this.#name = newValue;
-	}
-
 	setID(newValue: string) {
 		this.#id = newValue;
 	}
@@ -129,10 +122,6 @@ export class User {
 
 	getChildId(): string {
 		return this.#child_id;
-	}
-
-	getName(): string {
-		return this.#name;
 	}
 
 	getGroupId() {

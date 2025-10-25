@@ -52,12 +52,11 @@ export default function Auth() {
 									// search for user.id in parentuser in children
 									const { data } = await supabase
 										.from('children')
-										.select('id, name, clinician, child_id')
+										.select('id, clinician, child_id')
 										.eq('parentuser', user.id)
 										.maybeSingle();
 									if (data) {
 										// existing user
-										currUser.setName(data.name);
 										currUser.setID(data.id);
 										currUser.setChildID(data.child_id);
 										// fetch group id from clinicians
@@ -148,12 +147,11 @@ export default function Auth() {
 			// search for user.id in parentuser in children
 			const { data } = await supabase
 				.from('children')
-				.select('id, name, clinician, child_id')
+				.select('id, clinician, child_id')
 				.eq('parentuser', user.id)
 				.maybeSingle();
 			if (data) {
 				// existing user
-				currUser.setName(data.name);
 				currUser.setID(data.id);
 				currUser.setChildID(data.child_id);
 				// fetch group id from clinicians
@@ -209,12 +207,11 @@ export default function Auth() {
 			// search for user.id in parentuser in children
 			const { data } = await supabase
 				.from('children')
-				.select('id, name, clinician, child_id')
+				.select('id, clinician, child_id')
 				.eq('parentuser', user.id)
 				.maybeSingle();
 			if (data) {
 				// existing user
-				currUser.setName(data.name);
 				currUser.setID(data.id);
 				currUser.setChildID(data.child_id);
 				// fetch group id from clinicians

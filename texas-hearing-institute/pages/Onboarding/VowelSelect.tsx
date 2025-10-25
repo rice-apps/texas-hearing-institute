@@ -23,7 +23,7 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'Vowels'>;
 const MIN_SELECTED = 4;
 
 export default function VowelSelect({ navigation, route }: Props) {
-	const { id, name, groupID } = route.params;
+	const { id, groupID } = route.params;
 	const [itemsSelected, setItemsSelected] = useState(() => {
 		// Start load from storage and set state once load completes
 		retrieveItemSelections(vowelInventoryPersistenceKey, vowels).then(
@@ -112,7 +112,6 @@ export default function VowelSelect({ navigation, route }: Props) {
 							]);
 						} else {
 							navigation.navigate(`Consonants`, {
-								name: name,
 								groupID: groupID,
 								id: id,
 							});

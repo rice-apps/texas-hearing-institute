@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import {
+	View,
+	Pressable,
+	StyleSheet,
+	Text,
+	TextInput,
+	Alert,
+} from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import leftArrow from '../../icons/leftarrow';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
@@ -14,16 +21,7 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'InfoInput'>;
 
 export default function InfoInput({ route, navigation }: Props) {
 	const { id } = route.params;
-	const [childName, setChildName] = useState<string>('');
 	const [groupID, setGroupID] = useState<string>('');
-
-	function firstNameOnly(name: string) {
-		name = name.trim();
-		if (name.includes(' ')) {
-			name = name.substring(0, name.indexOf(' '));
-		}
-		return name;
-	}
 
 	async function validGroupNavigate() {
 		const { data, error } = await supabase
@@ -31,17 +29,14 @@ export default function InfoInput({ route, navigation }: Props) {
 			.select('id')
 			.eq('groupId', groupID)
 			.maybeSingle();
-		
+
 		if (!error && data) {
 			navigation.navigate(`Vowels`, {
-				name: firstNameOnly(childName),
 				groupID: groupID,
 				id: id,
-			})
+			});
 		} else {
-			Alert.alert('Error', 'Invalid group ID entered', [
-				{ text: 'OK' },
-			]);
+			Alert.alert('Error', 'Invalid group ID entered', [{ text: 'OK' }]);
 		}
 	}
 
@@ -89,14 +84,6 @@ export default function InfoInput({ route, navigation }: Props) {
 					</Text>
 				</View>
 				<View>
-					<Text style={styles.inputLabel}>
-						Your child’s name (first name ONLY)
-					</Text>
-					<TextInput
-						style={styles.input}
-						value={childName}
-						onChangeText={(name) => setChildName(name)}
-					></TextInput>
 					<Text style={styles.inputLabel}>Group ID</Text>
 					<TextInput
 						value={groupID}
@@ -106,9 +93,7 @@ export default function InfoInput({ route, navigation }: Props) {
 				</View>
 				<FloatingButton
 					label={'Continue'}
-					onPress={() =>
-						validGroupNavigate()
-					}
+					onPress={() => validGroupNavigate()}
 				/>
 			</View>
 		</CustomSafeAreaView>

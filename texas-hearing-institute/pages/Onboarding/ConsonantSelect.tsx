@@ -23,7 +23,7 @@ type Props = NativeStackScreenProps<AuthStackParamList, 'Consonants'>;
 const MIN_SELECTED = 4;
 
 export default function ConsonantSelect({ navigation, route }: Props) {
-	const { id, name, groupID } = route.params;
+	const { id, groupID } = route.params;
 	const [itemsSelected, setItemsSelected] = useState(() => {
 		// Start load from storage and set state once load completes
 		retrieveItemSelections(consonantInventoryPersistenceKey, consonants).then(
@@ -112,7 +112,6 @@ export default function ConsonantSelect({ navigation, route }: Props) {
 							]);
 						} else {
 							navigation.navigate(`Done`, {
-								name: name,
 								groupID: groupID,
 								id: id,
 							});

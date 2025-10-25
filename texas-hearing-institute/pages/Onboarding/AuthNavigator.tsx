@@ -10,9 +10,9 @@ import Done from './Done';
 export type AuthStackParamList = {
 	SignIn: undefined;
 	InfoInput: { id: string };
-	Vowels: { id: string; name: string; groupID: string };
-	Consonants: { id: string; name: string; groupID: string };
-	Done: { id: string; name: string; groupID: string };
+	Vowels: { id: string; groupID: string };
+	Consonants: { id: string; groupID: string };
+	Done: { id: string; groupID: string };
 };
 
 export default function AuthNavigator() {
