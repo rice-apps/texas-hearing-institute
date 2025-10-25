@@ -1,51 +1,49 @@
 {
-  "expo": {
-    "name": "Speech Babble",
-    "slug": "texas-hearing-institute",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/thi_logo.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/thi_logo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.texashearinginstitute.speechbabble",
-      "usesAppleSignIn": true,
-      "buildNumber": "4"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/thi_logo.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.texashearinginstitute.app",
-      "versionCode": 5
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-apple-authentication",
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 33,
-            "targetSdkVersion": 33,
-            "buildToolsVersion": "33.0.0"
-          },
-          "ios": {
-            "deploymentTarget": "14.0"
-          }
-        }
-      ]
-    ]
-  }
+	"expo": {
+		"name": "Speech Babble",
+		"slug": "texas-hearing-institute",
+		"version": "1.1.0",
+		"orientation": "portrait",
+		"icon": "./assets/thi_logo.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./assets/thi_logo.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.texashearinginstitute.speechbabble",
+			"usesAppleSignIn": true,
+			"buildNumber": "5"
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/thi_logo.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.texashearinginstitute.app",
+			"versionCode": 5
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"plugins": [
+			"expo-apple-authentication",
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"compileSdkVersion": 33,
+						"targetSdkVersion": 33,
+						"buildToolsVersion": "33.0.0"
+					},
+					"ios": {
+						"deploymentTarget": "14.0"
+					}
+				}
+			]
+		]
+	}
 }
