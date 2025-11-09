@@ -11,6 +11,7 @@ import FloatingButton from '../../components/FloatingButton';
 import { supabase } from '../../lib/supabase';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UserContext, UserContextType } from '../../user/UserContext';
+import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { AppStackParamList } from '../AppNavigator';
 
